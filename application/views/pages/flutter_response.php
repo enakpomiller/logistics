@@ -146,7 +146,7 @@
     </div>
      <div class="container">
           <center>
-             <img src="" style="width: 30%;">
+             <img src="<?=base_url('assets/admin/images/happy.png')?>" style="width: 20%;">
               <table class="table table-striped" style="width:20%">
               <tr> <td><b style="font-family:sans-serif">Payment Status :</b> <?=$this->input->get('status',true)?></td></tr>
           </table>
@@ -189,6 +189,7 @@ $(document).ready(function() {
                                       'Congratulations!',
                                       'Your tracking code has been sent to Your email!',
                                       'success')
+
                             }
 
                            })

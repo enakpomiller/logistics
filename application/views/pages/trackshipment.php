@@ -168,7 +168,7 @@
 
                         <div class="warehouse" style="height:80%;">
                           <div class="lefthouse" style="font-family:sans-serif">
-                           <img src="<?=base_url('assets/uploads/'.$track->userfile)?>" style="width:60%;border-radius:8px;margin: 20px;height:120%;">
+                           <img src="<?=base_url('assets/uploads/'.$track->userfile)?>" style="width:60%;border-radius:8px;margin: 20px;height:80%;">
                           </div>
                           <div class="righthouse">
                               <labe><h3> Details</h3> </labe>

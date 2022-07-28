@@ -70,7 +70,6 @@
 
 
 
-
 <!--mainpage chit-chating-->
 <div class="chit-chat-layer1">
 	<div class="col-md-6 chit-chat-layer1-left">

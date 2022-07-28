@@ -172,7 +172,9 @@
          	    $this->db->insert($table,$data);
          	    return true;
             }
-          public function  GetTrackingId( $TrackingCode){
+
+
+          public function  GetTrackingId($TrackingCode){
          	    $this->db->select('*');
          	    $this->db->from('tbl_users');
          	    $this->db->join('tbl_users_shipment','tbl_users.id=tbl_users_shipment.user_id');
@@ -237,8 +239,8 @@
               public function getwalletval($UserId){
                 $this->db->select('*');
                 $this->db->from('tbl_users');
-                $this->db->join('itbl_wallet','tbl_users.id=itbl_wallet.user_id');
-                $this->db->where('itbl_wallet.user_id',$UserId);
+                $this->db->join('tbl_wallet','tbl_users.id=tbl_wallet.user_id');
+                $this->db->where('tbl_wallet.user_id',$UserId);
                 $this->db->where('tbl_users.id',$UserId);
                 $query = $this->db->get();
                 return $query->result();

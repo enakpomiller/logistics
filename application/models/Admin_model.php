@@ -124,6 +124,7 @@
    		    $query = $this->db->get();
    		    return $query->row();
           }
+
       public function update_set($table,$userid,$location){
   	        $data = array(
   	        	'current_location'=>$location
@@ -188,9 +189,10 @@
         }
       }
 
-      public function CheckEmailExist($table,$data){
-        $query = $this->db->get_where($table,array('email'=>$data));
+      public function CheckEmailExist($table,$email){
+        $query = $this->db->get_where($table,array('email'=>$email));
         return $query->row();
+
       }
 
       public function changepassword($table,$passconf,$adminid){
@@ -204,6 +206,130 @@
 
 
 
+   //multiple upload
+      // public function getRows($id = ''){
+      //     $this->db->select('id,file_name,created_at');
+      //     $this->db->from('seller_prod');
+      //     if($id){
+      //         $this->db->where('id',$id);
+      //         $query = $this->db->get();
+      //         $result = $query->row_array();
+      //     }else{
+      //         $this->db->order_by('created_at','desc');
+      //         $query = $this->db->get();
+      //         $result = $query->result_array();
+      //     }
+      //     return !empty($result)?$result:false;
+      // }
+
+      public function insert_multiple_files($data = array()){
+          // $insert = $this->db->insert_batch('seller_prod',$data);
+          $insert = $this->db->insert_batch('client_product',$data);
+          return $insert?true:false;
+      }
+
+      // public function getRows($id = ''){
+      //     $this->db->select('id,file_name,created_at');
+      //     $this->db->from('client_product');
+      //     if($id){
+      //         $this->db->where('id',$id);
+      //         $query = $this->db->get();
+      //         $result = $query->row_array();
+      //     }else{
+      //         $this->db->order_by('created_at','desc');
+      //         $query = $this->db->get();
+      //         $result = $query->result_array();
+      //     }
+      //     return !empty($result)?$result:false;
+      //  }
+
+      // public function getRows($id = ''){
+      //     $this->db->select('id,file_name,created_at');
+      //     $this->db->from('client_product');
+      //
+      //     if($id){
+      //         $this->db->where('seller_id',$id);
+      //         $query = $this->db->get();
+      //         $result = $query->result_array();
+      //     }else{
+      //         $this->db->order_by('created_at','desc');
+      //         $query = $this->db->get();
+      //         $result = $query->result_array();
+      //     }
+      //     return !empty($result)?$result:false;
+      //  }
+
+
+     public function getRows($seller_id){
+        $this->db->select('seller_prod_details.*,client_product.*');
+        $this->db->from('seller_prod_details');
+        $this->db->join('client_product','client_product.prod_id = seller_prod_details.id');
+        //$this->db->where('client_product.seller_id',$seller_id);
+        $this->db->where('client_product.seller_id',$seller_id);
+        $query = $this->db->get();
+        if($query){
+        return $query->result_array();
+          }
+     }
+
+    public function sellerdetails($table,$data){
+      $this->db->insert($table,$data);
+      $insertid = $this->db->insert_id();
+      return $insertid;
+    }
+ // end multiple file end
+
+     public function getSellerProduct($key){
+       $query = $this->db->get_where('seller_prod',array('seller_prod_id'=>$key));
+       return $query->result();
+     }
+
+     public function fewProduct($id){
+       $query = $this->db->get_where('seller_prod_details',array('seller_id'=>$id));
+       return $query->result();
+     }
+
+    public function getAll(){
+      $query = $this->db->get('seller_prod_details');
+      return $query->result();
+    }
+
+    public function GetsingleSellerRecord($table,$data){
+     $query = $this->db->get_where($table,array('id'=>$data));
+     return $query->row();
+    }
+
+
+
+    public function UpdateSelletTable($seller_id,$name,$price,$brand){
+      $data = array(
+            array(
+              'prod_name'  => $name,
+              'prod_price'=> $price,
+              'prod_brand'   =>  $brand
+          ),
+          array(
+            'prod_name'  => $name,
+            'prod_price'=> $price,
+            'prod_brand'   => $brand
+          )
+        );
+
+      $this->db->where('id',$seller_id);
+      return $this->db->update('seller_prod_details',$data);
+    }
+
+    function getUserDetails(){
+  		$response = array();
+  		// Select record
+  		$this->db->select('*');
+  		$q = $this->db->get('seller_prod_details');
+  		$response = $q->result_array();
+  		return $response;
+       }
+       function insert_csv($insert_data){
+     	  $this->db->insert('seller_prod_details',$insert_data);
+     	 }
     }
 
 ?>

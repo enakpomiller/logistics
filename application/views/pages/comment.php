@@ -137,9 +137,6 @@
             <i class="fa fa-braille" aria-hidden="true"></i>
             <h3 class="text-center wthree w3-agileits agileits-w3layouts agile w3-agile"> Comment section </h>
         </div>
-
-        <div id="fupForm">  </div>
-        <div id="success">  </div>
     <div class="container">
         <div class="content-w3ls" style="height:90%;background:white;">
           <div class="content1-w3ls">
@@ -196,51 +193,51 @@ CKEDITOR.replace('body',{
 
 <script>
 
-$('#submit').on('click', function() {
-     $("#submit").attr("enabled", "enabled");
-      var prod_id = $('#prod_id').val();
-      var prod_title = $('#prod_title').val();
-      var name = $('#name').val();
-      var body = $('#body').val();
-      var userfile = $('#userfile').val();
-      var date = $('#date').val();
-
-      if(prod_id!="" && prod_title!="" && name!="" && body!="" && userfile!="" && date!=""){
-        $.ajax({
-          url:"<?php echo base_url(); ?>" + "Users/comment",
-          type:"POST",
-          data: {
-            prod_id:prod_id,
-            prod_title:prod_title,
-            name: name,
-            body:body,
-            userfile:userfile,
-            date:date
-          },
-           cache: false,
-          success: function(dataResult){
-            var dataResult = JSON.parse(dataResult);
-            if(dataResult.statusCode==200){
-              $("#butsave").removeAttr("disabled");
-      				$('#fupForm').find('input:text').val('');
-      				$("#success").show();
-      				$('#success').html('Data added successfully !');
-            }
-            else if(dataResult.statusCode==201){
-              // $("#error").show();
-              // $('#error').html('Invalid EmailId or Password !');
-              Swal.fire('Error!','cannot send!','error')
-
-            }
-
-          }
-        });
-      }
-      else{
-        	$('#success').html('Data added successfully !');
-           alert("please fill the fields");
-      }
-     });
+// $('#submit').on('click', function() {
+//      $("#submit").attr("enabled", "enabled");
+//       var prod_id = $('#prod_id').val();
+//       var prod_title = $('#prod_title').val();
+//       var name = $('#name').val();
+//       var body = $('#body').val();
+//       var userfile = $('#userfile').val();
+//       var date = $('#date').val();
+//
+//       if(prod_id!="" && prod_title!="" && name!="" && body!="" && userfile!="" && date!=""){
+//         $.ajax({
+//           url:"<?php echo base_url(); ?>" + "Users/comment",
+//           type:"POST",
+//           data: {
+//             prod_id:prod_id,
+//             prod_title:prod_title,
+//             name: name,
+//             body:body,
+//             userfile:userfile,
+//             date:date
+//           },
+//            cache: false,
+//           success: function(dataResult){
+//             var dataResult = JSON.parse(dataResult);
+//             if(dataResult.statusCode==200){
+//               $("#butsave").removeAttr("disabled");
+//       				$('#fupForm').find('input:text').val('');
+//       				$("#success").show();
+//       				$('#success').html('Data added successfully !');
+//             }
+//             else if(dataResult.statusCode==201){
+//               // $("#error").show();
+//               // $('#error').html('Invalid EmailId or Password !');
+//               Swal.fire('Error!','cannot send!','error')
+//
+//             }
+//
+//           }
+//         });
+//       }
+//       else{
+//         	$('#success').html('Data added successfully !');
+//            alert("please fill the fields");
+//       }
+//      });
 
 </script>
 

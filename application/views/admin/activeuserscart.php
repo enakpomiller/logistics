@@ -36,7 +36,7 @@
                               </tbody>
 
                              <!-- Large modal -->
-                                 <div class="modal fade" id="exampleModal<?=$cart->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="width: 100%;">
+                              <div class="modal fade" id="exampleModal<?=$cart->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="width: 100%;">
                                    <div class="modal-dialog modal-dialog-centered" role="document">
                                      <div class="modal-content">
                                        <div class="modal-header">
@@ -46,7 +46,7 @@
                                          </button>
                                        </div>
                                        <div class="modal-body">
-                                 <form action="<?=base_url('admin/update')?>" method="POST">
+                                       <form action="<?=base_url('admin/update')?>" method="POST">
                                       <center>
                                       <img src="<?=base_url('/uploads/'.$cart->userfile)?>" style="width:30%;height: 150px;margin: 10px;"><br>
                                     </center>
@@ -57,7 +57,7 @@
                                          <input type="input" id="prod_price" name="prod_price" class="form-control" value="<?=$cart->prod_price?>"><br>
                                         <label>Product Brand </label>
                                          <input type="input" id="prod_brand" name="prod_brand" class="form-control" value="<?=$cart->prod_brand?>"><br>
-                                          <label Quantity </label>
+                                          <label> Quantity </label>
                                            <input type="input" id="prod_quantity" name="prod_quantity" class="form-control" value="<?=$cart->prod_quantity?>"><br>
 
                                        </div>

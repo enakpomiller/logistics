@@ -118,7 +118,6 @@ class Users extends CI_controller{
                               'email'=>$email,
                               'logged_in'=>true
                                );
-
                                $this->session->set_userdata($data_arr);
                                $this->session->set_userdata('image',$getOneUser->userfile);
                                $this->session->set_userdata('name',$getOneUser->name);
@@ -208,14 +207,14 @@ class Users extends CI_controller{
                       $data['created_at'] = date("M-D-Y");
                         $AddIntoCart = $this->users_model->AddIntoCart('tbl_cart',$data);
                           if($AddIntoCart){
-                           $UserId = $this->input->post('user_id')->id;
+                           $UserId = $this->input->post('user_id');
                              $data = array(
                                'user_id'=> $UserId ,
                                'prod_price'=> $data['prod_price'],
                                'quantity'=>$data['prod_quantity'],
                                'wallet_amt'=>number_format($data['prod_price'] / 50 * $data['prod_quantity'])
                              );
-                             $this->users_model->InsetIntoWallet('itbl_wallet',$data);
+                             $this->users_model->InsetIntoWallet('tbl_wallet',$data);
 
                            $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
                            $this->session->set_flashdata('prod_inserted','Product Inserted into Cart');
@@ -282,6 +281,7 @@ class Users extends CI_controller{
                     $data['s_state'] = $this->input->post('s_state');
                     $data['s_land_mass'] = $this->input->post('s_land_mass');
                     $data['created_at'] =  date("i:sa");
+                    // echo "<pre>"; print_r($data); die;
                     $time = $this->session->set_userdata( $data['created_at']);
                     $this->session->set_userdata('s_email',$data['s_email']);
                     $shipping = $this->users_model->InsertIntoShipping('tbl_shipping',$data);
@@ -444,13 +444,14 @@ class Users extends CI_controller{
 
 
          public function tracking(){
-           $this->load->library('email');
+            $this->load->library('email');
             if($_POST){
                $data['user_id'] = $this->session->userdata('id')->id;
                $data['tracking_code'] = $this->generateRandomString();
+               // echo "<pre>"; print_r($data); die;
                $this->users_model->InsertIntoShipment('tbl_users_shipment',$data);
-               $code =$data['tracking_code'];
-          // mail configuration------------------------------
+               $code = $data['tracking_code'];
+             // mail configuration------------------------------
                     $config = array();
                     $config['useragent'] = "CodeIgniter";
                     $config['protocol'] = "smtp";
@@ -498,7 +499,7 @@ class Users extends CI_controller{
                  $UserId = $this->session->userdata('id')->id;
                  $TrackingCode = $this->input->post('trackcode');
                  $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-                 $data['track'] = $this->users_model->GetTrackingId( $TrackingCode,$UserId);
+                 $data['track'] = $this->users_model->GetTrackingId($TrackingCode,$UserId);
                  $data['GetShipment'] = $this->users_model->GetShipment('tbl_shipping',$UserId);
                  if($UserId==$data['track']->user_id){
                  $this->load->view('template/header',$data);

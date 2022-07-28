@@ -1,3 +1,6 @@
+
+
+
 <!--- admin footer -->
 
 <div class="copyrights">
@@ -62,15 +65,16 @@
 <?php else:?>
  <!-- sellers menu -->
 <div class="sidebar-menu text-center" style=" height:120%;">
-  <span class="text-center" style="position:kelative;margin-top:30px;"><?=$this->session->firstname?></span>
+  <img src="<?=base_url()?>assets/admin_uploads/<?=$this->session->userfile?>" style="position:relative;width:70px;height:70px;border-radius:50%;top:20px;"> <br>
+  <div class="text-center" style="position:relative;top:30px;"><?=$this->session->firstname?> <?=$this->session->othernames?> </div>
     <div class="menu">
-     <ul id="menu">
-      <li><span class="text-center"><a href="" style="color:white;"><i class="fa fa-th">Upload Product </i></a></span></li>
-      <li><span class="text-center"><a href="" style="color:white;"><i class="fa fa-sticky-note-o"> View Production </i> </a></span></li>
-      <li><span class="text-center"><a href="" style="color:white;"><i class="fa fa-sticky-note-o">Update Product</i> </a></span></li>
-      <li><span class="text-center"><a href="" style="color:white;"><i class="fa fa-venus"> View Product </i></a></span> </li>
-      <li><span class="text-center"><a href="<?=base_url('admin/change_pass')?>" style="color:white;"><i class="fa fa-sticky-note-o"> Change Password </i></a></span></li>
-
+     <ul id="menu" class="float:right">
+      <li><span class="text-center"><a href="<?=base_url('admin/multiple_upload')?>" style="color:white;text-decoration:none;"><i class="fa fa-th"> &nbsp; New Product </i></a></span></li>
+      <li><span class="text-center"><a href="<?=base_url('admin/view_seller_prod')?>" style="color:white;text-decoration:none;"><i class="fa fa-th"> &nbsp; View Product </i> </a></span></li>
+      <li><span class="text-center"><a href="<?=base_url('admin/update_seller')?>" style="color:white;text-decoration:none;"><i class="fa fa-th"> &nbsp; seller profile</i> </a></span></li>
+      <li><span class="text-center"><a href="" style="color:white;text-decoration:none;"><i class="fa fa-th"> &nbsp; Delete Product </i></a></span> </li>
+      <li><span class="text-center"><a href="<?=base_url('admin/change_pass')?>" style="color:white;text-decoration:none;"><i class="fa fa-th"> &nbsp; Change User </i></a></span></li>
+      <li><span class="text-center"><a href="<?=base_url('admin/bulk_update')?>" style="color:white;text-decoration:none;"><i class="fa fa-th">  &nbsp; Upload/Excel </i></a></span></li>
     </ul>
   </div>
 </div>
@@ -102,6 +106,8 @@ else
               toggle = !toggle;
           });
 </script>
+
+
 <!--scrolling js-->
   <script src="<?=base_url()?>assets/admin/js/jquery.nicescroll.js"></script>
   <script src="<?=base_url()?>assets/admin/js/scripts.js"></script>
