@@ -4,7 +4,7 @@
 
 
 
-<div class="container" style="position: relative;top:50px;">
+<div class="container" style="position: relative;top:100px;">
   <?php if($this->session->flashdata('country_created')):?>
    <div class="alert alert-success"> <?=$this->session->flashdata('country_created')?></div>
    <?php endif;?>

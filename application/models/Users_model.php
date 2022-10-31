@@ -80,10 +80,11 @@
         return $query->row();
         }
       public function AddIntoCart($table,$data){
-    		$this->db->insert($table,$data);
+    	  $this->db->insert($table,$data);
     		$count = $this->db->affected_rows();
     		return $count;
         }
+
       public  function GetCart($UserId ){
 		  //$response = array();
         $this->db->order_by('id','DESC');
@@ -127,6 +128,7 @@
         $data = array(
         'password'=>$hashed
          );
+
          $this->db->where('verify_code',$Gettoken);
          return $this->db->update('tbl_users',$data);
         }

@@ -5,17 +5,18 @@
 class Admin extends CI_controller{
   protected $table = "tbl_cart";
   protected $table2 = "tbl_comment";
-  public function  __construct(){
-	 		parent::__construct();
-	 		$this->load->database();
-	 		$this->load->model('admin_model');
-	 		// $this->load->library('session');
-	 		$this->load->helper('url','text');
-      $this->load->helper('security');
-	 		$this->load->library('form_validation');
-      $this->load->library("pagination");
-      $this->load->library('csvimport');
-	}
+      public function  __construct(){
+    	 		parent::__construct();
+    	 		$this->load->database();
+    	 		$this->load->model('admin_model');
+    	 		// $this->load->library('session');
+    	 		$this->load->helper('url','text');
+          $this->load->helper('security');
+    	 		$this->load->library('form_validation');
+          $this->load->library("pagination");
+          $this->load->library('csvimport');
+          $this->load->library('session');
+    	}
 
   public function index(){
        if(!$this->session->userdata('logged_in')){
@@ -87,10 +88,10 @@ class Admin extends CI_controller{
    	   if(isset($_POST['submit'])){
    	      if($this->form_validation->run()){
    	       //image upload------------------------------------
-             $config['upload_path'] ='./uploads';
-             $config['allowed_types'] ='gif|jpg|png|jpeg';
+             $config['upload_path'] = 'uploads';
+             $config['allowed_types'] ='gif|jpg|png|jpeg|GIF|JPEG|PNG|GIF|JPG';
              $config['max_size'] ='3048';
-             $config['max_width'] = '30000';
+             $config['max_width'] = '60000';
              $config['max_height'] ='60000';
              $this->load->library('upload',$config);
                 if(!$this->upload->do_upload()){
@@ -98,7 +99,7 @@ class Admin extends CI_controller{
 	              $userfile = 'noimage.jpg';
 	              }else{
 	               $data = array('upload_data'=>$this->upload->data());
-	               $userfile = $_FILES['userfile']['name'];
+	               $userfile =  $_FILES['userfile']['name'];
 	               }
 	              // close image upload ---------------------------
 	               $pname =  $this->input->post('prod_name');
@@ -106,12 +107,18 @@ class Admin extends CI_controller{
 	               $pbrand = $this->input->post('prod_brand');
 	               $UploadProd = $this->admin_model->UploadProduct($userfile,$pname,$pprice,$pbrand);
                    if($UploadProd){
-		               $this->session->set_flashdata('Upload_success'.'Product Uploaded Successfully');
-		               redirect(base_url('admin/product'));
+                     $data['msg_success'] = " Product Uploaded Successfully ";
+                     $this->load->view('admin/header',$data);
+                     $this->load->view('admin/product',$data);
+                     $this->load->view('admin/footer',$data);
+		               // $this->session->set_flashdata('Upload_success'.'Product Uploaded Successfully');
+		               // redirect(base_url('admin/product'));
 		               }else{
 		               $this->session->set_flashdata('Upload_error'.'Product Uploaded Failed');
 		               redirect(base_url('admin/product'));
 		               }
+                 }else{
+                   echo " fill all the feilds ";
                  }
                 }else{
                    $this->load->view('admin/header',$data);
@@ -157,17 +164,89 @@ class Admin extends CI_controller{
             //  $this->load->view('admin/userfile', $data);
                }
 
-              public function allprofile(){
+            public function allprofile(){
                 if($this->session->userdata('logged_in')){
-                //$this->data['comment'] = $this->admin_model->GetAllComment('tbl_comment');
                 $this->data['title'] = " All Users Profile";
-                $this->load->view('admin/header');
-                $this->load->view('admin/allprofile',$this->data);
-                $this->load->view('admin/footer');
+                $seller_id = $this->session->id;
+                $this->data['prodDetails']= $this->admin_model->prodDetails();
+                $this->data['ON'] =  $this->db->get_where('tbl_admin_login',array('id'=>$_SESSION['ON']))->row();
+                //$this->data['comment'] = $this->admin_model->GetAllComment('tbl_comment');
+                $this->data['allsellers'] = $this->admin_model->GetAllSellers('tbl_admin_login');
+                $this->data['allsellersproduct'] = $this->admin_model->GetAllSellersProduct();
+                //$this->data['sellerprod'] = $this->admin_model->GetFewProduct();
+                  $this->load->view('admin/header');
+                  $this->load->view('admin/allprofile',$this->data);
+                  $this->load->view('admin/footer');
                 }else{
                 redirect((base_url('admin/adminlogin')));
               }
             }
+
+
+      public function search_for_seller_prod(){
+           if($this->session->userdata('logged_in')){
+              $getby = $this->input->post('load');
+              $input = $this->input->post('find');
+              $search = $this->admin_model->GetSellerId($input);
+              if($search){
+                $test  =  $this->db->get_where('tbl_admin_login',array('tracking_code'=>$input))->row();
+                $demo  =   $this->db->get_where('seller_prod_details',array('seller_id'=>$test->id))->result();
+                $this->data['prod_img'] = $demo;
+                $this->data['prod_details'] = $search;
+                $this->data['seller_info']= $this->admin_model->GetSellerNmae($input);
+                $this->load->view('admin/viewseller',$this->data);
+              }else{
+                 $this->data['mgs_error']= " tracking code ".$input." not valid ";
+                 $this->load->view('admin/viewseller',$this->data);
+              }
+            }else{
+               echo " back to admin ";
+            }
+      }
+
+
+    public function settings(){
+
+            if($_POST){
+              $id = $this->input->post('id');
+              $config = $this->input->post('activity');
+              $test = $this->admin_model->ResetSellerStatus($id,$config);
+              $on_off = $this->db->get_where('tbl_admin_login',array('id'=>$id))->row();
+              if($test){
+                if($on_off->status=="on"){
+                  $_SESSION['ON'] = $on_off->id;
+                  //echo $on_off->firstname ." user activated";
+                 echo json_encode(array('statusCode'=>200));
+                 redirect('admin/allprofile');
+                 }else{
+                  echo json_encode(array('statusCode'=>201));
+                  redirect('admin/allprofile');
+                 }
+              }else{
+                echo " not found ";
+              }
+             }else{
+             return redirect(base_url('admin/allprofile'));
+            }
+
+       }
+
+
+           public function updateseller(){
+                 $id = $this->input->post('id');
+                 $fname = $this->input->post('firstname');
+                 $oname  = $this->input->post('othernames');
+                 $email = $this->input->post('email');
+                 $usertype = $this->input->post('usertype');
+                 $update = $this->admin_model->updateSingleRecord($fname,$oname,$email,$usertype,$id);
+                 if($update){
+                    $this->session->set_flashdata('msg_success',' Record Update was successful');
+                    redirect(base_url('admin/allprofile'));
+                 }else{
+                   echo " cannot update ";
+                   redirect(base_url('admin/allprofile'));
+                 }
+           }
 
              public function viewcomment(){
                if(!$this->session->userdata('logged_in')){
@@ -252,7 +331,8 @@ class Admin extends CI_controller{
            }
 	       }
            public function insert_update(){
-    	      $userid = $this->session->userdata('id');
+    	      $user_customer  = $this->session->id;
+            $userid =   $user_customer->id;
     	      $location = $this->input->post('current_location');
     	      $update = $this->admin_model->update_set('tbl_shipping',$userid,$location);
     	      if($update){
@@ -263,38 +343,54 @@ class Admin extends CI_controller{
     	      }
         }
 
-    public function adminlogin(){
+      public function adminlogin(){
 
-            if($_POST){
+          if($_POST){
             $username = $this->input->post('username');
             $password =$this->input->post('password');
             $user_type = $this->admin_model->getusertype('tbl_admin_login',$username);
             // $this->session->set_userdata('adminid',$user_type->id);
             // $admin = $this->admin_model->AdminLogin('tbl_admin_login',$username,$password);
-            $admin = $this->db->get_where('tbl_admin_login',array('username'=>$username,'password'=>$this->myhash($password)))->row();
-               if($admin){
+            $seller_login = $this->db->get_where('tbl_admin_login',array('username'=>$username,'password'=>$this->myhash($password),'status'=>'1'))->row();
+            $admin_login = $this->db->get_where('tbl_admin_login',array('username'=>$username,'password'=>$this->myhash($password),'usertype'=>'admin'))->row();
+               if($seller_login){
                 $data_arr = array(
-                  'id'=>$admin->id,
-                  'username'=>$admin->username,
-                  'usertype'=>$admin->usertype,
-                   'firstname'=>$admin->firstname,
-                   'othernames'=>$admin->othernames,
-                   'userfile'=>$admin->userfile,
+                  'id'=>$seller_login->id,
+                  'username'=>$seller_login->username,
+                  'usertype'=>$seller_login->usertype,
+                   'firstname'=>$seller_login->firstname,
+                   'othernames'=>$seller_login->othernames,
+                   'userfile'=>$seller_login->userfile,
                   'logged_in'=>true
                 );
                  // echo "<pre>"; print_r($data_arr);die;
                 $this->session->set_userdata($data_arr);
-                $this->session->set_userdata('admin_id',$admin->id);
-                $this->session->set_userdata('seller_id',$admin->id);
+                $this->session->set_userdata('admin_id',$seller_login->id);
+                $this->session->set_userdata('seller_id',$seller_login->id);
                 redirect(base_url('admin'));
-              }else{
+              }elseif($admin_login){
+                    $data_arr = array(
+                      'id'=>$admin_login->id,
+                      'username'=>$admin_login->username,
+                      'usertype'=>$admin_login->usertype,
+                       'firstname'=>$admin_login->firstname,
+                       'othernames'=>$admin_login->othernames,
+                       'userfile'=>$admin_login->userfile,
+                      'logged_in'=>true
+                    );
+                     // echo "<pre>"; print_r($data_arr);die;
+                    $this->session->set_userdata($data_arr);
+                    $this->session->set_userdata('admin_id',$admin_login->id);
+                    $this->session->set_userdata('seller_id',$admin_login->id);
+                    redirect(base_url('admin'));
+             }else{
               $this->session->set_flashdata('error','Enter correct username or password');
               redirect(base_url('admin/adminlogin'));
-               }
-             }else{
+             }
+           }else{
              $this->load->view('admin/adminlogin',$this->data);
              }
-         }
+      }
 
 
          public function deletecomment($id){
@@ -360,7 +456,7 @@ class Admin extends CI_controller{
              $this->data['email'] = $this->input->post('email');
              //image upload------------------------------------
                          $config['upload_path'] ='./assets/admin_uploads/';
-                         $config['allowed_types'] ='gif|jpg|png|jpeg|pdf';
+                         $config['allowed_types'] ='gif|jpg|png|jpeg|pdf|webp';
                          // $config['file_name'] = $this->data['firstname'];
                          $config['max_size'] ='2048';
                          $config['max_width'] = '5000';
@@ -383,6 +479,8 @@ class Admin extends CI_controller{
              $this->data['username']  = $this->input->post('username');
              $this->data['usertype'] = "SELLER";
              $this->data['password'] = $this->myhash($this->input->post('password'));
+             $this->data['tracking_code'] = rand(000000,999999);
+             $this->data['status'] = '1';
 
              $InsertSeller = $this->admin_model->CreateSeller('tbl_admin_login',$this->data);
               if($InsertSeller){
@@ -411,13 +509,13 @@ class Admin extends CI_controller{
     }
 
    public function change_pass(){
+  $adminid = $this->session->userdata('seller_id');
+          if($_POST['type']==1){
 
-          if($_POST){
-            $adminid = $this->session->userdata('adminid');
             $this->form_validation->set_rules('email','Email','required');
             $this->form_validation->set_rules('password','Password','required');
             $this->form_validation->set_rules('passconf','Passconf','required');
-             if($this->form_validation->run()){
+             if($this->form_validation->run()==TRUE){
              $email  = $this->input->post('email');
              $password = $this->input->post('password');
              $passconf = $this->input->post('passconf');
@@ -435,8 +533,8 @@ class Admin extends CI_controller{
                      // $this->load->view('admin/change_pass',$this->data);
                      // $this->load->view('admin/footer');
                      // echo json_encode(array('statusCode'=>200));
-                    echo json_encode(array('success' => true));
-                     return redirect(base_url('admin/change_pass'));
+                    echo json_encode(array("statusCode"=>200));
+                    redirect(base_url('admin/change_pass'));
 
                  }else{
 
@@ -445,8 +543,9 @@ class Admin extends CI_controller{
                     // $this->load->view('admin/change_pass',$this->data);
                     // $this->load->view('admin/footer');
                      // echo json_encode(array('statusCode'=>201));
-                     echo json_encode(array('success' => false));
-                     return redirect(base_url('admin/change_pass'));
+                     // var_dump(" false "); die;
+                      echo json_encode(array("statusCode"=>201));
+                     //return redirect(base_url('admin/change_pass'));
 
                  }
              }else{
@@ -458,6 +557,7 @@ class Admin extends CI_controller{
                // $this->load->view('admin/footer');
              }
           }else{
+            print " fill the form ";
             $this->load->view('admin/header');
             $this->load->view('admin/change_pass');
             $this->load->view('admin/footer');
@@ -518,15 +618,13 @@ class Admin extends CI_controller{
                               $uploadData[$i]['prod_id'] =  $seller_lastid;
                               $uploadData[$i]['file_name'] = $fileData['file_name'];
                               $uploadData[$i]['created_at'] = date("Y-M-D H:i:s");
-
-
                           }else{
                               $errorUploadType .= $_FILES['file']['name'].' | ';
                           }
                       }
                       $errorUploadType = !empty($errorUploadType)?'<br/>File Type Error: '.trim($errorUploadType, ' | '):'';
-                      if(!empty($uploadData)){
-
+                      if(($uploadData)){
+                         // echo "<pre>"; print_r($uploadData); die;
                           // Insert files data into the database
                          $insert = $this->admin_model->insert_multiple_files($uploadData);
                          //echo "<pre>"; print_r($insert); die;
@@ -614,10 +712,8 @@ public function update_single_seller_product(){
           }else{
           echo json_decode(['success'=>"Item  cannot updatedsuccessfully."]);
           }
-
-
-}
-public function update_batch_seller_product(){
+   }
+  public function update_batch_seller_product(){
           $ids = $this->input->post('ids');
           $data['prod_name'] = $this->input->post('prod_name');
           $data['prod_price'] = $this->input->post('prod_price');
@@ -631,9 +727,7 @@ public function update_batch_seller_product(){
           }else{
          echo json_decode(['success'=>"Itemcannot update."]);
           }
-
-
-}
+   }
 
 public function bulk_update(){
       $this->load->view('admin/header');
@@ -663,78 +757,80 @@ public function bulk_update(){
      //end
  }
 
-function import_csv(){
-  if(isset($_POST)){
+        function import_csv(){
+          if(isset($_POST)){
+            if(isset($_FILES["csvFile"])) {
+              // var_dump($_FILES);
+              // var_dump($_POST); exit;
+              $config['upload_path'] = 'assets/admin2/';
+              $config['allowed_types'] = 'text/plain|text/csv|csv';
+              $config['max_size'] = '2048';
+              $config['file_name'] = 'product_list.csv';
+              $config['mime'] = $_FILES["csvFile"]['type'];
+              $config['overwrite'] = TRUE;
+              //$this->upload->initialize($config);
+              $this->load->library('upload', $config);
+              if(!$this->upload->do_upload("csvFile")) {
+                 $this->upload->display_errors();
+                 redirect(base_url("admin/bulk_update"));
+              } else {
 
-    if(isset($_FILES["csvFile"])) {
-      // var_dump($_FILES);
-      // var_dump($_POST); exit;
-      $config['upload_path'] = 'assets/admin2/';
-      $config['allowed_types'] = 'text/plain|text/csv|csv';
-      $config['max_size'] = '2048';
-      $config['file_name'] = 'product_list.csv';
-      $config['mime'] = $_FILES["csvFile"]['type'];
-      $config['overwrite'] = TRUE;
-      //$this->upload->initialize($config);
-      $this->load->library('upload', $config);
-      if(!$this->upload->do_upload("csvFile")) {
-         $this->upload->display_errors();
-         redirect(base_url("admin/bulk_update"));
-      } else {
+                $file_data = $this->upload->data();
+                // $file_path =  'uploads/csv/staff_list.csv';
+                $file_path =  'assets/admin2/product_list.csv';
+                // $file_path =  $file_data['full_path'];
+                $headers = ['prod_name',	'prod_price',	'prod_brand','seller_id'];
+                // $csv_array = $this->csvimport->get_array($file_path);
+                // echo "<pre>"; var_dump($csv_array); exit;
 
-        $file_data = $this->upload->data();
-        // $file_path =  'uploads/csv/staff_list.csv';
-        $file_path =  'assets/admin2/product_list.csv';
-        // $file_path =  $file_data['full_path'];
-        $headers = ['prod_name',	'prod_price',	'prod_brand','seller_id'];
-        // $csv_array = $this->csvimport->get_array($file_path);
-        // echo "<pre>"; var_dump($csv_array); exit;
+                $handle = fopen($file_path, "r");
+                if ($handle) {
+                  for ($i = 1; $row = fgetcsv($handle); ++$i) {
 
-        $handle = fopen($file_path, "r");
-        if ($handle) {
-          for ($i = 1; $row = fgetcsv($handle); ++$i) {
+                    //$type = $_POST['usertype'];
+                    $insert_data = array(
+                      "prod_name" => $row[0],
+                      "prod_price" => $row[1],
+                      "prod_brand" => $row[2],
+                      "seller_id" =>$row[3]
+                    );
+                    if($i > 1){
+                      // echo "<pre>"; print_r($insert_data); die;
+                      $this->admin_model->insert_csv($insert_data);
+                    }
+                  }
+                  // echo "<pre>"; var_dump($insert_data); exit;
+                  fclose($handle);
+                  // $type = ($_POST['entry_mode'] == 'UTME') ? 'UTME' : 'DIRECT ENTRY';
+                  //$this->session->set_flashdata('csv_success', $type . ' list was uploaded sucessfully');
+                      // $this->session->set_flashdata('csv_success', ' list was uploaded sucessfully');
+                      $this->data['csv_insert'] = "<div class='text-center alert alert-success'> Product uploaded (CSV) </div>";
+                      $this->load->view('admin/header');
+                      $this->load->view('admin/bulk_update',$this->data);
+                      $this->load->view('admin/footer');
+                } else {
+                   //$this->session->set_flashdata('csv_error', 'Import Error :(  Try again');
+                   $this->data['csv_insert'] = "<div class='text-center alert alert-danger'> Error! Unable to Upload (CSV) File </div>";
+                   $this->load->view('admin/header');
+                   $this->load->view('admin/bulk_update',$this->data);
+                   $this->load->view('admin/footer');
+                }
 
-            //$type = $_POST['usertype'];
-            $insert_data = array(
-              "prod_name" => $row[0],
-              "prod_price" => $row[1],
-              "prod_brand" => $row[2],
-              "seller_id" =>$row[3]
-            );
-            if($i > 1){
-              // echo "<pre>"; print_r($insert_data); die;
-              $this->admin_model->insert_csv($insert_data);
+              }
+            } else {
+              $this->session->set_flashdata('csv_error', 'Import Error :(  File Not Found');
+              redirect(base_url("admin/bulk_update"));
             }
+          }else{
+            $this->load->view('admin/header');
+            $this->load->view('admin/bulk_update');
+            $this->load->view('admin/footer');
           }
-          // echo "<pre>"; var_dump($insert_data); exit;
-          fclose($handle);
-          // $type = ($_POST['entry_mode'] == 'UTME') ? 'UTME' : 'DIRECT ENTRY';
-          //$this->session->set_flashdata('csv_success', $type . ' list was uploaded sucessfully');
-              // $this->session->set_flashdata('csv_success', ' list was uploaded sucessfully');
-              $this->data['csv_insert'] = "<div class='text-center alert alert-success'> Product uploaded (CSV) </div>";
-              $this->load->view('admin/header');
-              $this->load->view('admin/bulk_update',$this->data);
-              $this->load->view('admin/footer');
-        } else {
-           //$this->session->set_flashdata('csv_error', 'Import Error :(  Try again');
-           $this->data['csv_insert'] = "<div class='text-center alert alert-danger'> Error! Unable to Upload (CSV) File </div>";
-           $this->load->view('admin/header');
-           $this->load->view('admin/bulk_update',$this->data);
-           $this->load->view('admin/footer');
         }
 
-      }
-    } else {
-      $this->session->set_flashdata('csv_error', 'Import Error :(  File Not Found');
-      redirect(base_url("admin/bulk_update"));
-    }
-  }else{
-    $this->load->view('admin/header');
-    $this->load->view('admin/bulk_update');
-    $this->load->view('admin/footer');
-  }
 
-}
+
+
    // private function validate(){
    //    $validate = array(
    //      array(

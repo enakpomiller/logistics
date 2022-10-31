@@ -205,7 +205,7 @@ class Users extends CI_controller{
                       $data['prod_brand'] = $this->input->post('prod_brand');
                       $data['prod_quantity'] = $this->input->post('prod_quantity');
                       $data['created_at'] = date("M-D-Y");
-                        $AddIntoCart = $this->users_model->AddIntoCart('tbl_cart',$data);
+                      $AddIntoCart = $this->users_model->AddIntoCart('tbl_cart',$data);
                           if($AddIntoCart){
                            $UserId = $this->input->post('user_id');
                              $data = array(

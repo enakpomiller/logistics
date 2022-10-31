@@ -89,7 +89,7 @@
                         </div>
                      </div>
                  </div>
-                    </form>
+            </form>
         <?php endforeach; ?>
 
               <!-- end of product listings -->

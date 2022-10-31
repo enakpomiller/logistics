@@ -117,7 +117,7 @@
 			        // $query = $this->db->get('tbl_users');
 			        // return $query->result();
    	         }
-   public function GetShippingById($table,$userid){
+      public function GetShippingById($table,$userid){
    		    $this->db->select('*');
    		    $this->db->from($table);
    		    $this->db->where('user_id',$userid);
@@ -132,6 +132,33 @@
   	        $this->db->where('user_id',$userid);
   	        return $this->db->update($table,$data);
          }
+
+        public function ResetSellerStatus($id,$config){
+            $data = array('status'=>$config);
+            $demo = $this->db->where('id',$id);
+            if($demo){
+               return $this->db->update('tbl_admin_login',$data);
+            }else{
+              echo " off ";
+            }
+
+        }
+      public function prodDetails(){
+       $this->db->order_by('tbl_admin_login.id','DESC');
+       $this->db->select('*');
+       $this->db->from('tbl_admin_login');
+       $this->db->join('seller_prod_details','tbl_admin_login.id =seller_prod_details.seller_id');
+       $query = $this->db->get();
+       return $query->result();
+       }
+       public function GetAllSellersProduct(){
+        $this->db->select('*');
+        $this->db->from('tbl_admin_login');
+        $this->db->join('client_product','tbl_admin_login.id =client_product.seller_id');
+        //$this->db->join('seller_prod_details','seller_prod_details.id = client_product.prod_id');
+        $query = $this->db->get();
+        return $query->result();
+         }
       public function AdminLogin($table,$username,$password){
           $this->db->where('username',$username);
           $this->db->where('password',$password);
@@ -142,10 +169,10 @@
           return false;
           }
          }
-     public function getusertype($table,$username){
-        $query = $this->db->get_where($table,array('username'=>$username));
-        return $query->row();
-     }
+         public function getusertype($table,$username){
+            $query = $this->db->get_where($table,array('username'=>$username));
+            return $query->row();
+         }
          public function get_count(){
            return $this->db->count_all($this->table);
          }
@@ -154,6 +181,12 @@
            $query = $this->db->get($this->table);
            return $query->result();
          }
+
+
+        public function GetAllSellers(){
+        $query = $this->db->get_where('tbl_admin_login',array('usertype'=>'seller'));
+        return $query->result();
+        }
 
          // public function GetAllComment($table){
          // $this->db->order_by('id','DESC');
@@ -330,6 +363,24 @@
        function insert_csv($insert_data){
      	  $this->db->insert('seller_prod_details',$insert_data);
      	 }
+
+       public function GetSellerId($input){
+          // $query = $this->db->get_where('tbl_admin_login',array('tracking_code'=>$input));
+          // return $query->row();
+          $this->db->select('*');
+          $this->db->from('tbl_admin_login');
+          $this->db->join('client_product','client_product.seller_id=tbl_admin_login.id');
+          $this->db->where('tbl_admin_login.tracking_code',$input);
+          $query = $this->db->get();
+          return $query->result();
+       }
+
+    public function GetSellerNmae($input){
+       $query = $this->db->get_where('tbl_admin_login',array('tracking_code'=>$input));
+       return $query->row();
+     }
+
     }
+
 
 ?>
