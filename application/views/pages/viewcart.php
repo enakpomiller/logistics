@@ -1,7 +1,8 @@
 
 
- <?php session_start();?>
-    <div class="container" style="margin-top:180px;">
+ <?php //session_start();?>
+
+  <div class="container" style="margin-top:180px;">
        <?php $total_sum=0;?>
        <?php $grand_sum=0;?>
           <h2><?=ucfirst($this->session->userdata('name'))."'s".' cart'?></h2>
@@ -18,6 +19,7 @@
               </tr>
               </thead>
                 <tbody>
+
                   <?php foreach($demo as $row):?>
                   <tr>
                    <td style="width:20%;">
@@ -26,17 +28,26 @@
                     <td>  <?=$row->prod_brand?> </td>
                     <td>  <?='&#8358;'.$row->prod_price?> </td>
                     <td>  <?=$row->prod_quantity?> </td>
-                  <td><?=($row->prod_price)*($row->prod_quantity) ?> </td>
+                  <td> <?='&#8358;'.(number_format($row->totalprice))?> </td>
                  <td><a href="<?=base_url('users/deleteusercart/'.$row->id)?>" onclick="return confirm('do you want to delete this record?')" class="btn btn-danger delete" style="float:right;">X </a></td>
+
                   </tr>
+
                    <!-- <?=$total_sum+=$row->prod_quantity;?>
                   <?php $grand_sum+=($row->prod_price)*($row->prod_quantity);?> -->
               <?php endforeach ;?>
       </tbody>
     </table>
 
+
+
+
 <!-- start cart -->
 <a href='<?= base_url('users/export_csv')?>' class="btn btn-primary">Export to Excel</a>
+
+
+<a href='<?= base_url('users/export_excel')?>' class="btn btn-primary">Export to new Excel</a>
+
 <table class="table table-striped" style="width:30%;position: relative;left:70%;top: 10px;">
     <tr>
        <th style="font-family:sans-serif;"> Total  Number Of Items </th>
@@ -61,6 +72,12 @@
 
 
 
+<!--
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#table').DataTable();
+});
+</script> -->
 
 <script type="text/javascript">
 $(document).ready(function() {

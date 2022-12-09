@@ -85,6 +85,7 @@ class Admin extends CI_controller{
      	 $this->form_validation->set_rules('prod_name','Prod_name'.'required');
      	 $this->form_validation->set_rules('prod_price','Prod_price','required');
      	 $this->form_validation->set_rules('prod_brand','Prod_brand'.'required');
+       $this->form_validation->set_rules('category','category'.'required');
    	   if(isset($_POST['submit'])){
    	      if($this->form_validation->run()){
    	       //image upload------------------------------------
@@ -105,7 +106,8 @@ class Admin extends CI_controller{
 	               $pname =  $this->input->post('prod_name');
 	               $pprice = $this->input->post('prod_price');
 	               $pbrand = $this->input->post('prod_brand');
-	               $UploadProd = $this->admin_model->UploadProduct($userfile,$pname,$pprice,$pbrand);
+                 $pcategory = $this->input->post('category');
+	               $UploadProd = $this->admin_model->UploadProduct($userfile,$pname,$pprice,$pbrand,$pcategory);
                    if($UploadProd){
                      $data['msg_success'] = " Product Uploaded Successfully ";
                      $this->load->view('admin/header',$data);
@@ -351,7 +353,7 @@ class Admin extends CI_controller{
             $user_type = $this->admin_model->getusertype('tbl_admin_login',$username);
             // $this->session->set_userdata('adminid',$user_type->id);
             // $admin = $this->admin_model->AdminLogin('tbl_admin_login',$username,$password);
-            $seller_login = $this->db->get_where('tbl_admin_login',array('username'=>$username,'password'=>$this->myhash($password),'status'=>'1'))->row();
+            $seller_login = $this->db->get_where('tbl_admin_login',array('username'=>$username,'password'=>$this->myhash($password),'status'=>'on'))->row();
             $admin_login = $this->db->get_where('tbl_admin_login',array('username'=>$username,'password'=>$this->myhash($password),'usertype'=>'admin'))->row();
                if($seller_login){
                 $data_arr = array(
@@ -484,8 +486,10 @@ class Admin extends CI_controller{
 
              $InsertSeller = $this->admin_model->CreateSeller('tbl_admin_login',$this->data);
               if($InsertSeller){
-                $this->data['msg_insert'] = " Image uploade";
-                $this->load->view('admin/seller_reg',$this->data);
+                // $this->data['msg_insert'] = " Image uploade";
+                // $this->load->view('admin/seller_reg',$this->data);
+                $this->session->set_flashdata('msg','<div class="alert alert-success"> Account created successfully please login  </div>');
+                return redirect(base_url('admin/adminlogin'));
               }else{
                 $this->data['msg_insert'] = " Cannot Upload Image";
                 $this->load->view('admin/seller_reg',$this->data);

@@ -24,7 +24,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="login-form">
 			 <a href="<?=base_url('admin/seller_reg')?>"> <p style="position:relative;top:20px;left:80%;"> Sign Up </p> </a>
 			 <form action="<?=base_url('admin/adminlogin')?>" method="POST" class="form_submit">
-		    <center style="margin:10px 10px;"> <?=$this->session->flashdata('error')?> </center>
+		    <center style="margin:10px 10px;">
+					<?=$this->session->flashdata('error')?> <br>
+					<?php if($this->session->flashdata('msg')){?>
+					 <?=$this->session->flashdata('msg')?>
+					 <?php }?>
+				</center>
 					<li>
 						<input type="text" name="username" required class="text" placeholder="USERNAME"><a href="#" class=" icon user"></a>
 					</li>

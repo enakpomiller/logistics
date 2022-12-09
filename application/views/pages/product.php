@@ -63,9 +63,12 @@
                       <input type="hidden" name="user_id" id="user_id"   value="<?=$this->session->userdata('id')->id?>">
                         <input type="hidden" name="product_id"  id="prodcut_id"   value="<?=$row_prod->id?>">
                            <div id="prod-cover">
-                              <a href="<?=base_url('users/comment/'.$row_prod->id)?>">
+                              <!-- <a href="<?=base_url('users/comment/'.$row_prod->id)?>">
                                 <img src="<?=base_url()?>uploads/<?=$row_prod->userfile?>" style="width: 90%;height: 100px;margin-top: 10px;">
-                                </a>
+                                </a>  -->
+                                <a href="<?=base_url('users/single_prod/'.$row_prod->id)?>">
+                                  <img src="<?=base_url()?>uploads/<?=$row_prod->userfile?>" style="width: 90%;height: 100px;margin-top: 10px;">
+                                  </a>
                                <input type="hidden" name="userfile" id="userfile"  value="<?=$row_prod->userfile?>">
                                <div style="margin:20px;">
                                  <p>  <input type="text" name="prod_name"  id="prod_name" readonly value="<?= $row_prod->prod_name?>" class="txt"> </p>

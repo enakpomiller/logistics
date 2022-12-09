@@ -16,12 +16,12 @@ class Users extends CI_controller{
          }
 
        public function index(){
-        $UserId= $this->session->userdata('id')->id;
-        $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-        $this->load->view('template/header',$data);
-        $this->load->view('template/slider');
-        $this->load->view('pages/body');
-        $this->load->view('template/footer');
+            $UserId= $this->session->userdata('id')->id;
+            $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+            $this->load->view('template/header',$data);
+            $this->load->view('template/slider');
+            $this->load->view('pages/body');
+            $this->load->view('template/footer');
          }
 
         public function signup (){
@@ -303,15 +303,15 @@ class Users extends CI_controller{
                  }
 
            public function very_shipping (){
-            $data['title_name'] = "Shipping Details ";
-            $UserId = $this->session->userdata('id')->id;
-            $time =  date("i:sa");
-            $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-            $data['getship'] = $this->users_model->GetVerifyUser($time);
+                $data['title_name'] = "Shipping Details ";
+                $UserId = $this->session->userdata('id')->id;
+                $time =  date("i:sa");
+                $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+                $data['getship'] = $this->users_model->GetVerifyUser($time);
 
-            $this->load->view('template/header',$data);
-            $this->load->view('pages/very_shipping',$data);
-            $this->load->view('template/footer');
+                $this->load->view('template/header',$data);
+                $this->load->view('pages/very_shipping',$data);
+                $this->load->view('template/footer');
             }
 
            public function pay_from_wallet(){
@@ -334,17 +334,18 @@ class Users extends CI_controller{
            }
         }
          public function viewcart(){
-             $UserId= $this->session->userdata('id')->id;
-             $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-             $this->load->view('template/header',$data);
-             $this->load->view("pages/viewcart",$data);
-             $this->load->view('template/footer');
+            $UserId = $this->session->userdata('id')->id;
+            $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+            $this->load->view('template/header',$data);
+            $this->load->view('pages/viewcart',$data);
+            $this->load->view('template/footer');
+
            }
 
           public function deleteusercart($id){
               $deletecart=$this->users_model->deletecart($id);
               if($deletecart){
-              redirect(base_url('users/viewcart',''));
+              redirect(base_url('users/viewcart'));
               }else{
               print_r("cannot delete");
               }
@@ -374,6 +375,7 @@ class Users extends CI_controller{
                     fclose($file);
                     exit;
                   }
+
 
                public function services(){
                 $UserId= $this->session->userdata('id')->id;
@@ -549,10 +551,63 @@ class Users extends CI_controller{
                   $this->load->view('template/footer');
                 }
             }else{
+              $data['getcomment'] = $this->db->get_where('tbl_comment',(array('prod_id'=>$id )))->result();
               $this->load->view('template/header',$data);
               $this->load->view('pages/comment',$data);
               $this->load->view('template/footer');
             }
+        }
+
+        public function single_prod(){
+           $id = $this->uri->segment(3);
+          $UserId = $this->session->userdata('id')->id;
+
+          $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+          $data['prod_details'] = $this->users_model->SingleProduct($id);
+          if($_POST){
+            $data = array(
+              'user_id' => $this->input->post('user_id'),
+              'product_id' =>$this->input->post('product_id'),
+              'userfile' => $this->input->post('userfile'),
+              'prod_name' => $this->input->post('prod_name'),
+              'prod_price' => $this->input->post('prod_price'),
+              'prod_brand' => $this->input->post('prod_brand'),
+              'category' => $this->input->post('category'),
+              'prod_quantity' => $this->input->post('prod_quantity'),
+              'created_at' => $this->input->post('date')
+            );
+
+             $AddIntoCart = $this->users_model->AddIntoCart('tbl_cart',$data);
+             if($AddIntoCart){
+              $UserId = $this->input->post('user_id');
+                $data = array(
+                  'user_id'=> $UserId ,
+                  'prod_price'=> $data['prod_price'],
+                  'quantity'=>$data['prod_quantity'],
+                  'wallet_amt'=>number_format($data['prod_price'] / 50 * $data['prod_quantity'])
+                );
+                $this->users_model->InsetIntoWallet('tbl_wallet',$data);
+
+              $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+              $this->session->set_flashdata('prod_inserted','Product Inserted into Cart');
+              redirect('users/single_prod');
+              //$this->load->view('pages/product',$data);
+            }else{
+              $this->session->set_flashdata('failed',' Product creation failed');
+              return redirect(base_url('users/single_prod'));
+            }
+
+          }else{
+            $get_prod_name = $this->db->get_where('tbl_product',array('id'=>$id))->row()->category;
+            //echo "<pre>"; print_r($get_prod_name); die;
+            $data['similar'] = $this->users_model->get_same_prod('tbl_product',$get_prod_name);
+            $this->load->view('template/header',$data);
+            $this->load->view('pages/single_prod',$data);
+            $this->load->view('template/footer');
+
+          }
+
+
         }
 
           public function wallet(){

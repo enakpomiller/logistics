@@ -34,10 +34,20 @@
 
                     <tr>
                         <td><input type="file" name="userfile" id="file"  class="form-control name_list" required="" /></td>
-                         <td><input type="text" name="prod_name" id="prod_name" placeholder="Enter product name" class="form-control name_list" required="" /></td>
-                          <td><input type="text" name="prod_price" id="prod_price" placeholder="Enter product price" class="form-control name_list" required="" /></td>
-                             <td><input type="text" name="prod_brand"  id="prod_brand" placeholder="Enter product brand" class="form-control name_list" required="" /></td>
-
+                        <td><input type="text" name="prod_name" id="prod_name" placeholder="Enter product name" class="form-control name_list" required="" /></td>
+                        <td><input type="text" name="prod_price" id="prod_price" placeholder="Enter product price" class="form-control name_list" required="" /></td>
+                         <td><input type="text" name="prod_brand"  id="prod_brand" placeholder="Enter product brand" class="form-control name_list" required="" /></td>
+												 <td>
+													  <select name="category" class="form-control" id="category">
+															<option> Select  </option>
+															<option value="bag"> Bag </option>
+															<option value="shirt"> shirt </option>
+															<option value="jean"> jeans </option>
+															<option value="phone"> phones </option>
+															<option value="electronics"> Electronics </option>
+															<option value="shoes"> shoes </option>
+														</select>
+												 </td>
              <!-- <td><button type="button" name="add" id="add" class="btn btn-success">Add Field</button></td> -->
                     </tr>
                 </table>

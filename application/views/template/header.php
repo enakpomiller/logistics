@@ -259,12 +259,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					 <i class="fa fa-shopping-cart" class="dropbtn" style="position: relative;top:5px;font-size:43px;left: 20px;color: #33accc;">
 					 	<psan class="badge badge-light" style="position: relative;right: 40px;bottom: 8px;">
 					 	    <?php $total_sum=0;?>
-			         <?php if(!empty($demo)):?>
 			         	<?php foreach($demo as $cart):?>
-			         	<?php $total_sum+=$cart->prod_quantity;?>
+			         	<?php //$total_sum+=$cart->prod_quantity;?>
+                <?php $total_sum+=$cart->quantity;?>
 			         	<?php endforeach;?>
                  <?=$total_sum?>
-			         	<?php endif ;?>
+
 					   </i>
 					 </psan>
 								  <div class="dropdown-content">

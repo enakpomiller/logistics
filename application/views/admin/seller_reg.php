@@ -17,8 +17,9 @@
 <body>
 
 	 <div class="login-form" style="width:40%;position:relative;bottom:100px;">
-		 <?=$msg_insert?>
+
      <a href="<?=base_url('admin/adminlogin')?>" style="position:absolute;margin:40px;" class="btn btn-warning"> Back </a>
+		
 			 <form method="post" action="<?=base_url('admin/seller_reg')?>" id="form"  enctype="multipart/form-data" class="subscribeForm">
               <p class="text-center text-uppercase h2" style="position:relative;bottom:40px;font-family:ariel;"> Sellers Form </p>
           <div class="mb-3">

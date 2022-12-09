@@ -32,12 +32,13 @@
 
         }
 
-    public function UploadProduct($userfile,$pname,$pprice,$pbrand){
+    public function UploadProduct($userfile,$pname,$pprice,$pbrand,$pcategory){
 	    $data = array(
 	    	'userfile'=>$userfile,
 	    	'prod_name'=>$pname,
 	    	'prod_price'=>$pprice,
 	    	'prod_brand'=>$pbrand,
+        'category' =>$pcategory,
 	    	'created_at'=>date('M-D-Y')
 	    );
 	    return $this->db->insert('tbl_product',$data);

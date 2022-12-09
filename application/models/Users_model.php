@@ -134,7 +134,7 @@
         }
        public function GetCartProd($table,$UserId){
         // $this->db->limit(10);
-        $this->db->select('*');
+        $this->db->select('id,user_id,product_id,userfile,prod_name,(prod_price * prod_quantity)as totalprice,prod_price,prod_quantity,prod_quantity as quantity,prod_brand');
         $this->db->from($table);
         $this->db->where('user_id',$UserId);
         $query =  $this->db->get();
@@ -211,6 +211,14 @@
                 return $this->db->count_all($this->table);
                }
 
+              public function get_same_prod($table,$data){
+                 $this->db->select('*');
+                 $this->db->from($table);
+                 $this->db->where('category',$data);
+                 $query = $this->db->get();
+                 return $query->result();
+               }
+
                 // public function get_cart($limit,$start,$UserId){
                 //   $this->db->limit($limit,$start);
                 //   $this->db->where('user_id',$UserId);
@@ -225,8 +233,7 @@
                 //   $query = $this->db->get();
                 //   return $query->result();
                 // }
-              public function deletecart($id)
-              {
+              public function deletecart($id){
                 $this->db->where('id',$id);
                 $this->db->delete('tbl_cart');
                 return true;

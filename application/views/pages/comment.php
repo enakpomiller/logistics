@@ -150,7 +150,7 @@
                       <center><label style="padding:10px;font-family:ariel;font-size:2em"><?= " &#x20A6;".($result->prod_price)?></label></center>
                     </div>
 
-                  <form  id="fupForm" action="<?php echo base_url("Users/comment/$result->id");?>" method="POST">
+                  <form   action="<?php //echo base_url("Users/comment/$result->id");?>" method="POST">
                   <div class="righthouse">
                        <div class="form-group" style="position: relative;top: ;">
                         <input type="hidden" name="prod_id" id="prod_id" value="<?=$result->id?>">
@@ -177,67 +177,87 @@
                     </form>
                 </div>
         </div>
+
+              <table class="table table-bordered"  style="width:90%;margin:auto;">
+                  <tr>
+                    <th class="text-center text-primary"> CUSTOMER NAME</th>
+                    <th class="text-center text-primary"> COMMENT</th>
+                    <TH class="text-center text-primary"> DATE </TH>
+                  </tr>
+                   <?php foreach($getcomment as $comment){?>
+                    <tr>
+                      <td class="text-center"> <?=$comment->name?> </td>
+                      <td class="text-center"> <?=$comment->body?> </td>
+                      <td class="text-center"> <?=$comment->date?> </td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+              </table>
+
+
     </div>
+
 </section>
 
 
  <script type="text/javascript">
-CKEDITOR.replace('body',{
-  width: "100%",
-  height: "140px"
+    CKEDITOR.replace('body',{
+      width: "100%",
+      height: "140px"
 
-});
+    });
 
 </script>
 
 
 <script>
 
-// $('#submit').on('click', function() {
-//      $("#submit").attr("enabled", "enabled");
-//       var prod_id = $('#prod_id').val();
-//       var prod_title = $('#prod_title').val();
-//       var name = $('#name').val();
-//       var body = $('#body').val();
-//       var userfile = $('#userfile').val();
-//       var date = $('#date').val();
-//
-//       if(prod_id!="" && prod_title!="" && name!="" && body!="" && userfile!="" && date!=""){
-//         $.ajax({
-//           url:"<?php echo base_url(); ?>" + "Users/comment",
-//           type:"POST",
-//           data: {
-//             prod_id:prod_id,
-//             prod_title:prod_title,
-//             name: name,
-//             body:body,
-//             userfile:userfile,
-//             date:date
-//           },
-//            cache: false,
-//           success: function(dataResult){
-//             var dataResult = JSON.parse(dataResult);
-//             if(dataResult.statusCode==200){
-//               $("#butsave").removeAttr("disabled");
-//       				$('#fupForm').find('input:text').val('');
-//       				$("#success").show();
-//       				$('#success').html('Data added successfully !');
-//             }
-//             else if(dataResult.statusCode==201){
-//               // $("#error").show();
-//               // $('#error').html('Invalid EmailId or Password !');
-//               Swal.fire('Error!','cannot send!','error')
-//
-//             }
-//
-//           }
-//         });
-//       }
-//       else{
-//         	$('#success').html('Data added successfully !');
-//            alert("please fill the fields");
-//       }
-//      });
+$('#submit').on('click', function() {
+      var prod_id = $('#prod_id').val();
+      var prod_title = $('#prod_title').val();
+      var name = $('#name').val();
+      var body = $('#body').val();
+      var userfile = $('#userfile').val();
+      var date = $('#date').val();
+
+      if(prod_id!="" && prod_title!="" && name!="" && body!="" && userfile!="" && date!=""){
+        $.ajax({
+          url:"<?php echo base_url(); ?>" + "Users/comment",
+          type:"POST",
+          data: {
+            prod_id:prod_id,
+            prod_title:prod_title,
+            name: name,
+            body:body,
+            userfile:userfile,
+            date:date
+          },
+
+           cache: false,
+          success: function(dataResult){
+            var dataResult = JSON.parse(dataResult);
+            if(dataResult.statusCode==200){
+              $("#butsave").removeAttr("disabled");
+      				$('#fupForm').find('input:text').val('');
+      				$("#success").show();
+      				$('#success').html('Data added successfully !');
+            }
+            else if(dataResult.statusCode==201){
+              // $("#error").show();
+              // $('#error').html('Invalid EmailId or Password !');
+              Swal.fire('Error!','cannot send!','error')
+
+            }
+
+          }
+        });
+      }
+      else{
+        	$('#success').html('Data added successfully !');
+           alert("please fill the fields");
+      }
+     });
 
 </script>
 
