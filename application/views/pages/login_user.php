@@ -11,20 +11,18 @@
 
   <section class="shipment-w3ls">
       <div class="container">
-          <i class="fa fa-braille" aria-hidden="true"></i>
-          <h3 class="text-center wthree w3-agileits agileits-w3layouts agile w3-agile"> User Login </h3>
-      </div>
-      <div class="container">
+      <h3 style="margin-top:100px;text-align:center;padding:10px;"> User Login </h3>
+                    <div class="content-w3ls">
 
-                <div class="content-w3ls">
-                    <div class="content1-w3ls">
-                      <center>
-                        <h5>
-                       <div style="color:#ffffff;font-family: sans-serif;font-weight: bold;"><?//= validation_errors()?></di>
-                             <label> <?=form_error('email')?></label>
-                             <label><?=form_error('password')?></label>
-                        </h5>
-                    </div>
+                        <div class="content1-w3ls" style="background:sandybrown">
+
+                          <center>
+                            <h5>
+                           <div style="color:#ffffff;font-family: sans-serif;font-weight: bold;"><?//= validation_errors()?></di>
+                                 <label> <?=form_error('email')?></label>
+                                 <label><?=form_error('password')?></label>
+                            </h5>
+                        </div>
 
            <center>
               <div id="error"></div>
@@ -37,12 +35,12 @@
                        <input type="text"  name="password" id="password"  placeholder=" Enter password " class="form-control" style="width:30%;margin:30px;padding: 20px;" value="<?=set_value('password')?>">
                 </div>
                   <div class="form-group">
-                    <button  class="btn btn-primary" style="width:30%;margin:0px;padding: 10px;" id="submit"> login </button>
+                    <button  class="btn btn-primary" style="width:30%;margin:0px;padding: 10px;background:sandybrown;border:0px solid red;font-family:sans-serif;" id="submit"><b> LOGIN </b></button>
               </div>
               <div class="form-group">
                   <div class="form-check">
                     <label class="form-check-label" for="gridCheck">
-                      <a href="<?=base_url('login/verify_email')?>"> Forget Password </a>
+                      <a href="<?=base_url('login/verify_email')?>" style="color:sandybrown;"> Forget Password </a>
                     </label>
                  </div>
               </div>
@@ -103,4 +101,6 @@
                Swal.fire('Error!','PLEASE FILL THE ENTRY!','error');
            }
           });
+
+
      </script>

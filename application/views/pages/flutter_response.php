@@ -140,19 +140,17 @@
 
 
 <section class="shipment-w3ls">
-    <div class="container">
-        <i class="fa fa-braille" aria-hidden="true"></i>
-        <h3 class="text-center wthree w3-agileits agileits-w3layouts agile w3-agile"> Pay Response  </h3>
-    </div>
-     <div class="container">
+
+     <div class="container" style="margin-top:100px;">
+         <h1 class="" style="text-align:center;position:relative;top:0px;"> Payment Response  </h1>
           <center>
-             <img src="<?=base_url('assets/admin/images/happy.png')?>" style="width: 20%;">
+             <img src="<?=base_url('assets/images/mobile_pay.png')?>" style="width: 20%;">
               <table class="table table-striped" style="width:20%">
               <tr> <td><b style="font-family:sans-serif">Payment Status :</b> <?=$this->input->get('status',true)?></td></tr>
           </table>
            <form action="<?=base_url('users/tracking')?>" method="POST">
                   <input type="hidden" name="code" id="code" value="<?=$this->session->userdata('code')?>">
-              <button class="btn btn-primary" id="butsave" style="font-family:sans-serif;padding:10px;">Click to get  your tracking code </button>
+              <button class="btn" id="butsave" style="font-family:sans-serif;padding:10px;background:sandybrown;">Click to get  your tracking code </button>
           </form>
       </center>
     </div>

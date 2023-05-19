@@ -9,6 +9,7 @@ class Users extends CI_controller{
         $this->load->model('users_model');
         //$this->load->helper('url','form','text');
         $this->load->helper(array('form', 'url','text'));
+        $this->load->helper('cookie');
         $this->load->library('session');
         $this->load->library('form_validation');
         $this->load->library("pagination");
@@ -16,7 +17,7 @@ class Users extends CI_controller{
          }
 
        public function index(){
-            $UserId= $this->session->userdata('id')->id;
+            $UserId= $this->session->userdata('id');
             $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
             $this->load->view('template/header',$data);
             $this->load->view('template/slider');
@@ -184,7 +185,7 @@ class Users extends CI_controller{
                 }
               }
            public function about(){
-                $UserId= $this->session->userdata('id')->id;
+                $UserId= $this->session->userdata('id');
                 $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
                 $this->load->view('template/header',$data);
                 $this->load->view('pages/about');
@@ -192,11 +193,11 @@ class Users extends CI_controller{
                }
 
             public function product(){
-                  if(!$this->session->userdata('logged_in')){
+              if(!$this->session->userdata('logged_in')){
                   $this->session->set_flashdata('msg_loggin','Please Login');
                   redirect('login/Login_user');
-                  }else{
-                     if($_POST){
+              }else{
+                  if($_POST){
                       $data['user_id']= $this->input->post('user_id');
                       $data['product_id']= $this->input->post('product_id');
                       $data['userfile'] = $this->input->post('userfile');
@@ -206,38 +207,36 @@ class Users extends CI_controller{
                       $data['prod_quantity'] = $this->input->post('prod_quantity');
                       $data['created_at'] = date("M-D-Y");
                       $AddIntoCart = $this->users_model->AddIntoCart('tbl_cart',$data);
-                          if($AddIntoCart){
-                           $UserId = $this->input->post('user_id');
-                             $data = array(
-                               'user_id'=> $UserId ,
-                               'prod_price'=> $data['prod_price'],
-                               'quantity'=>$data['prod_quantity'],
-                               'wallet_amt'=>number_format($data['prod_price'] / 50 * $data['prod_quantity'])
-                             );
-                             $this->users_model->InsetIntoWallet('tbl_wallet',$data);
-
-                           $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-                           $this->session->set_flashdata('prod_inserted','Product Inserted into Cart');
-                           redirect('users/product');
-                           //$this->load->view('pages/product',$data);
-                           }else{
-                           $this->session->set_flashdata('prod_error','Product Creation failed');
-                           redirect(base_url('users/product'));
-                          }
-                         }
-                        $unique_id = $this->session->userdata('id');
-                        $UserId = $unique_id->id;
-                        $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-                        // var_dump( $data['demo']);die;
-                        $data['countries'] = $this->users_model->GetAllCountries();
-
-                        $this->session->set_userdata('prod_id',$data['countries']);
-                        $data['GetProd']= $this->users_model->GetAllProduct();
-                        $this->load->view('template/header',$data);
-                        $this->load->view('pages/product',$data);
-                        $this->load->view('template/footer');
-                        }
-                      }
+                    if($AddIntoCart){
+                       $UserId = $this->input->post('user_id');
+                         $data = array(
+                           'user_id'=> $UserId ,
+                           'prod_price'=> $data['prod_price'],
+                           'quantity'=>$data['prod_quantity'],
+                           'wallet_amt'=>number_format($data['prod_price'] / 50 * $data['prod_quantity'])
+                         );
+                         $this->users_model->InsetIntoWallet('tbl_wallet',$data);
+                         $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+                         $this->session->set_flashdata('prod_inserted','Product Inserted into Cart');
+                         redirect('users/product');
+                          //$this->load->view('pages/product',$data);
+                     }else{
+                       $this->session->set_flashdata('prod_error','Product Creation failed');
+                       redirect(base_url('users/product'));
+                     }
+                   }
+                    $unique_id = $this->session->userdata('id');
+                    $UserId = $unique_id->id;
+                    $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+                    // var_dump( $data['demo']);die;
+                    $data['countries'] = $this->users_model->GetAllCountries();
+                    $this->session->set_userdata('prod_id',$data['countries']);
+                    $data['GetProd']= $this->users_model->GetAllProduct();
+                    $this->load->view('template/header',$data);
+                    $this->load->view('pages/product',$data);
+                    $this->load->view('template/footer');
+              }
+            }
 
 
               public function ViewEachProduct($id){
@@ -251,7 +250,7 @@ class Users extends CI_controller{
                $this->load->view('template/footer');
                 }
               public function contact(){
-              $UserId= $this->session->userdata('id')->id;
+              $UserId= $this->session->userdata('id');
               $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
               $this->load->view('template/header',$data);
               $this->load->view('pages/contact',$data);
@@ -273,8 +272,8 @@ class Users extends CI_controller{
                   // $data['userprofile'] = $this->users_model->GetActiveCart($UserId);
                   // $data['oneuser'] = $this->users_model->GetUser('tbl_users',$UserId);
 
-                if($_POST){
-                    $data['user_id'] = $this->session->userdata('id')->id;
+                if($_POST['type']==1){
+                    $data['user_id'] = $this->session->userdata('id');
                     $data['s_name'] = $this->input->post('s_name');
                     $data['s_email'] = $this->input->post('s_email');
                     $data['s_country'] = $this->input->post('s_country');
@@ -286,12 +285,14 @@ class Users extends CI_controller{
                     $this->session->set_userdata('s_email',$data['s_email']);
                     $shipping = $this->users_model->InsertIntoShipping('tbl_shipping',$data);
                       if($shipping){
-                      redirect(base_url('users/very_shipping'));
+                      echo json_encode(array("statusCode"=>200));
+                       //redirect(base_url('users/very_shipping'));
                       }else{
-                        die("wrong");
+                       echo json_encode(array("statusCode"=>201));
+                        //redirect(base_url('users/login_user'));
                       }
                       }else{
-                      $UserId = $this->session->userdata('id')->id;
+                      $UserId = $this->session->userdata('id');
                       $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
                       $data['title_name'] = "Shipping Details ";
                       $data['countries'] = $this->users_model->GetAllCountries();
@@ -304,9 +305,10 @@ class Users extends CI_controller{
 
            public function very_shipping (){
                 $data['title_name'] = "Shipping Details ";
-                $UserId = $this->session->userdata('id')->id;
+                $UserId = $this->session->userdata('id');
                 $time =  date("i:sa");
                 $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+
                 $data['getship'] = $this->users_model->GetVerifyUser($time);
 
                 $this->load->view('template/header',$data);
@@ -334,7 +336,7 @@ class Users extends CI_controller{
            }
         }
          public function viewcart(){
-            $UserId = $this->session->userdata('id')->id;
+            $UserId = $this->session->userdata('id');
             $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
             $this->load->view('template/header',$data);
             $this->load->view('pages/viewcart',$data);
@@ -353,7 +355,7 @@ class Users extends CI_controller{
 
            public function export_csv(){
                   /* file name */
-                    $UserId = $this->session->userdata('id')->id;
+                    $UserId = $this->session->userdata('id');
                     $demo = $this->users_model->GetCart($UserId);
                     //   echo "<pre>";
                     //   print_r($value); die;
@@ -378,21 +380,21 @@ class Users extends CI_controller{
 
 
                public function services(){
-                $UserId= $this->session->userdata('id')->id;
+                $UserId= $this->session->userdata('id');
                 $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
                 $this->load->view('template/header',$data);
                 $this->load->view('pages/services');
                 $this->load->view('template/footer');
                  }
                public function ourwork(){
-                $UserId= $this->session->userdata('id')->id;
+                $UserId= $this->session->userdata('id');
                 $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
                 $this->load->view('template/header',$data);
                 $this->load->view('pages/ourwork');
                 $this->load->view('template/footer');
                 }
                public function process(){
-                $UserId= $this->session->userdata('id')->id;
+                $UserId= $this->session->userdata('id');
                 $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
                 $this->load->view('template/header',$data);
                 $this->load->view('pages/process');
@@ -405,7 +407,7 @@ class Users extends CI_controller{
                   }
 
                public function flutter_response(){
-                 $code= $this->generateRandomString();
+                 $code = $this->generateRandomString();
                  $this->session->set_userdata('code',$code);
                  $status = $this->input->get('status',TRUE);
                  $ref = $this->input->get('tx_ref',TRUE);
@@ -435,7 +437,7 @@ class Users extends CI_controller{
                 redirect('users/flutter_response');
 
               }else{
-                $UserId = $this->session->userdata('id')->id;
+                $UserId = $this->session->userdata('id');
                 $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
                 $this->load->view('template/header',$data);
                 $this->load->view('pages/flutter_response');
@@ -448,7 +450,7 @@ class Users extends CI_controller{
          public function tracking(){
             $this->load->library('email');
             if($_POST){
-               $data['user_id'] = $this->session->userdata('id')->id;
+               $data['user_id'] = $this->session->userdata('id');
                $data['tracking_code'] = $this->generateRandomString();
                // echo "<pre>"; print_r($data); die;
                $this->users_model->InsertIntoShipment('tbl_users_shipment',$data);
@@ -498,22 +500,47 @@ class Users extends CI_controller{
             redirect('login/Login_user','refresh');
             }else{
              if($_POST){
-                 $UserId = $this->session->userdata('id')->id;
+                 $UserId = $this->session->userdata('id');
                  $TrackingCode = $this->input->post('trackcode');
                  $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
                  $data['track'] = $this->users_model->GetTrackingId($TrackingCode,$UserId);
                  $data['GetShipment'] = $this->users_model->GetShipment('tbl_shipping',$UserId);
                  if($UserId==$data['track']->user_id){
-                 $this->load->view('template/header',$data);
-                 $this->load->view('pages/trackshipment',$data);
-                 //$this->load->view('template/footer');
+                     $this->load->view('template/header',$data);
+                     $this->load->view('pages/trackshipment',$data);
+                     $this->load->view('template/footer');
                  }else{
-                 $this->session->set_flashdata('error_tracking','Incorrect tracking code');
+                  $this->session->set_flashdata('error_tracking','Incorrect tracking code');
                   redirect('users','refresh');
                  }
                }else{ redirect(base_url('users','refresh')); }
               }
             }
+
+      public function like_prod(){
+        if($_POST){
+          $search_key  = $this->input->post('search');
+          var_dump($search_key);die;
+               $result = $this->users_model->get_like_product($search_key);
+               if($result){
+                echo json_encode(array("statusCode"=>200));
+                }else{
+                 echo json_encode(array("statusCode"=>201));
+               }
+        }else{
+          $this->load->view('template/header');
+          $this->load->view('pages/like_prod');
+          $this->load->view('template/footer');
+        }
+
+
+       }
+
+      // public function like_prod(){
+      //   $this->load->view('template/header');
+      //   $this->load->view('pages/like_prod');
+      //   $this->load->view('template/footer');
+      // }
 
         public function comment($id){
             $UserId = $this->session->userdata('id')->id;
@@ -559,100 +586,162 @@ class Users extends CI_controller{
         }
 
         public function single_prod(){
-           $id = $this->uri->segment(3);
-          $UserId = $this->session->userdata('id')->id;
-
-          $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-          $data['prod_details'] = $this->users_model->SingleProduct($id);
-          if($_POST){
-            $data = array(
-              'user_id' => $this->input->post('user_id'),
-              'product_id' =>$this->input->post('product_id'),
-              'userfile' => $this->input->post('userfile'),
-              'prod_name' => $this->input->post('prod_name'),
-              'prod_price' => $this->input->post('prod_price'),
-              'prod_brand' => $this->input->post('prod_brand'),
-              'category' => $this->input->post('category'),
-              'prod_quantity' => $this->input->post('prod_quantity'),
-              'created_at' => $this->input->post('date')
-            );
-
-             $AddIntoCart = $this->users_model->AddIntoCart('tbl_cart',$data);
-             if($AddIntoCart){
-              $UserId = $this->input->post('user_id');
-                $data = array(
-                  'user_id'=> $UserId ,
-                  'prod_price'=> $data['prod_price'],
-                  'quantity'=>$data['prod_quantity'],
-                  'wallet_amt'=>number_format($data['prod_price'] / 50 * $data['prod_quantity'])
-                );
-                $this->users_model->InsetIntoWallet('tbl_wallet',$data);
-
-              $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-              $this->session->set_flashdata('prod_inserted','Product Inserted into Cart');
-              redirect('users/single_prod');
-              //$this->load->view('pages/product',$data);
-            }else{
-              $this->session->set_flashdata('failed',' Product creation failed');
-              return redirect(base_url('users/single_prod'));
-            }
-
-          }else{
-            $get_prod_name = $this->db->get_where('tbl_product',array('id'=>$id))->row()->category;
-            //echo "<pre>"; print_r($get_prod_name); die;
-            $data['similar'] = $this->users_model->get_same_prod('tbl_product',$get_prod_name);
-            $this->load->view('template/header',$data);
-            $this->load->view('pages/single_prod',$data);
-            $this->load->view('template/footer');
-
+          if($this->session->userdata('logged_in')==FALSE){
+              redirect(base_url('users/login_user'));
           }
+            $id = $this->uri->segment(3);
+            $this->session->set_userdata('prod_id',$id);
+            $UserId = $this->session->userdata('id');
+            $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+            $data['prod_details'] = $this->users_model->SingleProduct($id);
+            if($_POST){
+                $data = array(
+                  'user_id' => $this->input->post('user_id'),
+                  'product_id' =>$this->input->post('product_id'),
+                  'userfile' => $this->input->post('userfile'),
+                  'prod_name' => $this->input->post('prod_name'),
+                  'prod_price' => $this->input->post('prod_price'),
+                  'prod_brand' => $this->input->post('prod_brand'),
+                  'category' => $this->input->post('category'),
+                  'prod_quantity' => $this->input->post('prod_quantity'),
+                  'created_at' => $this->input->post('date')
+                );
+              $AddIntoCart = $this->users_model->AddIntoCart('tbl_cart',$data);
+                 if($AddIntoCart){
+                   $UserId = $this->input->post('user_id');
+                    $data_cart = array(
+                      'user_id'=> $UserId ,
+                      'prod_price'=> $data['prod_price'],
+                      'quantity'=>$data['prod_quantity'],
+                      'wallet_amt'=>number_format($data['prod_price'] / 50 * $data['prod_quantity'])
+                    );
+                    $this->users_model->InsetIntoWallet('tbl_wallet',$data_cart);
 
+                    $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+                    $this->session->set_flashdata('prod_inserted','Product Inserted into Cart');
+                    redirect('users/single_prod');
+                    //$this->load->view('pages/product',$data);
+                 }else{
+                  $this->session->set_flashdata('failed',' Product creation failed');
+                  return redirect(base_url('users/single_prod'));
+                }
+             }else{
+                $get_view_prod = $this->db->get_where('tbl_product',array('id'=>$id))->row();
+                 if(isset($id)){
+                    $num_views = $counter =  1;
+                    $data_arr = array(
+                    'product_id' => $get_view_prod->id,
+                    'user_id' =>$this->session->userdata('id'),
+                    'prod_name'  => json_encode(array($get_view_prod->prod_name)),
+                    'prod_price' => $get_view_prod->prod_price,
+                    'userfile' => $get_view_prod->userfile,
+                    'no_views' => $num_views
+                   );
+                   $ExistProd = $this->db->get_where('tbl_viewed_prod',array('product_id'=>$id))->row();
+                     if(isset($id) && ($ExistProd)){
+                       $num_views+=$ExistProd->no_views;
+                       $get_view_prod = $this->db->get_where('tbl_product',array('id'=>$id))->row();
+                       $views= $this->users_model->update_view_prod('tbl_viewed_prod',$get_view_prod,$num_views,$id);
+                       $data['num_views'] = $ExistProd->no_views;
+                       $data['num_likes'] = $this->db->get_where('tbl_viewed_prod',array('product_id'=>$id))->row()->likes;
+                     }else{
+                       $this->users_model->insert_into_viewprod('tbl_viewed_prod',$data_arr);
+                     }
 
+                 }else{
+                   var_dump(" product not set "); die;
+                 }
+                   $get_prod_name = $this->db->get_where('tbl_product',array('id'=>$id))->row()->category;
+                   $viewed_prod = $this->db->get_where('tbl_product',array('id'=>$id))->row();
+                   $data['similar'] = $this->users_model->get_same_prod('tbl_product',$get_prod_name);
+                   $this->load->view('template/header',$data);
+                   $this->load->view('pages/single_prod',$data);
+                   $this->load->view('template/footer');
+
+             }
         }
 
-          public function wallet(){
-            $this->data['title'] = 'user wallet';
-            $UserId = $this->session->userdata('id')->id;
-            $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-            $this->data['user_name']= $this->users_model->getuser_namel('tbl_users',$UserId);
-            $this->data['getwallet']= $this->users_model->getwalletval($UserId);
-            if($this->data['getwallet']){
-            $this->load->view('template/header',$data);
-            $this->load->view('pages/wallet',$this->data);
-            $this->load->view('template/footer');
-             }else{
-               $this->data['getwallet'] = " ? ";
-               $this->load->view('template/header');
-               $this->load->view('pages/wallet',$this->data);
-               $this->load->view('template/footer');
-              }
-             }
 
-          public function make_payment(){
+     public function no_likes(){
+            if($this->input->post('type')==1){
+              //$views = $this->db->get_where('tbl_product',array('id'=>$id))->row();
+              $prod_id = $this->session->userdata('prod_id');
+              $likes= 1;
+              $check_likes = $this->db->get_where('tbl_viewed_prod',array('product_id'=>$prod_id))->row();
+                if($check_likes->likes=='0'){
+                  $UpdateLikes = $this->users_model->UpdateCountLikes('tbl_viewed_prod', $prod_id,$likes);
+                }elseif($check_likes->likes!='0'){
+                    $new_like = $this->db->get_where('tbl_viewed_prod',array('product_id'=>$prod_id))->row();
+                    $num_likes = '1' + $new_like->likes;
+                    $this->users_model->ReUpdateLikes('tbl_viewed_prod', $prod_id,$num_likes);
+                    $count_likes = $this->db->get_where('tbl_viewed_prod',array('product_id'=>$prod_id))->row();
+                    $like = $count_likes->likes;
+                   //redirect(base_url('users/single_prod?like='.$like.' '));
+                 }
+                   echo json_encode(array("statusCode"=>200));
+
+
+            }else{
+              echo json_encode(array("statusCode"=>201));
+              echo " cannot post ";
+            }
+       }
+
+
+
+    public function wallet(){
+      $this->data['title'] = 'user wallet';
+      $UserId = $this->session->userdata('id');
+      $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+      $this->data['user_name']= $this->users_model->getuser_namel('tbl_users',$UserId);
+      $this->data['getwallet']= $this->users_model->getwalletval($UserId);
+      if($this->data['getwallet']){
+          $this->load->view('template/header',$data);
+          $this->load->view('pages/wallet',$this->data);
+          $this->load->view('template/footer');
+      }else{
+          $this->data['getwallet'] = " ? ";
+          $this->load->view('template/header');
+          $this->load->view('pages/wallet',$this->data);
+          $this->load->view('template/footer');
+      }
+     }
+
+
+
+     public function book(){
+      $this->load->view('template/header');
+      $this->load->view('pages/book');
+      $this->load->view('template/footer');
+    }
+
+       public function make_payment(){
+
             $this->data['title'] = " Make Payment";
-            $UserId = $this->session->userdata('id')->id;
+            $UserId = $this->session->userdata('id');
             $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-            if($_POST){
+
+          if($_POST){
                $verify_amt = $this->session->userdata('very_amt');
                $wallet = $this->input->post('wallet');
-              if($verify_amt == $wallet){
-                $this->data['msg'] = " Wallet Payment Successful";
+             if($verify_amt == $wallet)
+                {
+                  $this->data['msg'] = " Wallet Payment Successful";
+                  $this->load->view('template/header',$data);
+                  $this->load->view('pages/make_payment',$this->data);
+                  $this->load->view('template/footer');
+                }else{
+                    $this->data['msg'] =  "  Insuffficent Wallet Ballance ". " ".'&#8358;'.number_format(($this->session->userdata('wallet_ballance')),2) ;
+                    $this->load->view('template/header',$data);
+                    $this->load->view('pages/make_payment',$this->data);
+                    $this->load->view('template/footer');
+                }
+             }else{
                 $this->load->view('template/header',$data);
                 $this->load->view('pages/make_payment',$this->data);
                 $this->load->view('template/footer');
-             }else{
-                  $this->data['msg'] =  "  Insuffficent Wallet Ballance ". " ".'&#8358;'.number_format(($this->session->userdata('wallet_ballance')),2) ;
-                  $this->load->view('template/header',$data);
-                  $this->load->view('template/header');
-                  $this->load->view('pages/make_payment',$this->data);
-                  $this->load->view('template/footer');
-            }
-           }else{
-              $this->load->view('template/header',$data);
-              $this->load->view('pages/make_payment',$this->data);
-              $this->load->view('template/footer');
+             }
          }
-           }
 
 
           // public function viewcart(){

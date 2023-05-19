@@ -10,29 +10,27 @@
 <!-- tracking section -->
 <div id="msg"></div>
           <section class="shipment-w3ls">
-              <div class="container">
-                  <i class="fa fa-braille" aria-hidden="true"></i>
-                  <h3 class="text-center wthree w3-agileits agileits-w3layouts agile w3-agile"> Get token Via e-mail </h3>
-              </div>
-              <div class="container">
-                  <div class="content-w3ls">
-                      <div class="content1-w3ls">
-                </div>
+
+
+            <div class="container" style="margin-top:100px;">
+                  <h1 class=" wthree w3-agileits agileits-w3layouts agile w3-agile" style="text-align:center;"> Get token Via e-mail </h1>
+                  <div class="content-w3ls" style="width:60%;height:250px;">
+                      <div class="content1-w3ls" style="background:sandybrown;"></div>
 
                 <?php  //echo form_open('login/verify_email');?>
                   <form  action="" method="POST">
                       <div class="form-group">
                           <center>
-                               <input type="email"  name="email" id="email" placeholder=" Enter email" class="form-control" style="width:30%;margin:30px;padding: 20px;">
+                               <input type="email"  name="email" id="email" placeholder=" Enter email" class="form-control" style="width:50%;margin:30px;padding: 20px;">
                                <div class="col-lg-12">
-                                <button type="submit" id="submit" class="btn btn-primary" style="width:30%;">Send email</button>
+                                <button type="submit" id="submit" class="btn btn-primary" style="width:50%;background:sandybrown;padding:10px;border:0px solid red;">Send email</button>
                              <div id="result"></div>
                           </center>
-                      <div>
-                  </div>
-               </iv>
+                </div>
            </div>
         </form>
+    </div>
+    </div>
      </section>
 
 
@@ -43,7 +41,7 @@
 <!-- /tracking section -->
      <script type="text/javascript">
         $('#submit').on('click', function(e) {
-          $("#result").html("<p style='width:50%; text-align:center;' style='font-size:19px'><span  id='lgaspin' class='text-danger' ><i class='fa fa-spinner fa-spin'></i> loading...</span></p>");
+          // $("#result").html("<p style='width:50%; text-align:center;' style='font-size:19px'><span  id='lgaspin' class='text-danger' ><i class='fa fa-spinner fa-spin'></i> loading...</span></p>");
               e.preventDefault();
               var email = $('#email').val();
               if(email!=""){
@@ -58,6 +56,7 @@
                   success: function(dataResult){
                     var dataResult =JSON.parse(dataResult);
                     if(dataResult.statusCode==200){
+                        $("#result").html("<p style='width:50%; text-align:center;' style='font-size:19px'><span  id='lgaspin' class='text-danger' ><i class='fa fa-spinner fa-spin'></i> loading...</span></p>");
                         window.location = "<?=base_url('login/changepassword')?>";
                     }
                     else if(dataResult.statusCode==201){
@@ -99,7 +98,7 @@
              // }
 
              $("#email").keydown(function(e){
-          			if(e.keyCode == '13'){
+          			if(e.keyCode == '3'){
           				search();
           			}
           		});

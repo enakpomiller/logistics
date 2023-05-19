@@ -7,7 +7,7 @@
               border: 0px solid red;
           }
           #prod-cover{
-              border:1px solid skyblue;margin-bottom: 10px;margin-top: 10px;
+              border:1px solid sandybrown;margin-bottom: 10px;margin-top: 10px;
           }
           #prod-cover:hover{
               border: 1px solid sandybrown;
@@ -37,14 +37,12 @@
 
 <!-- tracking section -->
 <section class="shipment-w3ls">
-    <div class="container">
-        <i class="fa fa-braille" aria-hidden="true"></i>
-        <h3 class="text-center wthree w3-agileits agileits-w3layouts agile w3-agile"> Product Listings </h3>
-    </div>
 
-    <div class="container">
+
+    <div class="container" style="margin-top:130px;">
+       <h2 class="text-center" style="font-family:sans-serif;"> Product Listing </h2>
         <div class="content-w3ls" style="overflow:auto;height:100%;background: #ffffff;">
-            <div class="content1-w3ls">
+            <div class="content1-w3ls" style="background:sandybrown;">
             </div>
             <center>
 
@@ -54,6 +52,7 @@
     <div class="row-fluid ">
 
      <?php foreach($GetProd as $row_prod):?>
+
    <form  action="" class="subscribeForm" method="POST">
 
         <div class="col-sm-4">
@@ -69,6 +68,7 @@
                                 <a href="<?=base_url('users/single_prod/'.$row_prod->id)?>">
                                   <img src="<?=base_url()?>uploads/<?=$row_prod->userfile?>" style="width: 90%;height: 100px;margin-top: 10px;">
                                   </a>
+
                                <input type="hidden" name="userfile" id="userfile"  value="<?=$row_prod->userfile?>">
                                <div style="margin:20px;">
                                  <p>  <input type="text" name="prod_name"  id="prod_name" readonly value="<?= $row_prod->prod_name?>" class="txt"> </p>

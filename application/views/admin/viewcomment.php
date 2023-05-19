@@ -16,28 +16,38 @@ a.pagination-links{
 }
 </style>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<!-- datatable bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+
 <div class="container" style="margin-top:100px;">
 <label><?=$title?></label>
 <?php $counter =1;?>
+
+
 <center>
-<table class="table table-striped" style="width:100%;">
-  <tr style="width:90%;">
+<table class="table table-striped" id="table">
+  <thead>
+  <tr>
     <th> s/n </th>
     <th> Product name </th>
     <th> CUstomer name </th>
     <th> Date </th>
     <th style="float:right;"> Action </th>
   </tr>
+</thead>
+<tbody>
   <?php if(!empty($comment)):?>
   <?php foreach($comment as $row):?>
      <tr>
       <td><?=$counter++?></td>
        <td><?=$row->prod_title?></td>
        <td> <?=$row->name?></td>
-       <td> <?=$row->date?>
+       <td> <?=$row->date?></td>
        <td style="float:right;">
+       <a href="<?=base_url('admin/deletecomment/'.$row->id)?>" class="btn btn-danger" onclick="return confirm('YOU WANT TO DELETE THIS RECORD');"><i class="fa fa-trash"></i></a>
         <a href="" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal<?=$row->id?>" style="margin: 10px;"><i class="fa fa-book"></i> </a>
-        <a href="<?=base_url('admin/deletecomment/'.$row->id)?>" class="btn btn-danger" onclick="return confirm('YOU WANT TO DELETE THIS RECORD');" title="Delete Record"><i class="fa fa-trash"></i>
+       
          </td>
      </tr>
      <!-- Large modal -->
@@ -59,8 +69,8 @@ a.pagination-links{
                    <img src="<?=base_url('uploads/'.$row->userfile)?>" style="width:30%;height:120%;"><br>
                      <label style="text-transform:capitalize;"><?=$row->prod_title?></label>
               </center>
-                 <p><?=$row->body?></p>
-            </center>
+              <center>  <p class="text-center"><?=$row->body?></p></center>
+            
                </div>
                <div class="modal-footer">
                  <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -73,6 +83,7 @@ a.pagination-links{
        <!-- end of modal -->
      <?php endforeach;?>
      <?php endif;?>
+  </tbody>
 </table>
 </center>
 
@@ -244,3 +255,16 @@ a.pagination-links{
     </div>
 
     </div>
+
+
+
+    <!-- datatable script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+    <!-- end datatable script -->
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#table').DataTable();
+    });
+    </script>

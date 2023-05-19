@@ -129,7 +129,18 @@
        .txt{
         width: 100%;border: 0px solid red;
        }
+       .ship{
+         //border: 1px solid red;
+         box-shadow: 0px 0px 2px 1px  grey;
+         border-radius: 5px;
+       }
      </style>
+
+     <!-- Include Select2 CSS -->
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+       <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+       <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+     <!-- end select 2 links -->
 
 
 <!-- <section class="inner-w3ls">
@@ -142,24 +153,16 @@
 
 <!-- tracking section -->
 <section class="shipment-w3ls">
-    <div class="container">
-        <i class="fa fa-braille" aria-hidden="true"></i>
-        <h3 class="text-center wthree w3-agileits agileits-w3layouts agile w3-agile"> Shipping Details </h3>
-    </div>
 
-    <div class="container">
-        <div class="content-w3ls" style="height:100%;background:;">
-            <div class="content1-w3ls">   </div>
+  <div class="container" style="margin-top:100px;">
+     <h1 class=" " style="text-align:center;margin:10px;"> Shipping Details </h1>
+
+        <!-- <div class="content-w3ls" style="height:100%;background:red;"></div> -->
+            <div class="content1-w3ls" style="background:sandybrown;">  </div>
           <!-- shipping start -->
            <h1 style="position:relative;text-align: center;top:50px;font-family: sans-serif;"> </h1>
-              <center style="margin-top: 100px;margin-bottom: 100px;">
+              <center style="margin-top: 100px;margin-bottom: 100px;">  </center>
 
-                <div class="warehouse">
-                  <div class="lefthouse" style="font-family:sans-serif">
-                     <img src="<?=base_url('assets/images/undraw_gatsbyjs_st4g.png')?>" style="width:120%;">
-                  </div>
-                  <div class="righthouse">
-                      <label style="position: relative;bottom:10px;font-family:sans-serif;font-size:20px;margin: 10px;"><?=$title_name?></label>
                        <!-- user details -->
                                  <!-- <?php if(!empty($userprofile)):?>
                                             <?php $total_sum =0;?>
@@ -177,39 +180,106 @@
                                         <?php endif;?> -->
                        <!-- end of userdetail -->
 
-                       <form action="<?=base_url('users/checkout')?>" method="POST">
-                       <div class="form-group" style="position: relative;top: ;">
-                       <input type="text" required class="form-control line_remove" name="s_name" value="<?=set_value('s_name')?>" placeholder=" yOUR nAMES">
-                        <?php $this->session->set_userdata('s_name') ?>
-                     </div>
-                       <div class="form-group">
-                       <input type="text" class="form-control line_remove" name="s_email" placeholder=" yOUR Email">
-                     </div>
-                       <div class="form-group">
-                    <select name="s_country" class="form-control line_remove" style="">
-                      <option>Select Your Country </option>
-                         <?php foreach($countries as $row_country):?>
-                          <option value="<?=$row_country->country?>"><?=$row_country->country?></option>
-                             <?php endforeach ;?>
-                        </select>
-                     </div>
-                       <div class="form-group">
-                       <input type="text" class="form-control line_remove" name="s_state" placeholder=" Your State">
-                     </div>
-                         <div class="form-group">
-                       <input type="text" class="form-control line_remove" name="s_land_mass" placeholder=" Your Landmass">
-                     </div>
-                      <div class="form-group">
-                       <button class="btn btn-primary" style="width:100%;">Verify Shipment</button>
-                     </div>
-                   </div>
+                       <div class="row ship" style="width:80%;margin:auto;position:relative;bottom:50px;">
+                         <div class="col-md-4" style="margin-right:10px;margin-right:80px;">
+                            <img src="<?=base_url('assets/images/shipping.png')?>" style="position:relative;width:120%;top:30px;height:200px;">
+                         </div>
+                         <div class="col-md-6">
+                           <h3> <p style="padding:20px;"> <?=$title_name?></p> </h3>
+                           <form action="" method="POST">
+                                 <div class="form-group" class="form-control">
+                                     <input type="text" class="form-control line_remove" id="s_name" name="s_name" placeholder=" yOUR nAMES" value="<?=set_value('s_name')?>">
+                                     <?php $this->session->set_userdata('s_name') ?>
+                                  </div>
+                                    <div class="form-group">
+                                      <input type="text" class="form-control line_remove" id="s_email" name="s_email" placeholder=" yOUR Email">
+                                   </div>
+                                 <div class="form-group">
+                                    <select name="s_country"  id="s_country"  class="form-control line_remove" style="">
+                                         <option disabled>Select Your Country </option>
+                                          <option></option>
+                                          <?php foreach($countries as $row_country):?>
+                                          <option value="<?=$row_country->country?>"><?=$row_country->country?></option>
+                                          <?php endforeach;?>
+                                     </select>
+                                  </div>
+                                   <div class="form-group">
+                                     <input type="text" class="form-control line_remove" id="s_state" name="s_state" placeholder=" Your State">
+                                    </div>
+                                      <div class="form-group">
+                                        <input type="text" class="form-control line_remove" id="s_land_mass" name="s_land_mass" placeholder=" Your Landmass">
+                                      </div>
+                                      <div class="form-group">
+                                        <button class="btn btn-primary" id="submit_ship" style="width:100%;background:sandybrown;padding:10px;border:0px solid red;">Verify Shipment</button>
+                                   </div>
+                                   <!-- loader -->
+                                   <center> <div id="loading"></div></center>
 
-                    </form>
-
-                </div>
-
-                     </center>
+                           </form>
+                         </div>
+                       </div>
                 <!-- end shipping -->
-     </div>
+                <!-- <div class="row" style="margin-top: 30px;" id="loading">
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4 text-center">
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                    <p class="">Processing...</p>
+                  </div>
+                  <div class="col-md-4"></div>
+                </div> -->
 
 </section>
+
+<style>
+#spin{
+  background: red;
+}
+</style>
+<script>
+
+         $('#loading').hide();
+          $('#gen_toggle').hide();
+
+          $('#submit_ship').click(function(e){
+            e.preventDefault();
+              var s_name = $('#s_name').val();
+              var s_email = $('#s_email').val();
+              var s_country = $('#s_country').val();
+              var s_state = $('#s_state').val();
+              var s_land_mass = $('#s_land_mass').val();
+              //var param = $('#prn').val();
+             if(s_name!="" && s_email!="" && s_country!="" && s_state!="" && s_land_mass!=""){
+               $('#loading').show();
+                  $.ajax({
+                    type: "POST",
+                    url:  "<?php echo base_url(); ?>" + "users/checkout",
+                     data:{type:1,s_name:s_name,s_email:s_email,s_country:s_country,s_state:s_state,s_land_mass:s_land_mass},
+                    //data: 'load=' + param,
+                    success: function(dataResult){
+                       var dataResult =JSON.parse(dataResult);
+                       if(dataResult.statusCode==200){
+                         $("#loading").html("<p style='width:50%; text-align:center;' style='font-size:9px;'><i style='background:sandybrown;' class='fa fa-spinner fa-spin'></i> loading...</p>");
+                         window.location = "<?=base_url('users/very_shipping')?>";
+                       }else if(dataResult.statusCode==201){
+                         $('#loading').hide();
+                         Swal.fire('Error!','Sorry an Error Occured, please login and try again !','error')
+
+                       }
+
+                    }
+                  });
+             }else{
+               // $("#msg_error").html("<p class='alert alert-danger'> Error please fill the entries </p>")
+                Swal.fire('Warning!','Please Fill All Entry!','warning')
+             }
+
+            //}
+          });
+</script>
+
+
+<script type="text/JavaScript">
+$(document).ready(function() {
+  $('#s_country').select2();
+});
+</script>

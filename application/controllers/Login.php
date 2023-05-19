@@ -41,7 +41,7 @@
                                'logged_in'=>true
                                 );
                                 $this->session->set_userdata($data_arr);
-                                $this->session->set_userdata('id',$id);
+                                $this->session->set_userdata('id',$id->id);
                                 $this->session->set_userdata('image',$getOneUser->userfile);
                                 $this->session->set_userdata('name',$getOneUser->name);
                                 $this->session->set_flashdata('success',' login successful');
@@ -252,6 +252,7 @@
           $this->session->unset_userdata('id');
           $this->session->unset_userdata('email');
           $this->session->unset_userdata('logged_in');
+          $this->session->unset_userdata($data_arr);
           $this->session->set_flashdata('logout',' you are know logged out');
           redirect(base_url('users'));
     }

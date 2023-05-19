@@ -1,7 +1,12 @@
 
 
-<!--heder end here-->
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+
+
+<!--heder end here-->
 	<?php if($this->session->flashdata('country_created')):?>
    <div class="alert alert-success"> <?=$this->session->flashdata('country_created')?></div>
 
@@ -28,16 +33,15 @@
     <h2 align="left" style="font-family: sans-serif;"><?=$title?></h2>
     <div class="form-group">
            <?php echo form_open_multipart('admin/product');?>
-
             <div class="table-responsive">
-                <table class="table table-bordered" id="dynamic_field">
-
+                <table class="table table-bordered" style="margin-top:50px;" id="dynamic_field">
                     <tr>
                         <td><input type="file" name="userfile" id="file"  class="form-control name_list" required="" /></td>
                         <td><input type="text" name="prod_name" id="prod_name" placeholder="Enter product name" class="form-control name_list" required="" /></td>
                         <td><input type="text" name="prod_price" id="prod_price" placeholder="Enter product price" class="form-control name_list" required="" /></td>
                          <td><input type="text" name="prod_brand"  id="prod_brand" placeholder="Enter product brand" class="form-control name_list" required="" /></td>
 												 <td>
+													 <div>
 													  <select name="category" class="form-control" id="category">
 															<option> Select  </option>
 															<option value="bag"> Bag </option>
@@ -47,6 +51,7 @@
 															<option value="electronics"> Electronics </option>
 															<option value="shoes"> shoes </option>
 														</select>
+													</div>
 												 </td>
              <!-- <td><button type="button" name="add" id="add" class="btn btn-success">Add Field</button></td> -->
                     </tr>
@@ -217,8 +222,6 @@
     				        <div id="geoChart" class="chart"> </div>
     				    </div>
 
-
-
     				</div><!-- .wrapper-flex -->
     				</section>
     			</div>
@@ -226,6 +229,10 @@
          <div class="clearfix"> </div>
     </div>
 
-
-
 </div>
+
+<script>
+$(document).ready(function() {
+    $('#category').select2();
+});
+</script>

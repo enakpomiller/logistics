@@ -80,13 +80,19 @@
 }
 </style>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<!-- datatable bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+
+  
 <div class="container" style="margin-top:60px;">
   <h2><?=$title?></h2>
   <br>
+
   <!-- Nav pills -->
   <ul class="nav nav-pills" role="tablist">
-
     <li class="nav-item">
       <a class="nav-link active"  data-toggle="pill" href="#home" id="a">Sellers Profile </a>
     </li>
@@ -129,7 +135,7 @@
                         <td>  <?=$row->email?> </td>
                         <td>  <?=$row->usertype?> </td>
                         <td> <?=$row->tracking_code?> </td>
-                        <td> <?=$row->status=='on'?'<div class="btn btn-success">PAID</div>':'<div class="btn btn-danger">NOT PAID</div>'?> </td>
+                        <td> <?=$row->status=='on'?'<div class="btn btn-success">PAID</div>':'<div class="btn btn-danger">UNPAID</div>'?> </td>
                      <td>
                        <a href="" data-toggle="modal"  data-target="#exampleModal<?=$row->id?>" title="Edit Record" class="btn btn-success delete" style="position:relative;left:30px;"><i class="fa fa-pencil"></i> </a>
                        <a href="" data-toggle="modal"  data-target="#viewprod<?=$details->id?>" title="View Record" class="btn btn-warning" style="position:relative;left:20px;"><i class="fa fa-book"></i> </a>
@@ -208,23 +214,23 @@
                 </thead>
                   <tbody>
                     <?php foreach($allsellers as $row):?>
-                    <tr>
+                    <tr id="<?php echo $row->id; ?>">
                      <td style="width:20%;">
                       <img src="<?=base_url()?>assets/admin_uploads/<?=$row->userfile?>"  style="width:12%;border-radius: 5px;"> </td>
                       <td>  <?=$row->firstname?> </td>
                       <td>  <?=$row->othernames?> </td>
                       <td>  <?=$row->email?> </td>
                       <td>  <?=$row->usertype?> </td>
-                   <td>
-                     <form action="<?=base_url('admin/settings')?>" method="POST">
+                   <td style="width:25%;margin:auto;">
+                     <form action="<?=base_url('admin/settings')?>"  method="POST">
                        <label class="switch">
                          <input type="hidden" name="id" value="<?=$row->id?>">
-                         <input name="activity" type="checkbox" <?=$row->status=='on'?'checked':''?>/>
-
+                         <input type="checkbox"  name="activity" id="activity" <?=$row->status=='on'?'checked':''?>/>
                          <span class="slider round"></span>
                        </label>
-                       <button class="btn btn-warning" id="triga" style="color:black;"> Activate </button>
-                       <a href=""><i class="fa fa-trash"></i></a>
+                       <button class="btn btn-success" id="triga" style="color:black;color:white;"> Activate </button>
+                       <button type="submit" class="btn btn-danger remove"> Delete</button>
+                       <!-- <a href="<?//=base_url('admin/del_user_profile/'.$row->id)?>" style="color:white;" class="btn btn-danger remove">Delete</a> -->
                     </form>
                    </td>
                  </tr>
@@ -243,9 +249,11 @@
                  <!-- <button type="submit"><i class="fa fa-search"></i></button> -->
             </div>
             <div class="col-md-4" style="margin-bottom:15px">
-                <button id="fetch" class="btn btn-primary btn-block">Fetch</button>
+                <button id="fetch"  class="btn btn-primary btn-block">Fetch</button>
            </div>
-         </div>
+         </div> 
+
+
             <div class="row" id="loading">
               <div class="col-md-4"></div>
               <div class="col-md-4 text-center">
@@ -271,6 +279,7 @@
   $(document).ready(function() {
       $('#table').DataTable();
       $('#table1').DataTable();
+
   });
   </script>
 
@@ -286,52 +295,103 @@
           var find = $('#find').val();
           // var mode = $('#entry_mode').val();
 
-          if(find == ''){
+          if(find == ""){
             alert('Please enter a tracking code');
             return false;
-          }
+          }else{ 
 
-          // if(programme == ''){
-          //   alert('Please select a Programme');
-          //   return false;
-          // }
-
-      		$('#loading').show();
-
-      		$.ajax({
-      			type: "POST",
-      			url: '<?=base_url('admin/search_for_seller_prod')?>',
-      			// data: 'load=' + programme + "&mode="+mode,
-            data: 'load='+ "&find="+find,
-      			success: function(data){
-      				$('#loading').hide();
-      				if(data != '0' || data != 0){
-      					$('.display').html(data);
-      					//$('#simple-table').dataTable();
-      				}
-      			}
-      		});
+              $('#loading').show();
+                $.ajax({
+                  type: "POST",
+                  url: '<?=base_url('admin/search_for_seller_prod')?>',
+                  // data: 'load=' + programme + "&mode="+mode,
+                  data: 'load='+ "&find="+find,
+                  success: function(data){
+                    $('#loading').hide();
+                    if(data != '0' || data != 0){
+                      $('.display').html(data);
+                      //$('#simple-table').dataTable();
+                    }
+                  }
+                });
+           }
+          
 
       	});
 
 
 
-	function printDiv(divID) {
-		//Get the HTML of div
-		var divElements = document.getElementById(divID).innerHTML;
-		//Get the HTML of whole page
-		var oldPage = document.body.innerHTML;
+          $(".remove").click(function(e){
+            e.preventDefault();
+               var id = $(this).parents("tr").attr("id");
+              if(confirm('Are you sure to remove this record ?'))
+              {
+                  $.ajax({
+                     url: '/del_user_profile/'+id,
+                     type: 'DELETE',
+                     error: function() {
+                        alert('Something is wrong');
+                     },
+                     success: function(data) {
+                          $("#"+id).remove();
+                          alert("Record removed successfully");
+                     }
+                  });
+              }
+          });
 
-		//Reset the page's HTML with div's HTML only
-		document.body.innerHTML =
-		  "<html><head><title></title></head><body>" +
-		  divElements + "</body>";
 
-		//Print Page
-		window.print();
 
-		//Restore orignal HTML
-		document.body.innerHTML = oldPage;
-		location.reload();
-	}
+
+
+
+      // $('#loader').hide();
+
+      //     $('#fetch').click(function(){
+      //       let searchName = $('#find').val();
+      //       // var offset = $(".order-each").length;
+      //       if (searchName.length > 3) {
+      //         $('#loader').show();
+      //         if (searchName == ""){
+      //           errorMessage('Please enter a search data!')
+      //           $('#loader').hide();
+      //           return false;
+      //         }else{
+      //           $.ajax({
+      //             type: "POST",
+      //             url: '<?=base_url('admin/search_for_seller_prod')?>',
+      //             data: {searchName},
+      //             success: function(res){
+
+      //               $('#loader').hide();
+
+      //               if(data != '0' || data != 0){
+      //                 $('.display').html(data);
+      //                 //$('#simple-table').dataTable();
+      //               }
+      //             }
+      //           });
+      //         }
+      //       } 
+    
+
+      //     }
+
+</script> 
+
+
+
+
+
+<!-- cdn for delete -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- datatable script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+<!-- end datatable script -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#table').DataTable();
+});
 </script>

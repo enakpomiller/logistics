@@ -19,7 +19,7 @@
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-hover">
-                               <?php if(!empty($userprofile)):?>
+                               <?php if(($userprofile)){?>
                                	      <?php foreach($userprofile as $user):?>
                                	<table class="table table-bordered">
                                		<thead>
@@ -39,8 +39,9 @@
                                		</thead>
                                	</table>
                                <?php endforeach ;?>
-
-                                 <?php endif;?>
+							   <?php }else{?>
+								<?=" record not found " ?>
+                                 <?php }?>
 
 
                           </tbody>

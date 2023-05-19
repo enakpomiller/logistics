@@ -22,21 +22,21 @@ width:70%;
 <div id="success"></div>
 <!-- tracking section -->
 <section class="shipment-w3ls">
-    <div class="container">
-        <i class="fa fa-braille" aria-hidden="true"></i>
-        <h3 class="text-center wthree w3-agileits agileits-w3layouts agile w3-agile"> Create Account </h3>
-    </div>      <center>
-               <?php if($this->session->flashdata('update_pass')):?>
-                <div class="alert alert-warning" style="width:40%;"><?=$this->session->flashdata('update_pass')?></div>
-                    <?php endif;?>
-                       <?php if($this->session->flashdata('email_sent')):?>
-                <div class="alert alert-infor" style="width:40%;"><?=$this->session->flashdata('email_sent')?></div>
-                    <?php endif;?>
-                  </center>
 
-    <div class="container">
-        <div class="content-w3ls" style="overflow:initial;height: 70%;">
-            <div class="content1-w3ls">
+
+
+    <div class="container" style="margin-top:100px;">
+        <h1 style="font-family:sans-serif;text-align:center;"> Create Account </h1>
+        <center>
+             <?php if($this->session->flashdata('update_pass')):?>
+              <div class="alert alert-warning" style="width:40%;"><?=$this->session->flashdata('update_pass')?></div>
+                  <?php endif;?>
+                     <?php if($this->session->flashdata('email_sent')):?>
+                     <div class="alert alert-infor" style="width:40%;"><?=$this->session->flashdata('email_sent')?></div>
+                  <?php endif;?>
+          </center>
+        <div class="content-w3ls" style="overflow:initial;height:50%;">
+            <div class="content1-w3ls" style="background:sandybrown;">
                 <h2>  </h2>
             </div>
             <!-- start user account -->
@@ -83,7 +83,7 @@ width:70%;
                           <input type="date" id="date" name="date"  style="padding: 5px;position:relative;right:70px;">
                         </div>
                       </div>
-                      <button type="submit" id="butsave" onclick="move()" style="color:#ffffff;position: relative;left: 15px;width: 46%;" class="btn btn-primary" id="butsave">Sign in</button>
+                      <button type="submit" id="butsave" onclick="move()" style="color:#ffffff;position: relative;left: 15px;width: 46%;background:sandybrown;padding:10px;border:0px solid red;" class="btn btn-primary" id="butsave">Sign in</button>
                     </form>
               </div>
           </div>

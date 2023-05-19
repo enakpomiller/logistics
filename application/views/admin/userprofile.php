@@ -15,6 +15,50 @@ a.pagination-links{
 }
 </style>
 
+<!-- datatable bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+
+
+<div class="container" style="margin-top:180px;">
+      <?php if($this->session->flashdata('delrec')) {?>
+      <div class="alert alert-danger text-center" style="width:40%;margin:auto;"><?=$this->session->flashdata('delrec')?></div>
+       <?php
+        }else{ echo " ";}
+       ?>
+         <table class="table table-hover" style="" id="table">
+          <thead>
+            <tr>
+              <th scope="col"> Image</th>
+              <th scope="col"> Name</th>
+              <th scope="col"> Price</th>
+              <th scope="col"> Brand</th>
+              <th scope="col"> Qty</th>
+              <th scope="col"> Total </th>
+            <th scope="col"> Action </th>
+          </tr>
+          </thead>
+          <?php if(!empty($displaycart)):?>
+          <tbody>
+            <?php foreach($displaycart as $cart):?>
+            <tr>
+              <th scope="row"><img src="<?=base_url('uploads/'.$cart->userfile)?>" style="width:30px;"></th>
+            <td><?=$cart->prod_name?></td>
+            <td><?="&#8358;".$cart->prod_price?></td>
+            <td><?=$cart->prod_brand?></td>
+            <td><?=$cart->prod_quantity?></td>
+            <td><?="&#8358;".$total_sum = $cart->prod_price * $cart->prod_quantity?></td>
+            <td><a href="<?=base_url('admin/DeleteFromCart/'.$cart->id)?>" class="btn btn-danger" onclick="return confirm('YOU WANT TO DELETE THIS RECORD');" title="Delete Record"><i class="fa fa-trash"></i></a></td>
+            </tr>
+            <?php endforeach ;?>
+          <?php else:?>
+            <?=" record not found"?>
+          <?php endif;?>
+          </tbody>
+        </table>
+</div>
+
+
+
 
 <div class="chit-chat-layer1 container" style="margin-top:130px;">
 
@@ -22,33 +66,9 @@ a.pagination-links{
       <div class="form-group">
 
               <div class="table-responsive">
-                   <table  class="table table-striped">
-                   	  <tr>
-                   	  	<th>Product Image </th>
-                   	  		<th>Product Name </th>
-                   	  			<th>Product Price </th>
-                   	  				<th>Product Brand </th>
-                   	  				<th>Qty </th>
-                   	  				<th>Total </th>
-                   	  				<th style="float:right;">Action </th>
-                   	  </tr>
-  						            <?php if(!empty($displaycart)):?>
-  						            	<?php $total_sum=0;?>
-  						            	<?php foreach($displaycart as $cart):?>
-  						            			<tr>
-  						            				<td><img src="<?=base_url('uploads/'.$cart->userfile)?>" style="width:30px;"></td>
-  						            					<td><?=$cart->prod_name?></td>
-  						            						<td><?=$cart->prod_price?></td>
-  						            							<td><?=$cart->prod_brand?></td>
-  						            								<td><?=$cart->prod_quantity?></td>
-  						            									<td><?=$total_sum = $cart->prod_price * $cart->prod_quantity?></td>
-                                        <td><a href="<?=base_url('admin/DeleteFromCart/'.$cart->id)?>" class="btn btn-danger" onclick="return confirm('YOU WANT TO DELETE THIS RECORD');" title="Delete Record" style="float:right;"><i class="fa fa-trash"></i></td>
-  						            			  </tr>
-  						            	  <?php endforeach ;?>
-  						              <?php elseif(empty($displaycart)):?>
-  						            <?php $msg=" No Record Found ";?>
-  						          <?php endif ;?>
-  										</table>
+              <!-- open table -->
+
+                      <!-- close table -->
 
   										<?=$msg?>
                       <div class="pagination-links text-left">
@@ -263,3 +283,15 @@ a.pagination-links{
               //
 							// });
 						</script>
+
+
+            <!-- datatable script -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+            <!-- end datatable script -->
+
+            <script type="text/javascript">
+            $(document).ready(function() {
+                $('#table').DataTable();
+            });
+            </script>

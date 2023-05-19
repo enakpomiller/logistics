@@ -1,87 +1,85 @@
 
 
 
+<!-- datatable bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
 
-      <div class="form-group">
 
-              <div class="table-responsive" style="margin-top:100px;">
-                 <label><h2 align="left" style="font-family: sans-serif;"><?=$title?></h2></label>
-                <table id="book-table" style="position:relative;left:20px;margin-top:30px;width:95%;"class="table  table-bordered text-center">
-                   <thead>
-                   <tr>
-                     <th><center>Product Image    </center></th>
-                       <th><center>Product Name    </center></th>
-                         <th><center>Product Price    </center></th>
-                           <th><center>Product Brand    </center></th>
-                           <th><center>Qty    </center></th>
-                           <th><center>Total    </center></th>
-                           <th><center>Action    </center></th>
-                   </tr>
-                      </thead>
-                       <?php if(!empty($ActiveUserCart)):?>
-                         <?php $total_sum=0;?>
-                         <?php foreach($ActiveUserCart as $cart):?>
-                           <tbody id="table">
-                             <tr>
-                               <td><img src="<?=base_url('/uploads/'.$cart->userfile)?>" style="width:30px;"></td>
-                                 <td><?=$cart->prod_name?></td>
-                                   <td><?=$cart->prod_price?></td>
-                                     <td><?=$cart->prod_brand?></td>
-                                       <td><?=$cart->prod_quantity?></td>
-                                         <td><?=$total_sum = $cart->prod_price * $cart->prod_quantity?></td>
+ <div class="container" style="margin-top:200px;">
+    <table class="table table-striped" id="table">
+      <thead>
+        <tr>
+          <th scope="col">Product Image</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Product Price</th>
+          <th scope="col">Product Brand</th>
+          <th scope="col">QTY</th>
+          <th scope="col">Total </th>
+          <th scope="col">Action </th>
+        </tr>
+      </thead>
+      <?php if(!empty($ActiveUserCart)):?>
+        <?php $total_sum=0;?>
+        <?php foreach($ActiveUserCart as $cart):?>
+      <tbody>
+        <tr>
+            <td><img src="<?=base_url('/uploads/'.$cart->userfile)?>" style="width:30px;"></td>
+            <td><?=$cart->prod_name?></td>
+            <td><?php echo  "&#8358;".$cart->prod_price ;?></td>
+            <td><?=$cart->prod_brand?></td>
+            <td><?=$cart->prod_quantity?></td>
+            <td><?="&#8358;".$total_sum = $cart->prod_price * $cart->prod_quantity?></td>
+            <td><a href="<?=base_url('admin/DeleteActiveCart/'.$cart->id)?>" class="btn btn-danger" onclick="return confirm('YOU WANT TO DELETE THIS RECORD');" title="Delete Record"><i class="fa fa-trash"></i>
+               <a href="" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal<?=$cart->id?>" style="margin: 10px;"><i class="fa fa-pencil"></i> </a></td>
+        </tr>
 
-                      <td><a href="<?=base_url('admin/DeleteActiveCart/'.$cart->id)?>" class="btn btn-danger" onclick="return confirm('YOU WANT TO DELETE THIS RECORD');" title="Delete Record"><i class="fa fa-trash"></i>
-                         <a href="" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal<?=$cart->id?>" style="margin: 10px;"><i class="fa fa-pencil"></i> </a>
-                             </tr>
-                              </tbody>
+      </tbody>
+      <!-- Large modal -->
+       <div class="modal fade" id="exampleModal<?=$cart->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="width: 100%;">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle"><label> <?=$title?> </label></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                <form action="<?=base_url('admin/update')?>" method="POST">
+               <center>
+               <img src="<?=base_url('/uploads/'.$cart->userfile)?>" style="width:30%;height: 150px;margin: 10px;"><br>
+             </center>
+                 <input type="hidden" name="id" value="<?=$cart->id?>"> <br>
+                 <label>Product Name </label>
+               <input type="input" id="prod_name" name="prod_name" class="form-control" value="<?=$cart->prod_name?>"><br>
+                 <label>Product Price </label>
+                  <input type="input" id="prod_price" name="prod_price" class="form-control" value="<?=$cart->prod_price?>"><br>
+                 <label>Product Brand </label>
+                  <input type="input" id="prod_brand" name="prod_brand" class="form-control" value="<?=$cart->prod_brand?>"><br>
+                   <label> Quantity </label>
+                    <input type="input" id="prod_quantity" name="prod_quantity" class="form-control" value="<?=$cart->prod_quantity?>"><br>
 
-                             <!-- Large modal -->
-                              <div class="modal fade" id="exampleModal<?=$cart->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="width: 100%;">
-                                   <div class="modal-dialog modal-dialog-centered" role="document">
-                                     <div class="modal-content">
-                                       <div class="modal-header">
-                                         <h5 class="modal-title" id="exampleModalLongTitle"><label> <?=$title?> </label></h5>
-                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                           <span aria-hidden="true">&times;</span>
-                                         </button>
-                                       </div>
-                                       <div class="modal-body">
-                                       <form action="<?=base_url('admin/update')?>" method="POST">
-                                      <center>
-                                      <img src="<?=base_url('/uploads/'.$cart->userfile)?>" style="width:30%;height: 150px;margin: 10px;"><br>
-                                    </center>
-                                        <input type="hidden" name="id" value="<?=$cart->id?>"> <br>
-                                        <label>Product Name </label>
-                                      <input type="input" id="prod_name" name="prod_name" class="form-control" value="<?=$cart->prod_name?>"><br>
-                                        <label>Product Price </label>
-                                         <input type="input" id="prod_price" name="prod_price" class="form-control" value="<?=$cart->prod_price?>"><br>
-                                        <label>Product Brand </label>
-                                         <input type="input" id="prod_brand" name="prod_brand" class="form-control" value="<?=$cart->prod_brand?>"><br>
-                                          <label> Quantity </label>
-                                           <input type="input" id="prod_quantity" name="prod_quantity" class="form-control" value="<?=$cart->prod_quantity?>"><br>
-
-                                       </div>
-                                       <div class="modal-footer">
-                                         <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                       <input  type="submit" id="btn-submit" class="btn btn-primary" value="save changes">
-                                           </form>
-                                       </div>
-
-                                     </div>
-                                   </div>
-                                 </div>
-                               <!-- end of modal -->
-
-                         <?php endforeach ;?>
-                       <?php elseif(empty($displaycart)):?>
-                       <?php $msg=" Cart is empty ";?>
-                     <?php endif ;?>
-                   </table>
-
+                </div>
+                <div class="modal-footer">
+                  <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input  type="submit" id="btn-submit" class="btn btn-primary" value="save changes">
+            </form>
+                </div>
 
               </div>
+            </div>
+          </div>
+        <!-- end of modal -->
+          <?php endforeach ;?>
+        <?php elseif(empty($displaycart)):?>
+        <?php $msg=" Cart is empty ";?>
+      <?php endif ;?>
+  </table>
 
-      </div>
+</div>
+
+
+
 
 
 
@@ -288,3 +286,15 @@
 
 							});
 						</script> -->
+
+
+            <!-- datatable script -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+            <!-- end datatable script -->
+
+            <script type="text/javascript">
+            $(document).ready(function() {
+                $('#table').DataTable();
+            });
+            </script>

@@ -139,7 +139,7 @@
   #lightninBox .lb-prev.lb-enabled, #lightninBox .lb-next.lb-enabled {
     visibility: visible;
   }
- 
+
 
 @-webkit-keyframes lb-lightbox-fade-in {
     0%   {display: none; opacity: 0; transform: -webkit-translate3d(-50%,-50%,0) scale(.5); transform: translate3d(-50%,-50%,0) scale(.5);}

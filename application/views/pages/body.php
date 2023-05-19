@@ -1,31 +1,32 @@
 
 <!-- specialization section -->
 <section class="special-w3layouts">
-	<div class="container">
-		<h3 class="text-center wthree w3-agileits">Our Specialities</h3>
-		<p class="text-center wthree w3-agileits">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-		<div class="col-lg-3 col-md-3 col-sm-6">
-			<img src="<?=base_url()?>assets/images/eye.png" alt="" class="img-responsive">
-			<h4 class="text-center">Automated Tracking</h4>
-			<p class="special-p1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-		</div>
-		<div class="col-lg-3 col-md-3 col-sm-6">
-			<img src="<?=base_url()?>assets/images/monitor.png" alt="" class="img-responsive">
-			<h4 class="text-center">Tracking API</h4>
-			<p class="special-p1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-		</div>
-		<div class="col-lg-3 col-md-3 col-sm-6">
-			<img src="<?=base_url()?>assets/images/shop.png" alt="" class="img-responsive">
-			<h4 class="text-center">Ecommerce Integration</h4>
-			<p class="special-p1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-		</div>
-		<div class="col-lg-3 col-md-3 col-sm-6">
-			<img src="<?=base_url()?>assets/images/truck.png" alt="" class="img-responsive">
-			<h4 class="text-center">Delivered In Time</h4>
-			<p class="special-p1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-		</div>
-		<div class="clearfix"></div>
-	</div>
+					<div class="container">
+						<h3 class="text-center wthree w3-agileits">Our Specialities</h3>
+						<p class="text-center wthree w3-agileits">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+						<div class="col-lg-3 col-md-3 col-sm-6">
+							<!-- <img src="<?=base_url()?>assets/images/eye.png" alt="" class="img-responsive"> -->
+							<img src="<?=base_url()?>assets/images/shipping.png" alt="" style="width:50%;" class="img-responsive">
+							<h4 class="text-center">Automated Tracking</h4>
+							<p class="special-p1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-6">
+							<img src="<?=base_url()?>assets/images/monitor.png" alt="" class="img-responsive">
+							<h4 class="text-center">Tracking API</h4>
+							<p class="special-p1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-6">
+							<img src="<?=base_url()?>assets/images/shop.png" alt="" class="img-responsive">
+							<h4 class="text-center">Ecommerce Integration</h4>
+							<p class="special-p1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-6">
+							<img src="<?=base_url()?>assets/images/truck.png" alt="" class="img-responsive">
+							<h4 class="text-center">Delivered In Time</h4>
+							<p class="special-p1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+						</div>
+						<div class="clearfix"></div>
+					</div>
 </section>
 <!-- /specialization section -->
 
@@ -62,4 +63,3 @@
 	</div>
 </section>
 <!-- /3rd info section -->
-

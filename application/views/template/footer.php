@@ -51,7 +51,7 @@ margin-top: 16px;
 <section class="footer-agileits">
 	<div class="container">
 		<div class="col-lg-3 col-md-3 col-sm-6">
-			<h3>More Info</h3>
+			<h3 style="color:sandybrown">More Info</h3>
 			<ul class="info-links">
 				<li><a href="<?=base_url()?>"><i class="fa fa-hand-o-right" aria-hidden="true"></i> Home </a></li>
 				<li><a href="<?=base_url('users/about')?>"><i class="fa fa-hand-o-right" aria-hidden="true"></i> About Us</a></li>
@@ -61,7 +61,7 @@ margin-top: 16px;
 			</ul>
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-6">
-			<h3>Our Links</h3>
+			<h3 style="color:sandybrown">Our Links</h3>
 			<ul class="footer-links">
 				<li><a href="service.html"><i class="fa fa-hand-o-right" aria-hidden="true"></i> Our Services</a></li>
 				<li><a href="work.html"><i class="fa fa-hand-o-right" aria-hidden="true"></i> Our Work</a></li>
@@ -70,7 +70,7 @@ margin-top: 16px;
 			</ul>
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-6">
-			<h3>Contact Info</h3>
+			<h3 style="color:sandybrown">Contact Info</h3>
 			<div class="contact-info">
 				<div class="address">
 					<i class="glyphicon glyphicon-globe"></i>
@@ -90,7 +90,7 @@ margin-top: 16px;
 			</div>
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-6">
-			<h3>Subscribe Us</h3>
+			<h3 style="color:sandybrown">Subscribe Us</h3>
 			<div class="subscribe">
 				<form action="#" method="post">
 					<div class="form-group">
@@ -100,7 +100,7 @@ margin-top: 16px;
 						<input type="text" name="user" class="form-control" id="text1" placeholder="Your Name">
 					</div>
 					<div class="form-group">
-						<button type="submit" class="btn-outline">Subscribe</button>
+						<button type="submit" class="btn-outline" style="background:sandybrown;color:black;border:0px solid black;">Subscribe</button>
 					</div>
 				</form>
 			</div>
@@ -147,5 +147,10 @@ myBgFader.start()
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
 <!-- end datatable script -->
+
+
+
+
+
 </body>
 </html>

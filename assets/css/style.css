@@ -24,9 +24,9 @@ input[type="button"],input[type="submit"]{
 	-ms-transition:0.5s all;
 }
 h1,h2,h3,h4,h5,h6{
-	margin:0;	
+	margin:0;
 	padding:0;
-}	
+}
 p{
 	margin:0;
 	padding:0;
@@ -82,12 +82,12 @@ body {
 	margin-right:5px;
 }
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
-    color: #fff;
+    color: #fff00;
     background-color:#33accc;
 }
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
-    color: #fff;
-    background-color:#33accc;
+    color: sandybrown;
+    /* background-color:sandybrown; */
 }
 .navbar-default .navbar-nav>li>a {
     color: #777;
@@ -128,15 +128,15 @@ body {
 }
 .dropdown-menu input::-webkit-input-placeholder {
 color: #000 !important;
-} 
+}
 .dropdown-menu input:-moz-placeholder { /* Firefox 18- */
-color: #000 !important;  
+color: #000 !important;
 }
 .dropdown-menu input::-moz-placeholder {  /* Firefox 19+ */
-color: #000 !important;  
+color: #000 !important;
 }
-.dropdown-menu input:-ms-input-placeholder {  
-color: #000 !important;  
+.dropdown-menu input:-ms-input-placeholder {
+color: #000 !important;
 }
 .dropdown-menu .track-w3ls button.btn.btn-primary {
 	margin-top:20px;
@@ -146,7 +146,8 @@ color: #000 !important;
 	padding:10px 20px;
 	border-radius:0;
 	font-family: 'Exo 2', sans-serif;
-	background-color:#33accc;
+	background-color:sandybrown;
+	border: 0px solid red;
 }
 .dropdown-menu .track-w3ls p.track-p1 {
 	font-size:17px;
@@ -201,15 +202,15 @@ color: #000 !important;
 	padding:10px 20px;
 	border-radius:0;
 	background-color:#33accc;
-	margin-bottom:20px;	
+	margin-bottom:20px;
 	font-family: 'Exo 2', sans-serif;
-} 
+}
 /*-- /navigation effects --*/
 /*-- 1st banner section --*/
 section.banner-w3ls {
 	position:relative;
 }
-.header { 
+.header {
 	height:926px;
 	margin:0 auto;
 	padding:0;
@@ -346,18 +347,19 @@ section.info-w3ls p.text-center,section.info-w3ls2 p.text-center,section.info-w3
 }
 /*-- /1st info section --*/
 /*-- 2nd banner section --*/
-section.banner-w3ls2 {
-	background:url(../images/banner2.jpg);
-	background-position:center;
-	background-attachment:fixed;
-	background-repeat:no repeat;
-	background-size:cover;
-	-webkit-background-size:cover;
-	-moz-background-size:cover;
-	-o-background-size:cover;
-	-ms-background-size:cover;
-	min-height:650px;
-}
+	section.banner-w3ls2 {
+		background:url(../images/top2.jpeg);
+		/* background:rgba(0,0,0,0.7); */
+		background-position:center;
+		background-attachment:fixed;
+		background-repeat:no repeat;
+		background-size:cover;
+		-webkit-background-size:cover;
+		-moz-background-size:cover;
+		-o-background-size:cover;
+		-ms-background-size:cover;
+		min-height:650px;
+	}
 section.banner-w3ls2 h3.text-center,section.banner-w3ls3 h3.text-center {
 	font-size: 65px;
     font-weight: normal;
@@ -528,27 +530,27 @@ section.footer-agileits input#text1 {
 }
 section.footer-agileits input::-webkit-input-placeholder {
 color: #000 !important;
-} 
+}
 section.footer-agileits input:-moz-placeholder { /* Firefox 18- */
-color: #000 !important;  
+color: #000 !important;
 }
 section.footer-agileits input::-moz-placeholder {  /* Firefox 19+ */
-color: #000 !important;  
+color: #000 !important;
 }
-section.footer-agileits input:-ms-input-placeholder {  
-color: #000 !important;  
+section.footer-agileits input:-ms-input-placeholder {
+color: #000 !important;
 }
 section.footer-agileits textarea::-webkit-input-placeholder {
 color: #000 !important;
 }
 section.footer-agileits textarea::-moz-placeholder { /* Firefox 18- */
-color: #000 !important;  
+color: #000 !important;
 }
 section.footer-agileits textarea::-moz-placeholder {  /* Firefox 19+ */
-color: #000 !important;  
+color: #000 !important;
 }
-section.footer-agileits textarea::-ms-input-placeholder {  
-color: #000 !important;  
+section.footer-agileits textarea::-ms-input-placeholder {
+color: #000 !important;
 }
 section.footer-agileits ul.social-icons2 {
 	list-style:none;
@@ -640,10 +642,10 @@ section.footer-agileits ul.social-icons2 li a i.fa.fa-facebook:hover {
 section.footer-agileits ul.social-icons2 li a i.fa.fa-twitter:hover {
 	background-color:#004A82;
 }
-section.footer-agileits ul.social-icons2 li a i.fa.fa-linkedin:hover { 
+section.footer-agileits ul.social-icons2 li a i.fa.fa-linkedin:hover {
 	background-color:#BB5E00;
 }
-section.footer-agileits ul.social-icons2 li a i.fa.fa-google-plus:hover { 
+section.footer-agileits ul.social-icons2 li a i.fa.fa-google-plus:hover {
 	background-color:#8A0B00;
 }
 section.footer-agileits p.copyright {
@@ -828,7 +830,7 @@ section.about-w3ls h3.text-center,section.team-w3ls h3.text-center,section.cust-
 	font-family: 'Exo 2', sans-serif;
 	position:relative;
 }
-section.about-w3ls h3.text-center:after,section.team-w3ls h3.text-center:after,section.cust-agileits h3.text-center:after,section.service-w3ls h3.text-center:after,section.service-agileits h3.text-center:after,section.work-w3ls h3.text-center:after,section.shipment-w3ls h3.text-center:after,section.transit-w3ls h3.text-center:after,section.contact-us h3.text-center:after,section.contact-w3ls h3.text-center:after {	
+section.about-w3ls h3.text-center:after,section.team-w3ls h3.text-center:after,section.cust-agileits h3.text-center:after,section.service-w3ls h3.text-center:after,section.service-agileits h3.text-center:after,section.work-w3ls h3.text-center:after,section.shipment-w3ls h3.text-center:after,section.transit-w3ls h3.text-center:after,section.contact-us h3.text-center:after,section.contact-w3ls h3.text-center:after {
 	content: '';
     background-color: #33accc;
     height: 5px;
@@ -875,7 +877,7 @@ section.team-w3ls ul.social-icons1 li {
 	display:inline-block!important;
 	margin:1px!important;
 	padding:10px 0;
-}  
+}
 section.team-w3ls ul.social-icons1 li a {
 	text-decoration:none;
 }
@@ -923,7 +925,7 @@ section.team-w3ls ul.social-icons1 li a i.fa.fa-twitter {
 }
 section.team-w3ls ul.social-icons1 li a i.fa.fa-twitter:hover {
 	background-color:#1F435F;
-} 
+}
 section.team-w3ls ul.social-icons1 li a i.fa.fa-linkedin {
 	color:#fff;
 	background-color:#e68523;
@@ -963,7 +965,7 @@ section.team-w3ls ul.social-icons1 li a i.fa.fa-google-plus {
 	-webkit-transition:0.5s all;
 	-moz-transition:0.5s all;
 	-o-transition:0.5s all;
-	-ms-transition:0.5s all;	
+	-ms-transition:0.5s all;
 }
 section.team-w3ls ul.social-icons1 li a i.fa.fa-google-plus:hover {
 	background-color:#69251F;
@@ -1000,7 +1002,7 @@ section.service-w3ls p.serv-p1 {
 	color:#999;
 	padding-bottom:10px;
 	text-align:center;
-} 
+}
 .ch-grid {
 	margin:0;
 	padding: 0;
@@ -1035,19 +1037,19 @@ section.service-w3ls p.serv-p1 {
 	cursor: default;
 }
 
-.ch-info-wrap, 
+.ch-info-wrap,
 .ch-info{
 	position: absolute;
 	width: 180px;
 	height: 180px;
 	border-radius: 50%;
-	
+
 	-webkit-transition: all 0.4s ease-in-out;
 	-moz-transition: all 0.4s ease-in-out;
 	-o-transition: all 0.4s ease-in-out;
 	-ms-transition: all 0.4s ease-in-out;
 	transition: all 0.4s ease-in-out;
-	
+
 	-webkit-perspective: 800px;
 	-moz-perspective: 800px;
 	-o-perspective: 800px;
@@ -1059,10 +1061,10 @@ section.service-w3ls p.serv-p1 {
 	top: 20px;
 	left: 20px;
 	background: #f9f9f9 url(../images/bg.jpg);
-	box-shadow: 
-		0 0 0 20px rgba(255,255,255,0.2), 
+	box-shadow:
+		0 0 0 20px rgba(255,255,255,0.2),
 		inset 0 0 3px rgba(115,114, 23, 0.8);
-	
+
 }
 
 .ch-info {
@@ -1093,9 +1095,9 @@ section.service-w3ls p.serv-p1 {
 	-o-transform-origin: 50% 100%;
 	-ms-transform-origin: 50% 100%;
 	transform-origin: 50% 100%;
-	
+
 	z-index: 100;
-	box-shadow: 
+	box-shadow:
 		inset 2px 1px 4px rgba(0,0,0,0.1);
 }
 
@@ -1103,19 +1105,19 @@ section.service-w3ls p.serv-p1 {
 	background: rgba(230,132,107,0);
 }
 
-.ch-img-1 { 
+.ch-img-1 {
 	background-image: url(../images/serv-img1.jpg);
 }
 
-.ch-img-2 { 
+.ch-img-2 {
 	background-image: url(../images/serv-img2.jpg);
 }
 
-.ch-img-3 { 
+.ch-img-3 {
 	background-image: url(../images/serv-img3.jpg);
 }
 
-.ch-img-4 { 
+.ch-img-4 {
 	background-image: url(../images/serv-img4.jpg);
 }
 
@@ -1128,8 +1130,8 @@ section.service-w3ls p.serv-p1 {
 	padding: 40px 0 0 0;
 	height: 90px;
 	font-family: 'Open Sans', Arial, sans-serif;
-	text-shadow: 
-		0 0 1px #fff, 
+	text-shadow:
+		0 0 1px #fff,
 		0 1px 2px rgba(0,0,0,0.3);
 }
 
@@ -1167,9 +1169,9 @@ section.service-w3ls p.serv-p1 {
 	-o-transform: rotate3d(1,0,0,-180deg);
 	-ms-transform: rotate3d(1,0,0,-180deg);
 	transform: rotate3d(1,0,0,-180deg);
-	
-	box-shadow: 
-		inset 0 0 5px rgba(255,255,255,0.2), 
+
+	box-shadow:
+		inset 0 0 5px rgba(255,255,255,0.2),
 		inset 0 0 3px rgba(0,0,0,0.3);
 }
 
@@ -1203,7 +1205,7 @@ section.service-agileits p.text-center {
 	line-height:30px;
 }
 .featurette-divider {
-  margin: 80px 0; 
+  margin: 80px 0;
 }
 .featurette-heading {
   font-weight: 300;
@@ -1267,7 +1269,7 @@ section.work-w3ls .resp-tab-active {
 }
 section.work-w3ls .resp-tabs-container {
 	padding: 0px;
-	clear: left;	
+	clear: left;
 }
 section.work-w3ls h2.resp-accordion {
 	cursor: pointer;
@@ -1330,7 +1332,7 @@ section.work-w3ls .nav-tabs > li > a {
     color: #000000;
     border: none;
     font-weight: normal;
-}	
+}
 section.work-w3ls .nav-tabs {
     border-bottom: none;
 	margin: 0 0 40px;
@@ -1422,13 +1424,13 @@ span.line {
 	background-color:#33accc;
 }
 .confirm span.line, .process span.line {
-	background-color:#33accc; 
+	background-color:#33accc;
 }
 .content3-w3ls p {
 	font-size:15px;
 	font-weight:600;
 	margin: 8% 0 0 -50%;
-} 
+}
 .imgcircle {
 	height:75px;
 	width:75px;
@@ -1520,9 +1522,9 @@ section.transit-w3ls .table>tbody>tr>td h4 {
 /*-- contact page --*/
 /*-- contact address --*/
 section.contact-us {
-	
+
 }
-section.contact-us p.text-center { 
+section.contact-us p.text-center {
 	font-size:17px;
 	padding:0 0 40px;
 	color:#999;
@@ -1680,7 +1682,7 @@ section.contact-w3ls button.btn.btn-primary:hover {
 @media (max-width:1600px) {
 section.work-w3ls .nav-tabs > li:nth-child(1) {
     margin-left: 41em;
-} 
+}
 .header {
     height: 796px;
 }
@@ -2124,7 +2126,7 @@ section.contact-w3ls button.btn.btn-primary {
     font-size: 16px;
 }
 .privacy2-grid1 h5 {
-    font-size: 16px; 
+    font-size: 16px;
 }
 section.work-w3ls .nav-tabs > li:nth-child(1) {
     margin-left: 12em;
@@ -2164,7 +2166,7 @@ section.banner-w3ls h2.text-center {
 @media (max-width:736px) {
 .navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse {
     max-height: 280px;
-}	
+}
 .navbar {
     min-height: 60px;
 }
@@ -2416,7 +2418,7 @@ section.team-w3ls p.team-p1 {
 }
 .ch-grid li:nth-child(2),.ch-grid li:nth-child(3),.ch-grid li:nth-child(4) {
 	margin-top:30px;
-} 
+}
 .marketing h4 {
     font-size: 18px;
     line-height: 35px;
@@ -2515,7 +2517,7 @@ section.footer-agileits input#inputEmail1, section.footer-agileits input#text1 {
 section.about-w3ls h3.text-center, section.team-w3ls h3.text-center, section.cust-agileits h3.text-center, section.service-w3ls h3.text-center, section.service-agileits h3.text-center, section.work-w3ls h3.text-center, section.shipment-w3ls h3.text-center, section.transit-w3ls h3.text-center, section.contact-us h3.text-center, section.contact-w3ls h3.text-center, section.info-w3ls h3.text-center, section.info-w3ls2 h3.text-center, section.info-w3ls3 h3.text-center,section.special-w3layouts h3.text-center {
     font-size: 19px;
 	padding: 15px 0 35px;
-}	
+}
 section.banner-w3ls2 h3.text-center, section.banner-w3ls3 h3.text-center {
     font-size: 27px;
 	line-height:40px;
@@ -2691,7 +2693,7 @@ section.special-w3layouts h4.text-center {
 .navbar-default .navbar-nav>li>a {
     padding: 10px 11px;
     font-size: 13px;
-}	
+}
 .navbar-brand h1 {
     font-size: 25px;
 }
@@ -2858,12 +2860,3 @@ section.footer-agileits button.btn-outline {
     padding: 15px 0px 0px 15px;
 }
 }
-
-
-
-
-
-
-
-
-

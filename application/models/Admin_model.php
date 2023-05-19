@@ -381,6 +381,12 @@
        return $query->row();
      }
 
+     public function del_seller_profile($id){
+        $this->db->where('id',$id);
+        $this->db->delete('tbl_admin_login');
+        return true;
+     }
+
     }
 
 

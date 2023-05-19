@@ -134,7 +134,7 @@
         }
        public function GetCartProd($table,$UserId){
         // $this->db->limit(10);
-        $this->db->select('id,user_id,product_id,userfile,prod_name,(prod_price * prod_quantity)as totalprice,prod_price,prod_quantity,prod_quantity as quantity,prod_brand');
+        $this->db->select('id,user_id,product_id,userfile,prod_name,(prod_price * prod_quantity) as totalprice,prod_price,prod_quantity,prod_quantity as quantity,prod_brand,created_at');
         $this->db->from($table);
         $this->db->where('user_id',$UserId);
         $query =  $this->db->get();
@@ -219,6 +219,11 @@
                  return $query->result();
                }
 
+            public function insert_into_viewprod($table,$data){
+                 $this->db->insert($table,$data);
+                 return true;
+            }
+
                 // public function get_cart($limit,$start,$UserId){
                 //   $this->db->limit($limit,$start);
                 //   $this->db->where('user_id',$UserId);
@@ -263,10 +268,52 @@
               return $query->row();
              }
 
+           public function update_view_prod($table,$get_view_prod,$num_views,$id){
+             $data_arr = array(
+               'product_id' => $get_view_prod->id,
+               'user_id' =>$this->session->userdata('id'),
+               'prod_name'  => $get_view_prod->prod_name,
+               'prod_price' => $get_view_prod->prod_price,
+               'userfile' => $get_view_prod->userfile,
+               'no_views' => $num_views
+              );
+              $this->db->where('product_id',$id);
+              return $this->db->update($table,$data_arr);
 
-             public function myhash($string){
-              return  hash("sha512", $string . config_item("encryption_key"));
-                  }
+           }
+
+          public function UpdateLikes($table,$prod_id,$num_likes){
+              $likes = array('no_likes'=>$num_likes);
+              $this->db->where('product_id',$prod_id);
+              $this->db->update($table,$likes);
+              return true;
+          }
+          public function UpdateCountLikes($table,$prod_id,$likes){
+              $data = array(
+                'likes'=>$likes
+              );
+             $this->db->where('product_id',$prod_id);
+             return  $this->db->update($table,$data);
+
+          }
+          public function ReUpdateLikes($table,$prod_id,$num_likes){
+              $countlikes = array('likes'=>$num_likes);
+              $this->db->where('product_id',$prod_id);
+              return $this->db->update($table,$countlikes);
+
+          }
+         public function myhash($string){
+           return  hash("sha512", $string . config_item("encryption_key"));
+         }
+
+       public function get_like_product($search_key){
+          $this->db->select('*');
+          $this->db->from('tbl_product');
+          $this->db->like('prod_name', $search_key);
+          $query  = $this->db->get();
+          return $query->result();
+
+        }
 
 }
 

@@ -10,6 +10,8 @@
 <!-- /banner section -->
 <!-- wallet icons -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+
 </head>
 <!-- ajax -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -46,7 +48,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 <!-- navigation -->
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" style="height:108px;">
+  <div class="" style="background:sandybrown;padding:5px;">
+  <marquee style="font-style:italic;color:white;"><blink> Check out our latest products and their prices, very much affordable...... </marquee></marquee>
+  </div>
     <div class="container" style="position: relative;">
         <div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -55,42 +60,54 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-		 <a class="navbar-brand" href="<?=base_url('users')?>"><h2><span class="" aria-hidden="true"></span>Gatsby</h2></a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse" style="">
-			<ul class="nav navbar-nav navbar-right">
-				<li class="<?=($this->uri->uri_string()==='users')?'active':''?>"> <a href="<?=base_url()?>users/">Home</a></li>
-				<li class="<?=($this->uri->uri_string()=='users/about')?'active':''?>" ><a href="<?=base_url()?>users/about/">About</a></li>
-				<li class="<?=($this->uri->uri_string()=='users/services')?'active':''?>" ><a href="<?=base_url()?>users/services">Services</a></li>
-				<li class="<?=($this->uri->uri_string()=='users/ourwork')?'active':''?>"><a href="<?=base_url()?>users/ourwork">Our Work</a></li>
-				<li class="<?=($this->uri->uri_string()=='users/process')?'active':''?>"><a href="<?=base_url()?>users/process">Process</a></li>
-				<li class="<?=($this->uri->uri_string()=='users/contact')?'active':''?>" ><a href="<?=base_url()?>users/contact">Contact</a></li>
+
+       <div id="navbar" class="navbar-collapse collapse">
+			  <ul class="nav navbar-nav navbar-right ">
+				   <li class="<?=($this->uri->uri_string()==='users')?'active':''?>" style="margin-top:13px;right:30px;"> <a href="<?=base_url()?>users/">Home</a></li>
+
+    				<!-- <li class="<?=($this->uri->uri_string()=='users/about')?'active':''?>" ><a href="<?=base_url()?>users/about/">About</a></li>
+    				<li class="<?=($this->uri->uri_string()=='users/services')?'active':''?>" ><a href="<?=base_url()?>users/services">Services</a></li>
+    				<li class="<?=($this->uri->uri_string()=='users/ourwork')?'active':''?>"><a href="<?=base_url()?>users/ourwork">Our Work</a></li>
+    				<li class="<?=($this->uri->uri_string()=='users/process')?'active':''?>"><a href="<?=base_url()?>users/process">Process</a></li>
+    				<li class="<?=($this->uri->uri_string()=='users/contact')?'active':''?>" ><a href="<?=base_url()?>users/contact">Contact</a></li> -->
          <!-- cart logo -->
-      <li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-truck" aria-hidden="true"></i> Tracking<b class="caret"></b></a>
-					<div class="dropdown-menu">
+         <li class="dropdown">
+					<a href="#" class="dropdown-toggle"  data-toggle="dropdown" style="margin-top:13px;right:20px;"><i class="fa fa-truck" aria-hidden="true"></i> Tracking<b class="caret"></b></a>
+					<div class="dropdown-menu" style="">
+
 						<div class="track-w3ls">
 							<h3>Enter Your Tracking Code</h3>
-				    <?php if($this->session->flashdata('error_tracking')):?>
-				    	 <center> <div class="alert alert-danger" style="width:70%"><?=$this->session->flashdata('error_tracking')?></div></center>
-				    <?php endif;?>
+				        <?php if(($this->session->flashdata('error_tracking'))):?>
+				    	     <center> <div class="alert alert-danger" style="width:70%"><?=$this->session->flashdata('error_tracking')?></div></center>
+				         <?php endif;?>
 							<form action="<?=base_url('users/trackshipment')?>" method="POST">
-								<input type="text" name="trackcode" autocomplete="off" placeholder="Enter Tracking Code" required />
+								<input type="text" name="trackcode"  autocomplete="off" placeholder="Enter Tracking Code" required />
 								<button type="submit" class="btn btn-primary">Track</button>
 							</form>
 							<p class="track-p1">Contact Us :</p>
+              <input type="text" name="">
 							<p class="track-p2"><a href="mailto:mail@example.com">mail@example.com</a></p>
 						</div>
 					</div>
 				</li>
 
+        <?php if($this->session->userdata("logged_in")){ ?>
+		   <input type="text" name="search" id="search" placeholder=" enter product key word...." size="55px;" style="position:relative;top:10px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
+		   <button  id="search_prod" style="position:relative;top:10px;padding:8px;background:sandybrown;border-radius:3px;border:0px solid red;"> SEARCH  </button>
 
-				<li class="<?=($this->uri->uri_string()==='login/login_user')?'active':''?>">
-					<a  href="<?=base_url('login/login_user')?>">
+        <?php }else{  ?>
+          <input type="text" name="" placeholder=" enter product key word...." size="55px;" style="position:relative;bottom:30px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
+            <button style="position:relative;bottom:30px;padding:8px;background:sandybrown;border-radius:3px;border:0px solid red;"> SEARCH  </button>
+        <?php } ?>
+
+
+				    <li class="<?=($this->uri->uri_string()==='login/login_user')?'active':''?>" style="margin-top:13px;right:20px;">
+				  	<a  href="<?=base_url('login/login_user')?>">
             Login<b class="caret"></b></a>
 
 				<!-- <!-- 	<a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lock" aria-hidden="true"></i> Login<b class="caret"></b></a>
-				<!-- 	<div class="dropdown-menu">
+				<!-- 	<div class="dropdown-menu">7
 						<div class="login-w3ls">
 							<h3>Login To Your Account</h3>
 							<form action="<?=base_url('login/users_login')?>" method="post">
@@ -102,7 +119,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div> -->
 				</li>
 
-				<li class="<?=($this->uri->uri_string()==='users/Signup')?'active':''?>">
+				<li class="<?=($this->uri->uri_string()==='users/Signup')?'active':''?>" style="margin-top:13px;right:20px;">
 					<a href="<?=base_url('users/Signup')?>">
 						<i class="fa fa-truck" aria-hidden="true">
 					 </i>Signup<b class="caret"></b></a>
@@ -176,7 +193,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 .dot{tive;
     position: relative;
-    bottom: 30px;
+    bottom: 40px;
 		background: green;height: 10px;
 		border: 1px solid yellow;
 		font-weight: bolder;
@@ -222,6 +239,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 font-size: 50px;
 			}
 		   }
+       #blink {
+         font-size: 14px;
+         font-weight: bold;
+         color: #2d38be;
+         transition: 0.5s;
+     }
 </style>
 
 <!--
@@ -237,12 +260,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 		 <label>
-				<div class="dropdown" style="float:right;">
+				<div class="dropdown" style="float:right;margin-top:20px;">
 						 <?php if($this->session->userdata('logged_in')):?>
 					      <a href="#"> <img src="<?=base_url()?>assets/uploads/<?=$this->session->userdata('image')?>" style="position:relative;width:50px;height:50px;left:50%;border-radius:50%;bottom:10px;"> <br>
-						      </a>
+                </a>
+                   <p style="position:relative;bottom:40px;left:120px;" id="blink"> Hi, <?=$this->session->userdata('name')?> </p>
 						      <div class="dot"></div>
-						         <div class="dropdown" style="margin-left:80px;width: 50%;padding:10px;">
+						         <div class="dropdown" style="margin-left:80px;padding:10px;position:relative;bottom:40px;">
 							  	     <div class="dropdown-content">
 								         <h4 style="font-family:sans-serif;text-align:center;padding-top:20px;padding: 5px;color: deepskyblue;"><?=$this->session->userdata('name')?></h4>
 								            <a href="#"><i class="fa fa-diamond"><?=$this->session->userdata('email')?></i></a>
@@ -250,42 +274,95 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							             <a href="<?=base_url('users/product')?>"><i class="fa fa-cloud">View Product</i></a>
 							         <a href="#"><i class="fa fa-smile-o"> Smile </i></a>
 								    <a href="<?=base_url('login/logout')?>"  onclick="return confirm('do you want to log out ?')"><i class="fa fa-arrow-circle-left">logout </i></a>
-
 								</div>
 					  </div>
 			  </div>
 
- 						<div class="dropdown">
-					 <i class="fa fa-shopping-cart" class="dropbtn" style="position: relative;top:5px;font-size:43px;left: 20px;color: #33accc;">
-					 	<psan class="badge badge-light" style="position: relative;right: 40px;bottom: 8px;">
+ 				 <div class="dropdown">
+					 <i class="fa fa-shopping-cart" class="dropbtn" style="position:relative;top:5px;font-size:43px;left: 20px;color: sandybrown;top:8px;top:20px;">
+					 	<psan class="badge badge-light" style="position: relative;right: 40px;bottom: 8px;background:sandybrown;color:black;">
 					 	    <?php $total_sum=0;?>
 			         	<?php foreach($demo as $cart):?>
 			         	<?php //$total_sum+=$cart->prod_quantity;?>
                 <?php $total_sum+=$cart->quantity;?>
 			         	<?php endforeach;?>
                  <?=$total_sum?>
-
 					   </i>
 					 </psan>
-								  <div class="dropdown-content">
-									  <a href="<?=base_url('users/checkout')?>"  data-toggle="modal"><i class="fa fa-car"></i> Checkout </a>
-							     <a href="<?=base_url('users/viewcart')?>"  data-toggle="modal"><i class="fa fa-eye"></i> View Cart </a>
-                   <a href="<?=base_url('users/wallet')?>"  data-toggle="modal"> 	<i class="fas fa-wallet"></i> View wallet </a>
 
-								  </div>
-								</div>
-
+						  <div class="dropdown-content">
+							  <a href="<?=base_url('users/checkout')?>"  data-toggle="modal"><i class="fa fa-car"></i> Checkout </a>
+					     <a href="<?=base_url('users/viewcart')?>"  data-toggle="modal"><i class="fa fa-eye"></i> View Cart </a>
+               <a href="<?=base_url('users/wallet')?>"  data-toggle="modal"> 	<i class="fas fa-wallet"></i> View wallet </a>
+						  </div>
+				</div>
 				   </label>
-
-						</div>
-					      </label>
-					         <?php endif;?>
+					</div>
+					</label>
+         <?php else:?>
+             <div id="navbar" class="navbar-collapse collapse" style="position:relative;bottom:8px;">
+          			 <ul class="nav navbar-nav navbar-right ">
+    				      <li class="<?=($this->uri->uri_string()=='users/about')?'active':''?>" ><a href="<?=base_url()?>users/about/">About</a></li>
+                 	<li class="<?=($this->uri->uri_string()=='users/contact')?'active':''?>" ><a href="<?=base_url()?>users/contact">Contact</a></li>
+                </ul>
+             </div>
+        <?php endif;?>
 
     </div>
 
-
-
 </nav>
+
+<script type="text/javascript">
+        var blink = document.getElementById('blink');
+        setInterval(function() {
+            blink.style.opacity = (blink.style.opacity == 0 ? 1 : 0);
+        }, 1500);
+    </script>
 <!-- navigation -->
 
 <!-- /contact section -->
+
+
+
+<script>
+    $(document).ready(function() {
+          $('#search_prod').on('click', function(){
+            var search = $('#search').val();
+            if(search!=""){
+                $.ajax({
+                   url:  "<?php// echo base_url(); ?>" + "users/search",
+                  type: "POST",
+                    data: {type:1,search:search},
+                  cache: false,
+                  success: function(dataResult){
+                    var dataResult =JSON.parse(dataResult);
+                    if(dataResult.statusCode==200){
+					   window.location = "<?=base_url('users/search')?>";
+                    }else if(dataResult.statusCode==201){
+                      $("#error").show();
+                      // $('#error').html('Invalid EmailId or Password !');
+                      Swal.fire('Error!','PRODUCT NOT FOUND !','error')
+
+                    }
+
+                  }
+                });
+
+
+            }else{
+				Swal.fire('Error!','PLEASE ENTER PRODUCT NAME  !','error');
+            }
+          });
+
+
+          //  $(document).ready(function() {
+          //     setInterval(function() {
+          //        $("#mydiv").load('<?//=base_url('users/no_likes')?>')
+          //     }, 500);
+          //   });
+
+
+
+    });
+
+</script>

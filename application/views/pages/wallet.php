@@ -17,6 +17,16 @@
   background: #FAFAFA; height: 200px;
   width:40%;margin:auto;
 }
+
+
+
+
+
+body {
+  font-family: Sans-Serif;
+}
+
+
 </style>
 <!-- tracking section -->
 <section class="shipment-w3ls">
@@ -49,4 +59,8 @@
         </div>
     </div>
 
+
+
+
 </section>
+

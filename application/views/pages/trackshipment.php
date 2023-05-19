@@ -50,11 +50,12 @@
 @media screen and (min-width: 600px) {
   div.warehouse {
     /*background: grey;*/
-     border: 1px solid #33accc;
+     border: 1px solid sandybrown;
     margin: auto;
-    width: 70%;
-    padding: 100px;
+    width: 100%;
+    padding: 80px;
     height: 110%;
+    margin-bottom: 90px;
 /*   overflow:auto;*/
    bottom: 0px;
    position: relative;
@@ -168,7 +169,7 @@
 
                         <div class="warehouse" style="height:80%;">
                           <div class="lefthouse" style="font-family:sans-serif">
-                           <img src="<?=base_url('assets/uploads/'.$track->userfile)?>" style="width:60%;border-radius:8px;margin: 20px;height:80%;">
+                           <img src="<?=base_url('assets/uploads/'.$track->userfile)?>" style="width:40%;border-radius:8px;margin: 20px;height:80%;">
                           </div>
                           <div class="righthouse">
                               <labe><h3> Details</h3> </labe>
@@ -210,7 +211,7 @@
                                       </tr>
                                  </table>
                                 <div class="form-group">
-                                  <button onclick="print()" class="btn btn-primary" style="width:120%;">Print Receipt </button>
+                                  <button onclick="print()" class="btn btn-primary" style="width:105%;background:sandybrown;padding:10px;border:0px solid red;">Print Receipt </button>
 
                              </div>
                            </div>

@@ -45,8 +45,6 @@ class Admin extends CI_controller{
           $this->load->view('admin/header');
 	        $this->load->view('admin/country');
           $this->load->view('admin/footer');
-
-
      }
 
    	      // $this->form_validation->set_rules('country','Country','required');
@@ -144,7 +142,6 @@ class Admin extends CI_controller{
             $config["uri_segment"] = 3;
             $config['attributes'] = array('class' => 'pagination-links');
             $this->pagination->initialize($config);
-
             $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
             $data["links"] = $this->pagination->create_links();
@@ -165,24 +162,23 @@ class Admin extends CI_controller{
             //  $data['displaycart'] = $this->admin_model->get_count($config["per_page"], $page);
             //  $this->load->view('admin/userfile', $data);
                }
-
-            public function allprofile(){
-                if($this->session->userdata('logged_in')){
-                $this->data['title'] = " All Users Profile";
-                $seller_id = $this->session->id;
-                $this->data['prodDetails']= $this->admin_model->prodDetails();
-                $this->data['ON'] =  $this->db->get_where('tbl_admin_login',array('id'=>$_SESSION['ON']))->row();
-                //$this->data['comment'] = $this->admin_model->GetAllComment('tbl_comment');
-                $this->data['allsellers'] = $this->admin_model->GetAllSellers('tbl_admin_login');
-                $this->data['allsellersproduct'] = $this->admin_model->GetAllSellersProduct();
-                //$this->data['sellerprod'] = $this->admin_model->GetFewProduct();
-                  $this->load->view('admin/header');
-                  $this->load->view('admin/allprofile',$this->data);
-                  $this->load->view('admin/footer');
-                }else{
-                redirect((base_url('admin/adminlogin')));
-              }
-            }
+ public function allprofile(){
+  if($this->session->userdata('logged_in')){
+        $this->data['title'] = " All Users Profile";
+        $seller_id = $this->session->id;
+        $this->data['prodDetails']= $this->admin_model->prodDetails();
+        $this->data['ON'] =  $this->db->get_where('tbl_admin_login',array('id'=>$_SESSION['ON']))->row();
+        //$this->data['comment'] = $this->admin_model->GetAllComment('tbl_comment');
+        $this->data['allsellers'] = $this->admin_model->GetAllSellers('tbl_admin_login');
+        $this->data['allsellersproduct'] = $this->admin_model->GetAllSellersProduct();
+        //$this->data['sellerprod'] = $this->admin_model->GetFewProduct();
+          $this->load->view('admin/header');
+          $this->load->view('admin/allprofile',$this->data);
+          $this->load->view('admin/footer');
+        }else{
+        redirect((base_url('admin/adminlogin')));
+    }
+ }
 
 
       public function search_for_seller_prod(){
@@ -190,11 +186,13 @@ class Admin extends CI_controller{
               $getby = $this->input->post('load');
               $input = $this->input->post('find');
               $search = $this->admin_model->GetSellerId($input);
+                 //$search = $this->db->get_where('tbl_admin_login',array('tracking_code'=>$input))->row();
               if($search){
                 $test  =  $this->db->get_where('tbl_admin_login',array('tracking_code'=>$input))->row();
                 $demo  =   $this->db->get_where('seller_prod_details',array('seller_id'=>$test->id))->result();
                 $this->data['prod_img'] = $demo;
                 $this->data['prod_details'] = $search;
+                //echo "<pre>"; print_r($this->data['prod_details']);die;
                 $this->data['seller_info']= $this->admin_model->GetSellerNmae($input);
                 $this->load->view('admin/viewseller',$this->data);
               }else{
@@ -208,7 +206,6 @@ class Admin extends CI_controller{
 
 
     public function settings(){
-
             if($_POST){
               $id = $this->input->post('id');
               $config = $this->input->post('activity');
@@ -218,8 +215,9 @@ class Admin extends CI_controller{
                 if($on_off->status=="on"){
                   $_SESSION['ON'] = $on_off->id;
                   //echo $on_off->firstname ." user activated";
-                 echo json_encode(array('statusCode'=>200));
-                 redirect('admin/allprofile');
+                  echo json_encode(array('statusCode'=>200));
+                  return redirect(base_url('admin/allprofile'));
+                 //redirect('admin/allprofile');
                  }else{
                   echo json_encode(array('statusCode'=>201));
                   redirect('admin/allprofile');
@@ -228,11 +226,36 @@ class Admin extends CI_controller{
                 echo " not found ";
               }
              }else{
+               var_dump(" POST action not working  ");die;
              return redirect(base_url('admin/allprofile'));
             }
 
        }
+  public function del_user_profile($id){
+    if($_POST['type']=='DELETE'){
+      $delrec = $this->admin_model->del_seller_profile($id);
+      if($delrec){
+        echo " record deleted ";
+        redirect('admin/allprofile');
+      }else{
+        var_dump(" cannot delete");die;
+      }
+    }else{
+      var_dump(" cannot post ");die;
+    }
 
+
+  }
+
+  public function get_data() {
+    $data = array(
+        'name' => 'John Doe',
+        'age' => 30,
+        'email' => 'johndoe@example.com'
+    );
+
+    echo json_encode($data);
+ }
 
            public function updateseller(){
                  $id = $this->input->post('id');
@@ -273,7 +296,14 @@ class Admin extends CI_controller{
                }
              }
              public function DeleteFromCart($id){
-   	         $this->admin_model->DeleteCartByID($id);
+   	          $del = $this->admin_model->DeleteCartByID($id);
+              if($del){
+                 $this->session->set_flashdata('delrec'," Record Deleted Successfully");
+                 return redirect('admin/userprofile');
+              }else{
+              echo " cannot detete record";
+                return redirect('admin/userprofile');
+              }
    	         redirect('admin/userprofile');
               }
 
@@ -282,8 +312,9 @@ class Admin extends CI_controller{
                redirect('admin/AdminLogin');
                }else{
                $this->data['title']='update cart';
-  	       	   $user_id = $this->session->userdata('id')->id;
+  	       	   $user_id = $this->session->userdata('id');
   	       	   $this->data['ActiveUserCart'] = $this->admin_model->UserCart($user_id);
+               // var_dump($this->data['ActiveUserCart']);die;
                $this->load->view('admin/header',$this->data);
   	       	   $this->load->view('admin/activeuserscart',$this->data);
                $this->load->view('admin/footer',$this->data);
@@ -324,7 +355,8 @@ class Admin extends CI_controller{
            if(!$this->session->userdata('logged_in')){
            redirect('admin/AdminLogin');
            }else{
-	 	       $userid = $this->session->userdata('id')->id;
+	 	       $userid = $this->session->userdata('id');
+           // var_dump($userid);die;
 	     	   $data['GetShipping'] = $this->admin_model->GetShippingById('tbl_shipping',$userid);
 	     	   $data['image'] = $this->db->get_where('tbl_users',array('id'=>$userid))->row();
            $this->load->view('admin/header');
@@ -333,8 +365,7 @@ class Admin extends CI_controller{
            }
 	       }
            public function insert_update(){
-    	      $user_customer  = $this->session->id;
-            $userid =   $user_customer->id;
+    	      $userid  = $this->session->id;
     	      $location = $this->input->post('current_location');
     	      $update = $this->admin_model->update_set('tbl_shipping',$userid,$location);
     	      if($update){
@@ -353,9 +384,9 @@ class Admin extends CI_controller{
             $user_type = $this->admin_model->getusertype('tbl_admin_login',$username);
             // $this->session->set_userdata('adminid',$user_type->id);
             // $admin = $this->admin_model->AdminLogin('tbl_admin_login',$username,$password);
-            $seller_login = $this->db->get_where('tbl_admin_login',array('username'=>$username,'password'=>$this->myhash($password),'status'=>'on'))->row();
+            $seller_login = $this->db->get_where('tbl_admin_login',array('username'=>$username,'password'=>$this->myhash($password)))->row();
             $admin_login = $this->db->get_where('tbl_admin_login',array('username'=>$username,'password'=>$this->myhash($password),'usertype'=>'admin'))->row();
-               if($seller_login){
+               if($seller_login->status=='on' || $seller_login->status=='1'){
                 $data_arr = array(
                   'id'=>$seller_login->id,
                   'username'=>$seller_login->username,
@@ -387,7 +418,7 @@ class Admin extends CI_controller{
                     redirect(base_url('admin'));
              }else{
               $this->session->set_flashdata('error','Enter correct username or password');
-              redirect(base_url('admin/adminlogin'));
+              redirect('admin/adminlogin');
              }
            }else{
              $this->load->view('admin/adminlogin',$this->data);
@@ -395,13 +426,16 @@ class Admin extends CI_controller{
       }
 
 
-         public function deletecomment($id){
-         $delete  = $this->admin_model->deletecomment($id);
-          if($delete){
-            redirect(base_url('admin/viewcomment'));
-          }
+  public function deletecomment($id){
+      $delete  = $this->admin_model->deletecomment($id);
+       if($delete){
+         redirect(base_url('admin/viewcomment'));
+       }else{
+         echo " cannot delete ";
+       }
 
-         }
+
+  }
 
    public function admin_logout(){
      $this->session->unset_userdata('username');
@@ -669,7 +703,7 @@ class Admin extends CI_controller{
  }
 
 
- function view_seller_prod(){
+public function view_seller_prod(){
      $key = $this->session->userdata('key');
      $seller_id = $this->session->userdata('seller_id');
      $this->data['title'] = " PRODUCTS ";
@@ -683,8 +717,8 @@ class Admin extends CI_controller{
      $this->load->view('admin/view_seller_prod',$this->data);
      $this->load->view('admin/footer');
 
-  }
-  function update_seller(){
+}
+public function update_seller(){
      $this->data['title'] = " Update Product ";
      $seller_id = $this->session->userdata('seller_id');
      $this->data['seller_record'] = $this->admin_model->GetsingleSellerRecord('tbl_admin_login',$seller_id);
@@ -782,6 +816,7 @@ public function bulk_update(){
                 $file_data = $this->upload->data();
                 // $file_path =  'uploads/csv/staff_list.csv';
                 $file_path =  'assets/admin2/product_list.csv';
+              
                 // $file_path =  $file_data['full_path'];
                 $headers = ['prod_name',	'prod_price',	'prod_brand','seller_id'];
                 // $csv_array = $this->csvimport->get_array($file_path);

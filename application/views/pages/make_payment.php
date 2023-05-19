@@ -51,7 +51,7 @@
 @media screen and (min-width: 600px) {
   div.warehouse {
     /*background: grey;*/
-    border: 1px solid #33accc;
+    border: 1px solid #F9A826;
     margin: auto;
     width: 70%;
     padding: 100px;
@@ -132,8 +132,12 @@
      </style>
 
 
+
+
 <section class="shipment-w3ls">
     <div class="container">
+
+ 
           <!-- shipping start -->
             <center>
                 <div class="warehouse" style="margin-top:180px;height:450px;">
@@ -157,11 +161,11 @@
                      <div class="form-group">
                       <script src="https://checkout.flutterwave.com/v3.js"></script>
                       <button type="button" onClick="makePayment()">
-                      <img src="<?=base_url('assets/images/Flutterwave_IMTC.jpg')?>" style="width:35%;';">
-                      Pay Now
+                         <img src="<?=base_url('assets/images/Flutterwave_IMTC.jpg')?>" style="width:35%;';">
+                         Pay Now
                        </button>
                       </div>
-                        <form action="<?=base_url('users/make_payment')?>" class="wallet_form subscribeForm" id="btn-wallet"  method="POST">
+                  <form action="<?=base_url('users/make_payment')?>" class="wallet_form subscribeForm" id="btn-wallet"  method="POST">
                           <div class="alert alert-danger"> <?=$msg?>  </div>
                          <p>
                          OR <br>
@@ -214,12 +218,14 @@
         }
     }).render('#paypal-button-container');
 </script>
+
 <!-- flutter wave -->
-<script src="https://checkout.flutterwave.com/v3.js"></script>
+ <script src="https://checkout.flutterwave.com/v3.js"></script> 
+
 <script>
    function makePayment() {
      FlutterwaveCheckout({
-       public_key: "FLWPUBK_TEST-SANDBOXDEMOKEY-X",
+      public_key: "FLWPUBK_TEST-SANDBOXDEMOKEY-X",
        tx_ref: "RX1",
        amount:"<?=$_SESSION['sum']?>",
        currency: "NGN",
@@ -242,10 +248,43 @@
          // close modal
        },
        customizations: {
-         title: "GaysBuy",
+         title: "GatsBuy",
          description: "Payment for items in cart",
          logo: "https://assets.piedpiper.com/logo.png",
        },
      });
    }
+</script>
+
+
+
+<script>
+
+
+// function makePayment() {
+//   FlutterwaveCheckout({
+//     public_key: "FLWPUBK_TEST-SANDBOXDEMOKEY-X",
+//     tx_ref: "titanic-48981487343MDI0NzMx",
+//     amount: 54600,
+//     currency: "NGN",
+//     payment_options: "card, mobilemoneyghana, ussd",
+//     redirect_url: "https://glaciers.titanic.com/handle-flutterwave-payment",
+//     meta: {
+//       consumer_id: 23,
+//       consumer_mac: "92a3-912ba-1192a",
+//     },
+//     customer: {
+//       email: "rose@unsinkableship.com",
+//       phone_number: "08102909304",
+//       name: "Rose DeWitt Bukater",
+//     },
+//     customizations: {
+//       title: "The Titanic Store",
+//       description: "Payment for an awesome cruise",
+//       logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+//     },
+//   });
+// }
+
+
 </script>
