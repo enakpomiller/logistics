@@ -62,7 +62,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</button>
         </div>
 
+	
        <div id="navbar" class="navbar-collapse collapse">
+	   
 			  <ul class="nav navbar-nav navbar-right ">
 				   <li class="<?=($this->uri->uri_string()==='users')?'active':''?>" style="margin-top:13px;right:30px;"> <a href="<?=base_url()?>users/">Home</a></li>
 
@@ -70,7 +72,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     				<li class="<?=($this->uri->uri_string()=='users/services')?'active':''?>" ><a href="<?=base_url()?>users/services">Services</a></li>
     				<li class="<?=($this->uri->uri_string()=='users/ourwork')?'active':''?>"><a href="<?=base_url()?>users/ourwork">Our Work</a></li>
     				<li class="<?=($this->uri->uri_string()=='users/process')?'active':''?>"><a href="<?=base_url()?>users/process">Process</a></li>
-    				<li class="<?=($this->uri->uri_string()=='users/contact')?'active':''?>" ><a href="<?=base_url()?>users/contact">Contact</a></li> -->
+    				<li class="<?=($this->uri->uri_string()=='users/contact')?'active':''?>" ><a href="<?=base_url()?>users/contact">Contact</a></li>  -->
          <!-- cart logo -->
          <li class="dropdown">
 					<a href="#" class="dropdown-toggle"  data-toggle="dropdown" style="margin-top:13px;right:20px;"><i class="fa fa-truck" aria-hidden="true"></i> Tracking<b class="caret"></b></a>
@@ -92,18 +94,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 				</li>
 
-        <?php if($this->session->userdata("logged_in")){ ?>
-		   <input type="text" name="search" id="search" placeholder=" enter product key word...." size="55px;" style="position:relative;top:10px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
-		   <button  id="search_prod" style="position:relative;top:10px;padding:8px;background:sandybrown;border-radius:3px;border:0px solid red;"> SEARCH  </button>
+				<?php if($this->session->userdata("logged_in")){ ?>
+			<input type="text" name="search" id="search" placeholder=" enter product key word...." size="55px;" style="position:relative;top:10px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
+			<button  id="search_prod" style="position:relative;top:10px;padding:8px;background:sandybrown;border-radius:3px;border:0px solid red;"> SEARCH  </button>
 
-        <?php }else{  ?>
-          <input type="text" name="" placeholder=" enter product key word...." size="55px;" style="position:relative;bottom:30px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
-            <button style="position:relative;bottom:30px;padding:8px;background:sandybrown;border-radius:3px;border:0px solid red;"> SEARCH  </button>
-        <?php } ?>
+			<?php }else{  ?>
+			    <input type="text" name="" placeholder=" enter product key word...." size="55px;" style="position:relative;bottom:30px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
+				<button style="position:relative;bottom:30px;padding:8px;background:sandybrown;border-radius:3px;border:0px solid red;"> SEARCH  </button>
+		 <?php } ?> 
 
-
-				    <li class="<?=($this->uri->uri_string()==='login/login_user')?'active':''?>" style="margin-top:13px;right:20px;">
-				  	<a  href="<?=base_url('login/login_user')?>">
+		   <li class="<?=($this->uri->uri_string()==='login/login_user')?'active':''?>" style="margin-top:13px;right:20px;">
+			<a  href="<?=base_url('login/login_user')?>">
             Login<b class="caret"></b></a>
 
 				<!-- <!-- 	<a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lock" aria-hidden="true"></i> Login<b class="caret"></b></a>

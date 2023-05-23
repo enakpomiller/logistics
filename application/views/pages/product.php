@@ -43,6 +43,7 @@
        <h2 class="text-center" style="font-family:sans-serif;"> Product Listing </h2>
         <div class="content-w3ls" style="overflow:auto;height:100%;background: #ffffff;">
             <div class="content1-w3ls" style="background:sandybrown;">
+            <span class="text-right"><a href="<?=base_url('users/search_index')?>"> Search Product  </a> </span>
             </div>
             <center>
 

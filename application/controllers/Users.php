@@ -586,9 +586,9 @@ class Users extends CI_controller{
         }
 
         public function single_prod(){
-          if($this->session->userdata('logged_in')==FALSE){
-              redirect(base_url('users/login_user'));
-          }
+            if($this->session->userdata('logged_in')==FALSE){
+                redirect(base_url('users/login_user'));
+            }
             $id = $this->uri->segment(3);
             $this->session->set_userdata('prod_id',$id);
             $UserId = $this->session->userdata('id');
@@ -742,6 +742,35 @@ class Users extends CI_controller{
                 $this->load->view('template/footer');
              }
          }
+    
+     public function search_index(){
+          $this->data['title'] = " search product ";
+          $this->load->view('template/header',$data);
+          $this->load->view('pages/index',$this->data);
+          //$this->load->view('template/footer');
+        }
+
+     public function search(){
+        if($_POST){
+          $search = $this->input->post('search_product');
+            $this->db->like('category',$search);
+            // $this->db->or_like('prod_price');
+            // $this->db->or_like('prod_name',$search);
+            $this->data['keyprod'] = $this->db->get('tbl_product')->result();
+            if($this->data['keyprod']){
+              $this->load->view('pages/search',$this->data);
+            }else{
+              echo " <span class='text-danger'> Sorry! Product Not Found  </span> ";
+            }
+            
+        }else{
+          echo " cannot posst ";
+        }
+       
+     
+   
+       }
+
 
 
           // public function viewcart(){
