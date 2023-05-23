@@ -6,7 +6,7 @@
             
                 <div class="form-group" align="center">
                  <p>  <?=$title?> </p>
-                    <input type="text" name="search"  id="search"  placeholder=" enter product key word...." size="55px;" style="position:relative;top:10px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
+                    <input type="text" name="search_product"  autocomplete="off" id="search_product"  placeholder=" enter product key word...." size="55px;" style="position:relative;top:10px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
                     <!-- <button onclick="populateprod()" data-bs-dismiss="modal" class="btn btn-primary">Choose Customer</button> -->
                 </div> <p> 
 
@@ -87,14 +87,14 @@
 
 $(document).ready(function(){
 
-    function search(){
+    function search_product (){
         $("#result").html("<p style='width:100%; text-align:center;'>Loading...</p>");
-        var val = $("#search").val();
+        var val = $("#search_product").val();
         $.ajax({
         type : 'POST',
-        url : '<?php echo base_url() ?>' + 'users/search',
+        url : '<?php echo base_url() ?>' + 'users/search_product',
         dataType: "html",
-        data : "search=" + val,
+        data : "search_product=" + val,
         success : function(response){
         $("#result").html(response);
 
@@ -103,9 +103,9 @@ $(document).ready(function(){
 
     }
 
-    $("#search").keydown(function(e){
+    $("#search_product").keydown(function(e){
         if(e.keyCode == '13'){
-            search();
+            search_product();
         }
     });
 

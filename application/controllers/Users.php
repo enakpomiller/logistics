@@ -742,31 +742,31 @@ class Users extends CI_controller{
                 $this->load->view('template/footer');
              }
          }
-    
-     public function search_index(){
-          $this->data['title'] = " search product ";
-          $this->load->view('template/header',$data);
-          $this->load->view('pages/index',$this->data);
-          //$this->load->view('template/footer');
-        }
 
-     public function search(){
+     public function search_product(){
         if($_POST){
           $search = $this->input->post('search_product');
+          if(!empty($search )){ 
             $this->db->like('category',$search);
-            // $this->db->or_like('prod_price');
+            //$this->db->or_like('prod_price');
             // $this->db->or_like('prod_name',$search);
             $this->data['keyprod'] = $this->db->get('tbl_product')->result();
             if($this->data['keyprod']){
-              $this->load->view('pages/search',$this->data);
+              $this->load->view('pages/display_search',$this->data);
             }else{
-              echo " <span class='text-danger'> Sorry! Product Not Found  </span> ";
+              echo "<p class='text-center text-danger'>  Sorry! Product Not Found </p> ";
             }
+          }else{
+            echo "<p class='text-center text-danger'>  Please Enter A Product Name </p> ";
+           }
             
         }else{
-          echo " cannot posst ";
+          $this->data['title'] = " search product ";
+          $this->load->view('template/header',$data);
+          $this->load->view('pages/search_product',$this->data);
+          //$this->load->view('template/footer');
         }
-       
+      
      
    
        }
