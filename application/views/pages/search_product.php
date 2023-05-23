@@ -7,6 +7,7 @@
                 <div class="form-group" align="center">
                  <p>  <?=$title?> </p>
                     <input type="text" name="search_product"  autocomplete="off" id="search_product"  placeholder=" enter product key word...." size="55px;" style="position:relative;top:10px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
+                    
                     <!-- <button onclick="populateprod()" data-bs-dismiss="modal" class="btn btn-primary">Choose Customer</button> -->
                 </div> <p> 
 
