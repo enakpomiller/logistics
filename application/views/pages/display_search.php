@@ -1,16 +1,18 @@
 
 
 <div class="container">
-<?=(count($keyprod))." Items Found "?>
+    <?php 
+      if(count($keyprod)>1){
+      echo (count($keyprod))."<h4> Products Found </h4>";
+    }else{
+        echo (count($keyprod))." Product Found ";
+    }
+    ?>
+
 </div>
  
 
 <?php foreach($keyprod as $products) { ?>
-       <?php 
-         if($products->category =="shirt"){
-           $msg =  $products;
-          }
-        ?>
     <div class="col-lg-6" style="background:sandybrown;margin-top:50px;margin-bottom:40px;">
          <div class="cards" style="background:white;padding:20px 20px; margin:20px;">
             <span style="margin-to:10px;">

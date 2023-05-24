@@ -754,7 +754,8 @@ class Users extends CI_controller{
             if($this->data['keyprod']){
               $this->load->view('pages/display_search',$this->data);
             }else{
-              echo "<h3> <p class='text-center text-danger pt-4' style='margin-top:10pxl'> Sorry! Please Enter A Product Key Word</p></h3>  ";
+              echo "<center> <img src='".base_url('assets/error_img/notfound.png')."' style='width:30%;'> </center>";
+              echo "<h3> <p class='text-center text-danger pt-4' style='position:relative;top:20px;'>  Please Enter A Product Key Word</p></h3>  ";
             }
           }else{
             echo "<p class='text-center text-danger'>  Please Enter A Product Name </p> ";
