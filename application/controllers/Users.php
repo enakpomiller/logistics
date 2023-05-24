@@ -754,7 +754,7 @@ class Users extends CI_controller{
             if($this->data['keyprod']){
               $this->load->view('pages/display_search',$this->data);
             }else{
-              echo "<h2> <p class='text-center text-danger' style='margin-top:10pxl'> Sorry! Please Enter A Product Key Word</p></h2>  ";
+              echo "<h3> <p class='text-center text-danger pt-4' style='margin-top:10pxl'> Sorry! Please Enter A Product Key Word</p></h3>  ";
             }
           }else{
             echo "<p class='text-center text-danger'>  Please Enter A Product Name </p> ";
