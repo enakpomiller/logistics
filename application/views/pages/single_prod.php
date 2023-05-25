@@ -267,15 +267,17 @@
 
                       <?php
                          $get_view_prod = $this->db->get_where('tbl_viewed_prod',array('user_id'=>$this->session->userdata('id')))->result();
-                         foreach($get_view_prod as $prod_row){?>
+                           foreach($get_view_prod as $prod_row){?>
                           <div class="col-md-2 prod">
-                           <img src="<?=base_url()?>uploads/<?=$prod_row->userfile?>" style="width:80%;height:20%;position: relative;left:20px;">
-                           <p class="text-center"><?=json_decode($prod_row->prod_name)?>
-                          <?= "<b>"." &#x20A6;"."<b>".$prod_row->prod_price?><br>
-                            <?=$prod_row->no_views." Views"?><br>
+                            <a href="<?=base_url('users/single_prod/'.$prod_row->product_id)?>">
+                             <img src="<?=base_url()?>uploads/<?=$prod_row->userfile?>" style="width:80%;height:20%;position: relative;left:20px;">
+                           </a>
+                               <p class="text-center"><?=json_decode($prod_row->prod_name)?>
+                               <?= "<b>"." &#x20A6;"."<b>".$prod_row->prod_price?><br>
+                             <?=$prod_row->no_views." Views"?><br>
                             <?=$prod_row->likes." Likes"?>
-                            </p>
-                          </div>
+                          </p>
+                        </div>
                        <?php } ?>
                 </div>
              <h3  style="padding:10px;font-family:sans-serif;"><i class="glyphicon glyphicon-thumbs-up"></i> Products You May Like </h3>   <hr></hr>
