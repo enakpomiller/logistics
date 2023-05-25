@@ -138,6 +138,7 @@
     <div class="container">
         <div class="content-w3ls " style="height:90%;background:white;">
           <div class="content1-w3ls" style="background:sandybrown;">
+          <span class="text-right"><a href="<?=base_url('users/search_product')?>"> Search Product  </a> </span>
         </div>
 
                 <div class="warehouse">

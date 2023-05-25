@@ -747,33 +747,35 @@ class Users extends CI_controller{
         if($_POST){
           $search = $this->input->post('search_product');
           if(!empty($search )){ 
-            $this->db->like('category',$search);
-            //$this->db->or_like('prod_price');
-            // $this->db->or_like('prod_name',$search);
-            $this->data['keyprod'] = $this->db->get('tbl_product')->result();
-            if($this->data['keyprod']){
-              $this->load->view('pages/display_search',$this->data);
-            }else{
-              echo "<center> <img src='".base_url('assets/error_img/search.png')."' style='width:30%;'> </center>";
-              echo "<h4> <p class='text-center text-danger pt-4' style='position:relative;top:20px;'>  Please Enter A Product Key Word</p></h4>  ";
-            }
+              $this->db->like('category',$search);
+              //$this->db->or_like('prod_price');
+              // $this->db->or_like('prod_name',$search);
+              $this->data['keyprod'] = $this->db->get('tbl_product')->result();
+              if($this->data['keyprod']){
+                   $this->load->view('pages/display_search',$this->data);
+              }else{
+                echo "<center> <img src='".base_url('assets/error_img/search.png')."' style='width:30%;'> </center>";
+                echo "<h4> <p class='text-center text-danger pt-4' style='position:relative;top:20px;'>  Please Enter A Product Key Word</p></h4>  ";
+              }
           }else{
-            echo "<center> <img src='".base_url('assets/error_img/notfound.png')."' style='width:30%;'> </center>";
-            echo "<p class='text-center text-danger'>  Please Enter A Product Name </p> ";
+              echo "<center> <img src='".base_url('assets/error_img/notfound.png')."' style='width:30%;'> </center>";
+              echo "<p class='text-center text-danger'>  Please Enter A Product Name </p> ";
            }
-            
+           
         }else{
           $this->data['title'] = " search product ";
           $this->load->view('template/header',$data);
           $this->load->view('pages/search_product',$this->data);
           //$this->load->view('template/footer');
         }
-      
-     
-   
-       }
+      }
 
-
+    public function test (){
+      sleep(3);
+      $response = new stdClass;
+      $response->status = "success";
+      die(json_encode($response));
+    }
 
           // public function viewcart(){
           //    // $UserId= $this->session->userdata('id');
