@@ -15,7 +15,7 @@
                 <th scope="col">Unit price</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Total</th>
-                <th scope="col">Action</th>
+                <th scope="col" class="text-center">Action</th>
               </tr>
               </thead>
                 <tbody>
@@ -29,7 +29,10 @@
                     <td>  <?='&#8358;'.$row->prod_price?> </td>
                     <td>  <?=$row->prod_quantity?> </td>
                     <td> <?='&#8358;'.(number_format($row->totalprice))?> </td>
-                    <td> <button type="submit" class="btn btn-danger remove"><i class="fa fa-trash"></i> Delete</button>  </td>
+                    <td class="text-center">
+                       <button type="submit" class="btn btn-danger remove"><i class="fa fa-trash"></i> Delete</button> 
+                       <a href="<?=base_url('users/comment/'.$row->product_id)?>" class="btn btn-success"> <i class="fa fa-eye"></i> Comment  </a> 
+                       </td>
                   </tr>
                    <!-- <?=$total_sum+=$row->prod_quantity;?>
                   <?php $grand_sum+=($row->prod_price)*($row->prod_quantity);?> -->

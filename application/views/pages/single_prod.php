@@ -147,6 +147,7 @@
                   .prod:hover{
                     //border: 1px solid red;
                     box-shadow: 1px 1px 5px 1px  sandybrown;
+                    padding:0px;
                   }
                 </style>
 
@@ -274,8 +275,8 @@
                            </a>
                                <p class="text-center"><?=json_decode($prod_row->prod_name)?>
                                <?= "<b>"." &#x20A6;"."<b>".$prod_row->prod_price?><br>
-                             <?=$prod_row->no_views." Views"?><br>
-                            <?=$prod_row->likes." Likes"?>
+                               <?=$prod_row->no_views." Views"?><br>
+                               <?=$prod_row->likes." Likes"?>
                           </p>
                         </div>
                        <?php } ?>

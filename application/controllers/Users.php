@@ -4,35 +4,39 @@
 
 class Users extends CI_controller{
        public function __construct(){
-        parent::__construct();
-        $this->load->database();
-        $this->load->model('users_model');
-        //$this->load->helper('url','form','text');
-        $this->load->helper(array('form', 'url','text'));
-        $this->load->helper('cookie');
-        $this->load->library('session');
-        $this->load->library('form_validation');
-        $this->load->library("pagination");
-        // $this->load->library('ms_graph');
+            parent::__construct();
+            $this->load->database();
+            $this->load->model('users_model');
+            //$this->load->helper('url','form','text');
+            $this->load->helper(array('form', 'url','text'));
+            $this->load->helper('cookie');
+            $this->load->library('session');
+            $this->load->library('form_validation');
+            $this->load->library("pagination");
+            // $this->load->library('ms_graph');
+       
+          
          }
 
        public function index(){
-            $UserId= $this->session->userdata('id');
-            $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-            $this->load->view('template/header',$data);
-            $this->load->view('template/slider');
-            $this->load->view('pages/body');
-            $this->load->view('template/footer');
-         }
+              $UserId= $this->session->userdata('id');
+              $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+              $this->load->view('template/header',$data);
+              $this->load->view('template/slider');
+              $this->load->view('pages/body');
+              $this->load->view('template/footer');
+      
+        }
 
-        public function signup (){
-            $data['countries'] = $this->users_model->GetAllCountries();
-            $this->form_validation->set_rules('name','Name','required');
-            $this->form_validation->set_rules('country','Country','required');
-            $this->form_validation->set_rules('email','Email','required|callback_check_email_exists');
-            $this->form_validation->set_rules('password','Password','required|min_length[6]');
-            $this->form_validation->set_rules('conf_password','Confirm pasword','matches[password]');
-            $this->form_validation->set_rules('userfile', 'Image', 'trim');
+      public function signup (){
+          if($this->uri->uri_string()==="users/signup"){ 
+              $data['countries'] = $this->users_model->GetAllCountries();
+              $this->form_validation->set_rules('name','Name','required');
+              $this->form_validation->set_rules('country','Country','required');
+              $this->form_validation->set_rules('email','Email','required|callback_check_email_exists');
+              $this->form_validation->set_rules('password','Password','required|min_length[6]');
+              $this->form_validation->set_rules('conf_password','Confirm pasword','matches[password]');
+              $this->form_validation->set_rules('userfile', 'Image', 'trim');
                if($this->form_validation->run()==FALSE){
                   $this->load->view('template/header');
                   $this->load->view('pages/typo',$data);
@@ -48,51 +52,55 @@ class Users extends CI_controller{
                    $country=$this->input->post('country');
                    $email =$this->input->post('email');
                    $password = $this->myhash($this->input->post('password'));
-                  // $enc_password = $this->input->post('password');
+                   // $enc_password = $this->input->post('password');
 
-                  // $enc_password = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
+                   // $enc_password = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
 
-              //image upload------------------------------------
-                  $config['upload_path'] ='./assets/uploads/';
-                  $config['allowed_types'] ='gif|jpg|png|jpeg|pdf';
-                  $config['max_size'] ='2048';
-                  $config['max_width'] = '5000';
-                  $config['max_height'] ='60000';
+                   //image upload------------------------------------
+                    $config['upload_path'] ='./assets/uploads/';
+                    $config['allowed_types'] ='gif|jpg|png|jpeg|pdf';
+                    $config['max_size'] ='2048';
+                    $config['max_width'] = '5000';
+                    $config['max_height'] ='60000';
 
-                  $this->load->library('upload',$config);
-                  if(!$this->upload->do_upload()){
-                    $errors = array('error'=>$this->upload->display_errors());
-                    $userfile = 'noimage.jpg';
-                    var_dump($errors);die;
+                    $this->load->library('upload',$config);
+                    if(!$this->upload->do_upload()){
+                      $errors = array('error'=>$this->upload->display_errors());
+                      $userfile = 'noimage.jpg';
+                      var_dump($errors);die;
                     }else{
-                    $data = array('upload_data'=>$this->upload->data());
-                    $userfile = $_FILES['userfile']['name'];
+                      $data = array('upload_data'=>$this->upload->data());
+                      $userfile = $_FILES['userfile']['name'];
                     }
-               //close image upload ---------------------------
-                   $date = $this->input->post('date');
-                   // $data_arr=$this->security->xss_clean($data);
-                  // $InsertId=$this->users_model->create('tbl_users',$data_arr);
-                    $InsertId = $this->users_model->create($name,$country,$email,$password,$userfile,$date);
-                    $this->session->set_userdata($InsertId);
-                    if($InsertId){
-                       $InsertCode['user_id'] = $InsertId;
-                       $InsertCode['email'] = $this->input->post('email');
-                       $InsertCode['code'] = rand(0,10000);
-                       $this->users_model->InsertCode('tbl_code',$InsertCode);
-                   }
-                  $this->session->set_flashdata('msg_success','USERS CREATED! PLEASE LOGIN');
-                   //json_encode(array('statusCode'=>200));
-                   redirect('login/Login_user');
-                  // $this->load->view('template/header');
-                  // $this->load->view('pages/typo');
-                  // $this->load->view('template/footer');
+                      //close image upload ---------------------------
+                      $date = $this->input->post('date');
+                      // $data_arr=$this->security->xss_clean($data);
+                      // $InsertId=$this->users_model->create('tbl_users',$data_arr);
+                      $InsertId = $this->users_model->create($name,$country,$email,$password,$userfile,$date);
+                      $this->session->set_userdata($InsertId);
+                     if($InsertId){ 
+                        $InsertCode['user_id'] = $InsertId;
+                        $InsertCode['email'] = $this->input->post('email');
+                        $InsertCode['code'] = rand(0,10000);
+                        $this->users_model->InsertCode('tbl_code',$InsertCode);
+                     }
+                      $this->session->set_flashdata('msg_success','USERS CREATED! PLEASE LOGIN');
+                      //json_encode(array('statusCode'=>200));
+                      redirect('login/Login_user');
+                      // $this->load->view('template/header');
+                      // $this->load->view('pages/typo');
+                      // $this->load->view('template/footer');
                 }else{
                   $this->load->view('template/header');
                   $this->load->view('pages/typo');
                   $this->load->view('template/footer');
                 }
               }
-        }
+
+          }else{
+              echo " 404 page not found ";
+           }
+       }
 
       public function login_user(){
                 //$this->users_model->get_image();
@@ -185,11 +193,16 @@ class Users extends CI_controller{
                 }
               }
            public function about(){
-                $UserId= $this->session->userdata('id');
-                $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-                $this->load->view('template/header',$data);
-                $this->load->view('pages/about');
-                $this->load->view('template/footer');
+            if($this->uri->uri_string()=="users/about"){
+              $UserId= $this->session->userdata('id');
+              $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+              $this->load->view('template/header',$data);
+              $this->load->view('pages/about');
+              $this->load->view('template/footer');
+            }else{
+              echo " 4004 page not found ";
+            }
+            
                }
 
             public function product(){
@@ -249,13 +262,20 @@ class Users extends CI_controller{
                $this->load->view('pages/eachproduct',$data);
                $this->load->view('template/footer');
                 }
-              public function contact(){
-              $UserId= $this->session->userdata('id');
-              $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-              $this->load->view('template/header',$data);
-              $this->load->view('pages/contact',$data);
-              $this->load->view('template/footer');
+              
+            public function contact(){
+              if($this->uri->uri_string()==="users/contact"){
+                $UserId= $this->session->userdata('id');
+                $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+                $this->load->view('template/header',$data);
+                $this->load->view('pages/contact',$data);
+                $this->load->view('template/footer');
+              
+              }else{
+               echo " 404 page not found ";
               }
+             
+            }
 
               public  function generateRandomString($length = 10) {
                 $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

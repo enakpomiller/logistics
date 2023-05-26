@@ -9,14 +9,18 @@
           $this->load->helper('url','form','text');
           $this->load->library('session');
           $this->load->library('form_validation');
+         
+     
+
            }
 
 
       public function index(){
-
+    
            }
 
          public function login_user(){
+            if($this->uri->uri_string()==="login/login_user"){
                  //$this->users_model->get_image();
                   if($_POST['type']==1){
                       $unique_id = $this->session->userdata('id');
@@ -57,6 +61,9 @@
                     $this->load->view('pages/login_user');
                     $this->load->view('template/footer');
                   }
+                }else{
+                   var_dump(" 404 page not found");die;
+                }
 
           }
 

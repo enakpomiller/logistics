@@ -120,8 +120,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div> -->
 				</li>
 
-				<li class="<?=($this->uri->uri_string()==='users/Signup')?'active':''?>" style="margin-top:13px;right:20px;">
-					<a href="<?=base_url('users/Signup')?>">
+				<li class="<?=($this->uri->uri_string()==='users/signup')?'active':''?>" style="margin-top:13px;right:20px;">
+					<a href="<?=base_url('users/signup')?>">
 						<i class="fa fa-truck" aria-hidden="true">
 					 </i>Signup<b class="caret"></b></a>
 				</li>

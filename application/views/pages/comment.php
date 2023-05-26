@@ -132,23 +132,22 @@
 
 
 <!-- tracking section -->
-    <section class="shipment-w3ls">
-        <div class="container">
-            <i class="fa fa-braille" aria-hidden="true"></i>
-            <h3 class="text-center wthree w3-agileits agileits-w3layouts agile w3-agile"> Comment section </h>
-        </div>
-    <div class="container">
-        <div class="content-w3ls" style="height:90%;background:white;">
-          <div class="content1-w3ls">
-        </div>
+    <section class="shipment-w3ls" style="margin-top:100px;">
+          <!-- <div class="container">
+              <i class="fa fa-braille" aria-hidden="true"></i>
+              <h3 class="text-center wthree w3-agileits agileits-w3layouts agile w3-agile"> Comment section </h>
+          </div> -->
+          <div class="container" >
+              <div class="content-w3ls" style="height:90%;background:white;">
+                <!-- <div class="content1-w3ls"></div> -->
 
                 <div class="warehouse">
 
-                  <div class="lefthouse" style="font-family:sans-serif">
-                     <img src="<?=base_url('uploads/'.$result->userfile)?>" style="width:90%;height:120%;position: relative;left:30px;">
-                      <center><label style="margin:10px 10px;font-family:ariel;font-size:20px"><?=($result->prod_name)?></label></center>
-                      <center><label style="padding:10px;font-family:ariel;font-size:2em"><?= " &#x20A6;".($result->prod_price)?></label></center>
-                    </div>
+                    <div class="lefthouse" style="font-family:sans-serif">
+                      <img src="<?=base_url('uploads/'.$result->userfile)?>" style="width:90%;height:120%;position: relative;left:30px;">
+                        <center><label style="margin:10px 10px;font-family:ariel;font-size:20px"><?=($result->prod_name)?></label></center>
+                        <center><label style="padding:10px;font-family:ariel;font-size:2em"><?= " &#x20A6;".($result->prod_price)?></label></center>
+                      </div>
 
                   <form   action="<?php //echo base_url("Users/comment/$result->id");?>" method="POST">
                   <div class="righthouse">
@@ -171,29 +170,29 @@
                          <input type="date"  class="form-control line_remove" value="<?=set_value('date')?>" name="date" id="date">
                       </div>
                         <div class="form-group">
-                         <button class="btn btn-primary"  style="width:100%;" id="submit">Submit</button>
+                         <button class="btn"  style="width:100%;background:sandybrown;" id="submit">Submit</button>
                      </div>
                    </div>
                     </form>
                 </div>
         </div>
 
-              <table class="table table-bordered"  style="width:90%;margin:auto;">
-                  <tr>
-                    <th class="text-center text-primary"> CUSTOMER NAME</th>
-                    <th class="text-center text-primary"> COMMENT</th>
-                    <TH class="text-center text-primary"> DATE </TH>
-                  </tr>
-                   <?php foreach($getcomment as $comment){?>
-                    <tr>
-                      <td class="text-center"> <?=$comment->name?> </td>
-                      <td class="text-center"> <?=$comment->body?> </td>
-                      <td class="text-center"> <?=$comment->date?> </td>
-                    </tr>
-                    <?php
-                    }
-                    ?>
-              </table>
+                  <!-- <table class="table table-bordered"  style="width:90%;margin:auto;">
+                      <tr>
+                        <th class="text-center text-primary"> CUSTOMER NAME</th>
+                        <th class="text-center text-primary"> COMMENT</th>
+                        <TH class="text-center text-primary"> DATE </TH>
+                      </tr>
+                      <?php /*foreach($getcomment as $comment){?>
+                        <tr>
+                          <td class="text-center"> <?=$comment->name?> </td>
+                          <td class="text-center"> <?=$comment->body?> </td>
+                          <td class="text-center"> <?=$comment->date?> </td>
+                        </tr>
+                        <?php
+                        }*/
+                        ?>
+                  </table> -->
 
 
     </div>
