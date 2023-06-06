@@ -396,7 +396,7 @@ class Users extends CI_controller{
                     }
                     fclose($file);
                     exit;
-                  }
+             }
 
 
                public function services(){
@@ -562,34 +562,36 @@ class Users extends CI_controller{
       //   $this->load->view('template/footer');
       // }
 
-        public function comment($id){
-            $UserId = $this->session->userdata('id')->id;
+        public function comment1(){
+            $id = $this->uri->segment(3);
+            $UserId = $this->session->userdata('id');
             $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
             $data['result'] = $this->users_model->SingleProduct($id);
-            if($_POST){
-            $this->form_validation->set_rules('name','Name','required');
-            $this->form_validation->set_rules('body','Message','required');
-            $comment['prod_id'] = $this->input->post('prod_id');
-            $comment['prod_title'] = $this->input->post('prod_title');
-            $comment['name'] = $this->input->post('name');
-            $comment['body'] = $this->input->post('body');
-            $comment['userfile'] = $this->input->post('userfile');
-            $comment['date'] = $this->input->post('date');
-            // echo "<pre>"; print_r($comment); die;
-            if($this->form_validation->run()===TRUE){
-               $InsertComment = $this->users_model->CreateComment('tbl_comment',$comment);
-               if($InsertComment){
-                $this->session->set_flashdata('item','comment sent');
-                 $this->load->view('template/header',$data);
-                 $this->load->view('pages/comment',$data);
-                 $this->load->view('template/footer');
-                 echo json_encode(array("statusCode"=>200));
-               }else{
+          if($_POST){
+              $this->form_validation->set_rules('name','Name','required');
+              $this->form_validation->set_rules('body','Message','required');
+              $comment['prod_id'] = $this->input->post('prod_id');
+              $comment['prod_title'] = $this->input->post('prod_title');
+              $comment['name'] = $this->input->post('name');
+              $comment['body'] = $this->input->post('body');
+              $comment['userfile'] = $this->input->post('userfile');
+              $comment['date'] = $this->input->post('date');
+                //echo "<pre>"; print_r($comment); die;
+              if($this->form_validation->run()===TRUE){
+                 $InsertComment = $this->users_model->CreateComment('tbl_comment',$comment);
+                 if($InsertComment){
+                      $this->session->set_flashdata('item','comment sent');
+                      $this->load->view('template/header',$data);
+                      $this->load->view('pages/comment',$data);
+                      $this->load->view('template/footer');
+                    // return redirect(base_url('users/comment'));
+                    echo json_encode(array("statusCode"=>200));
+                }else{
                  echo json_encode(array("statusCode"=>201));
                 // // $messge = array('message' => 'Wrong password enter','class' => 'alert alert-danger fade in');
                 // // $this->session->set_flashdata('item',$messge );
                 // redirect('users/comment','refresh');
-               }
+                }
 
                 }else{
                   $msg_sent = $this->session->set_flashdata('error','Comment Sent! thank you ');
@@ -603,9 +605,67 @@ class Users extends CI_controller{
               $this->load->view('pages/comment',$data);
               $this->load->view('template/footer');
             }
-        }
+        } 
 
-        public function single_prod(){
+      public function comment(){
+        $id = $this->uri->segment(3);
+         if($this->input->post('type')==1){ 
+            $prodid = $this->input->post('prod_id');
+            if($prodid){
+              echo json_encode(array("statusCode"=>200));
+              redirect(base_url('users/comment/',$id));
+            }else{
+              echo json_encode(array("statusCode"=>201));
+              redirect(base_url('users/comment/',$id));
+            }
+            
+
+              // $this->form_validation->set_rules('prod_id','Prodcut id','required');
+              // $this->form_validation->set_rules('prod_title','Prodcut title','required');
+              // $this->form_validation->set_rules('name','Name','required');
+              // $this->form_validation->set_rules('body','Body','required');
+              // $this->form_validation->set_rules('userfile','Userfile','required');
+              // $this->form_validation->set_rules('date','Date','required');
+              //   if($this->form_validation->run()=== TRUE){
+              //     $comment['prod_id'] = $this->input->post('prod_id');
+              //     $comment['prod_title'] = $this->input->post('prod_title');
+              //     $comment['name'] = $this->input->post('name');
+              //     $comment['body'] = $this->input->post('body');
+              //     $comment['userfile'] = $this->input->post('userfile');
+              //     $comment['date'] = $this->input->post('date');
+              //     $InsertComment = $this->users_model->CreateComment('tbl_comment',$comment);
+              //       if($InsertComment){
+              //         $msg_sent = $this->session->set_flashdata('error','Comment Sent! thank you ');
+              //         echo json_encode(array("statusCode"=>200));
+              //         redirect(base_url('users/comment/',$id));
+              //       }else{
+                  
+              //         return redirect(base_url('users/comment/'.$id));
+              //       }
+              //   }else{
+              //     $id = $this->input->post('prod_id');
+              //     return redirect(base_url('users/comment/'.$id));
+              //     $this->load->view('template/header',$data);
+              //     $this->load->view('pages/comment',$data);
+              //     $this->load->view('template/footer');
+              //   return redirect(base_url('users/comment/'.$id));
+                
+              //   }  
+
+          }else{
+        
+            $UserId = $this->session->userdata('id');
+            $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+            $data['result'] = $this->users_model->SingleProduct($id);
+            $msg_sent = $this->session->set_flashdata('error','Comment Sent! thank you ');
+            $this->load->view('template/header',$data);
+            $this->load->view('pages/comment',$data);
+            $this->load->view('template/footer');
+          }
+          
+       }
+
+       public function single_prod(){
             if($this->session->userdata('logged_in')==FALSE){
                 redirect(base_url('users/login_user'));
             }
@@ -765,19 +825,21 @@ class Users extends CI_controller{
 
      public function search_product(){
         if($_POST){
-          $search = $this->input->post('search_product');
-          if(!empty($search )){ 
+          $search = $this->input->post('search');
+           if(!empty($search )){ 
               $this->db->like('category',$search);
               //$this->db->or_like('prod_price');
-              // $this->db->or_like('prod_name',$search);
+              //$this->db->or_like('prod_name',$search);
               $this->data['keyprod'] = $this->db->get('tbl_product')->result();
               if($this->data['keyprod']){
                    $this->load->view('pages/display_search',$this->data);
-              }else{
-                echo "<center> <img src='".base_url('assets/error_img/search.png')."' style='width:30%;'> </center>";
-                echo "<h4> <p class='text-center text-danger pt-4' style='position:relative;top:20px;'>  Please Enter A Product Key Word</p></h4>  ";
               }
-          }else{
+              else{
+                $this->load->view('pages/display_search',$this->data);
+                // echo "<center> <img src='".base_url('assets/error_img/search.png')."' style='width:30%;'> </center>";
+                // echo "<h4> <p class='text-center text-danger pt-4' style='position:relative;top:20px;'>  Please Enter A Product Key Word</p></h4>  ";
+              }
+           }else{
               echo "<center> <img src='".base_url('assets/error_img/notfound.png')."' style='width:30%;'> </center>";
               echo "<p class='text-center text-danger'>  Please Enter A Product Name </p> ";
            }

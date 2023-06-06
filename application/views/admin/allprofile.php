@@ -243,15 +243,15 @@
 
 
      <div id="menu3" class="container   tab-pane">
-        <div class="row" style="width:70%;margin:auto;margin-top:30px;">
-           <div class="col-md-8">
-                 <input type="text" placeholder="Search.." name="find" id="find" class="form-control" style="width:100%;margin-bottom:15px;">
-                 <!-- <button type="submit"><i class="fa fa-search"></i></button> -->
+          <div class="row" style="width:70%;margin:auto;margin-top:30px;">
+            <div class="col-md-8">
+                  <input type="text" placeholder="Search.." name="find" id="find" class="form-control" style="width:100%;margin-bottom:15px;">
+                  <!-- <button type="submit"><i class="fa fa-search"></i></button> -->
+              </div>
+              <div class="col-md-4" style="margin-bottom:15px">
+                  <button id="fetch"  class="btn btn-primary btn-block">Fetch</button>
             </div>
-            <div class="col-md-4" style="margin-bottom:15px">
-                <button id="fetch"  class="btn btn-primary btn-block">Fetch</button>
-           </div>
-         </div> 
+          </div> 
 
 
             <div class="row" id="loading">

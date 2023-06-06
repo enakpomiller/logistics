@@ -44,8 +44,8 @@ width:70%;
                      <div class="container" id="bg">
                      <?php //echo form_open_multipart('users/signup');?>
                         <form method="post" id="form"  enctype="multipart/form-data" class="subscribeForm">
-                         <div class="form-row">
-                         <div class="form-group col-md-6">
+                         <div class="form-row">  
+                         <div class="form-group col-md-6"> 
                           <div style="color: red;"> <?=form_error('name')?></div>
                           <input type="text" name="name"  placeholder="Enter Name" class="form-control" id="name" value="<?=set_value('name')?>" style="padding: 20px;">
                       </div>

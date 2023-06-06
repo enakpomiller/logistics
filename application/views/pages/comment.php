@@ -122,13 +122,7 @@
 }
    </style>
 
-<!-- <section class="inner-w3ls">
-    <div class="container">
-        <h2 class="text-center w3layouts w3 w3l agileits agileinfo">Track Your Product</h2>
-        <p class="text-center w3layouts w3 w3l agileits agileinfo">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
-    </div>
-</section> -->
-<!-- /banner section -->
+
 
 
 <!-- tracking section -->
@@ -140,7 +134,7 @@
           <div class="container" >
               <div class="content-w3ls" style="height:90%;background:white;">
                 <!-- <div class="content1-w3ls"></div> -->
-
+                <?=$msg_sent?>
                 <div class="warehouse">
 
                     <div class="lefthouse" style="font-family:sans-serif">
@@ -149,10 +143,10 @@
                         <center><label style="padding:10px;font-family:ariel;font-size:2em"><?= " &#x20A6;".($result->prod_price)?></label></center>
                       </div>
 
-                  <form   action="<?php //echo base_url("Users/comment/$result->id");?>" method="POST">
-                  <div class="righthouse">
+                <form   method="POST" id="butsave">
+                    <div class="righthouse">
                        <div class="form-group" style="position: relative;top: ;">
-                        <input type="hidden" name="prod_id" id="prod_id" value="<?=$result->id?>">
+                        <input type="text" name="prod_id" id="prod_id" value="<?=$result->id?>">
                          <input type="text" required class="form-control line_remove" id="prod_title" name="prod_title" value="<?=$result->prod_name?>" readonly>
                          </div>
                         <div class="form-group">
@@ -164,35 +158,19 @@
                         <label style="color:red;"> <?=form_error('body')?></label>
                         <textarea name="body" id="body"  value="<?=set_value('body')?>" id="body"></textarea>
                      </div>
-                       <input type="hidden" name="userfile" value="<?=$result->userfile?>">
+                       <input type="hidden" name="userfile" id="userfile" value="<?=$result->userfile?>">
                      <div class="form-group">
                       <label style="color:red;"> <?=form_error('date')?></label>
                          <input type="date"  class="form-control line_remove" value="<?=set_value('date')?>" name="date" id="date">
                       </div>
                         <div class="form-group">
-                         <button class="btn"  style="width:100%;background:sandybrown;" id="submit">Submit</button>
+                         <button class="btn"  style="width:100%;background:sandybrown;">Submit</button>
                      </div>
                    </div>
-                    </form>
+               </form>
                 </div>
         </div>
 
-                  <!-- <table class="table table-bordered"  style="width:90%;margin:auto;">
-                      <tr>
-                        <th class="text-center text-primary"> CUSTOMER NAME</th>
-                        <th class="text-center text-primary"> COMMENT</th>
-                        <TH class="text-center text-primary"> DATE </TH>
-                      </tr>
-                      <?php /*foreach($getcomment as $comment){?>
-                        <tr>
-                          <td class="text-center"> <?=$comment->name?> </td>
-                          <td class="text-center"> <?=$comment->body?> </td>
-                          <td class="text-center"> <?=$comment->date?> </td>
-                        </tr>
-                        <?php
-                        }*/
-                        ?>
-                  </table> -->
 
 
     </div>
@@ -210,94 +188,42 @@
 </script>
 
 
+
+
 <script>
-
-$('#submit').on('click', function() {
-      var prod_id = $('#prod_id').val();
-      var prod_title = $('#prod_title').val();
-      var name = $('#name').val();
-      var body = $('#body').val();
-      var userfile = $('#userfile').val();
-      var date = $('#date').val();
-
-      if(prod_id!="" && prod_title!="" && name!="" && body!="" && userfile!="" && date!=""){
-        $.ajax({
-          url:"<?php echo base_url(); ?>" + "Users/comment",
-          type:"POST",
-          data: {
-            prod_id:prod_id,
-            prod_title:prod_title,
-            name: name,
-            body:body,
-            userfile:userfile,
-            date:date
-          },
-
-           cache: false,
-          success: function(dataResult){
-            var dataResult = JSON.parse(dataResult);
-            if(dataResult.statusCode==200){
-              $("#butsave").removeAttr("disabled");
-      				$('#fupForm').find('input:text').val('');
-      				$("#success").show();
-      				$('#success').html('Data added successfully !');
-            }
-            else if(dataResult.statusCode==201){
-              // $("#error").show();
-              // $('#error').html('Invalid EmailId or Password !');
-              Swal.fire('Error!','cannot send!','error')
-
-            }
-
-          }
-        });
-      }
-      else{
-        	$('#success').html('Data added successfully !');
-           alert("please fill the fields");
-      }
-     });
-
-</script>
-
-
-<!--
-<script>
-    $(document).ready(function() {
-
-      $('#proceed').on('submit', function() {
+ $(document).ready(function() {
+      $('#butsave').on('click', function(e) {
+        e.preventDefault();
         var prod_id = $('#prod_id').val();
-        var prod_title = $('#prod_title').val();
-        var name = $('#name').val();
-        var body = $('#body').val();
-        var date  = $('#date').val();
-        if(prod_id!="" && prod_title!="" && name!="" && body!="" && date!=""){
-          $("#proceed").attr("disabled", "disabled");
+        // var prod_title = $('#prod_title').val();
+        // var name = $('#name').val();
+        // var body = $('#body').val();
+        // var userfile = $('#userfile').val();
+        // var date = $('#date').val();
+        if(prod_id!=""){
+          $("#butsave").attr("disabled", "disabled");
           $.ajax({
-            // url: "<?php// echo base_url("Users/comment");?>",
+            url: "<?php echo base_url("Users/comment");?>",
             type: "POST",
             data: {
-              type:1,
-              prod_id: prod_id,
-              prod_title: prod_title,
-              name: name,
-              body: body,
-              date: date
+              type: 1,
+              prod_id: prod_id
             },
-            // cache: false,
+             //cache: false,
             success: function(dataResult){
-              if(dataResult!=0){
-                // $("#proceed").removeAttr("disabled");
-                // $('#fupForm').find('input:text').val('');
-                // $("#success").show();
-                // $('#success').html('Data added successfully !');
-                 alert("success");
-
+              var dataResult = JSON.parse(dataResult);
+              console.log(dataResult);
+              if(dataResult.statusCode==200){
+                
+                $("#butsave").removeAttr("disabled");
+                $('#fupForm').find('input:text').val('');
+                $("#success").show();
+                $('#success').html('Data added successfully !'); 						
               }
               else if(dataResult.statusCode==201){
                 alert("Error occured !");
               }
-
+              
             }
           });
         }
@@ -305,6 +231,9 @@ $('#submit').on('click', function() {
           alert('Please fill all the field !');
         }
       });
-    });
-</script>
--->
+});
+</script> 
+
+
+
+
