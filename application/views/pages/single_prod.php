@@ -128,6 +128,7 @@
    </style>
 
 
+
 <!-- tracking section -->
     <section class="shipment-w3ls">
         <div class="container" style="margin-top:30px;">
@@ -281,20 +282,25 @@
                         </div>
                        <?php } ?>
                 </div>
-             <h3  style="padding:10px;font-family:sans-serif;"><i class="glyphicon glyphicon-thumbs-up"></i> Feedback From Verified Customers  </h3>   <hr></hr>
-             <?php if($cust_feedback){ ?> 
-              <?php foreach($cust_feedback as $feedback) {?>
-                    <div class="col-md-4 mt-4 mb-4">
-                       <div style="font-family:sans serif"> <?=$feedback->body?> </div>
+            <h3  style="padding:10px;font-family:sans-serif;"><i class="glyphicon glyphicon-thumbs-up"></i> Feedback From Verified Customers  </h3>   <hr></hr>
+           
+           
+                 <div class="row" style="background:#F8F8FF;">
+                    <div class="col-md-4">
+                       <img src="<?=base_url('uploads/'.$single_img->userfile)?>"  style="width:40%;height:20%;position: relative;left:30px;">
                     </div>
-                    <div class="col-md-6">
-                     <div style="font-family:sans serif" class="text-right"> <?=$feedback->date?> </div>
-                    </div>
-                <?php }?>
-             <?php }else{?>
-              <?= " No Feedback on this product "?>
-              <?php } ?>
-               </div>
+                  <?php foreach($cust_feedback as $feedback) {?> 
+                     <div class="col-md-4" style="margin:5px;font-family:sans serif;" align="justify">
+                     <p style="word-spacing:3px;padding:0px;"> <?=$feedback->body?> </p>
+                     <p> <?=$feedback->date. " By  ". (ucfirst($feedback->name))?> </p>
+                     </div>
+                 
+              
+                   <?php }?> 
+                 </div>
+            
+         
+      
 
         </div>
     </div>

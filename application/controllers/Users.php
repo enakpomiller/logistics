@@ -570,6 +570,7 @@ class Users extends CI_controller{
           $data['result'] = $this->users_model->SingleProduct($id);
 
           if($_POST){
+            // echo "<pre>"; print_r($_POST);die;
                $comment['prod_id'] = $this->input->post('prod_id');
                $comment['prod_title'] = $this->input->post('prod_title');
                $comment['name'] = $this->input->post('name');
@@ -661,6 +662,7 @@ class Users extends CI_controller{
                    $viewed_prod = $this->db->get_where('tbl_product',array('id'=>$id))->row();
                    $data['similar'] = $this->users_model->get_same_prod('tbl_product',$get_prod_name);
                    $data['cust_feedback'] = $this->users_model->get_feedback($id);
+                   $data['single_img'] = $this->users_model->get_single_image($id);
                    $this->load->view('template/header',$data);
                    $this->load->view('pages/single_prod',$data);
                    $this->load->view('template/footer');

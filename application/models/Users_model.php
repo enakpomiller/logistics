@@ -320,6 +320,12 @@
          return $query->result();
        }
 
+    
+       public function get_single_image($id){
+        $query = $this->db->get_where('tbl_comment',array('prod_id'=>$id));
+        return $query->row();
+       }
+
 }
 
 ?>
