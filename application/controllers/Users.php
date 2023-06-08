@@ -562,113 +562,39 @@ class Users extends CI_controller{
       //   $this->load->view('template/footer');
       // }
 
-        public function comment1(){
-            $id = $this->uri->segment(3);
-            $UserId = $this->session->userdata('id');
-            $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-            $data['result'] = $this->users_model->SingleProduct($id);
+      
+        public function comment(){
+          $id = $this->uri->segment(3);
+          $UserId = $this->session->userdata('id');
+          $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
+          $data['result'] = $this->users_model->SingleProduct($id);
+
           if($_POST){
-              $this->form_validation->set_rules('name','Name','required');
-              $this->form_validation->set_rules('body','Message','required');
-              $comment['prod_id'] = $this->input->post('prod_id');
-              $comment['prod_title'] = $this->input->post('prod_title');
-              $comment['name'] = $this->input->post('name');
-              $comment['body'] = $this->input->post('body');
-              $comment['userfile'] = $this->input->post('userfile');
-              $comment['date'] = $this->input->post('date');
-                //echo "<pre>"; print_r($comment); die;
-              if($this->form_validation->run()===TRUE){
-                 $InsertComment = $this->users_model->CreateComment('tbl_comment',$comment);
-                 if($InsertComment){
-                      $this->session->set_flashdata('item','comment sent');
-                      $this->load->view('template/header',$data);
-                      $this->load->view('pages/comment',$data);
-                      $this->load->view('template/footer');
-                    // return redirect(base_url('users/comment'));
-                    echo json_encode(array("statusCode"=>200));
-                }else{
-                 echo json_encode(array("statusCode"=>201));
-                // // $messge = array('message' => 'Wrong password enter','class' => 'alert alert-danger fade in');
-                // // $this->session->set_flashdata('item',$messge );
-                // redirect('users/comment','refresh');
-                }
-
-                }else{
-                  $msg_sent = $this->session->set_flashdata('error','Comment Sent! thank you ');
-                  $this->load->view('template/header',$data);
-                  $this->load->view('pages/comment',$data);
-                  $this->load->view('template/footer');
-                }
-            }else{
-              $data['getcomment'] = $this->db->get_where('tbl_comment',(array('prod_id'=>$id )))->result();
-              $this->load->view('template/header',$data);
-              $this->load->view('pages/comment',$data);
-              $this->load->view('template/footer');
-            }
-        } 
-
-      public function comment(){
-        $id = $this->uri->segment(3);
-         if($this->input->post('type')==1){ 
-            $prodid = $this->input->post('prod_id');
-            if($prodid){
-              echo json_encode(array("statusCode"=>200));
-              redirect(base_url('users/comment/',$id));
-            }else{
-              echo json_encode(array("statusCode"=>201));
-              redirect(base_url('users/comment/',$id));
-            }
-            
-
-              // $this->form_validation->set_rules('prod_id','Prodcut id','required');
-              // $this->form_validation->set_rules('prod_title','Prodcut title','required');
-              // $this->form_validation->set_rules('name','Name','required');
-              // $this->form_validation->set_rules('body','Body','required');
-              // $this->form_validation->set_rules('userfile','Userfile','required');
-              // $this->form_validation->set_rules('date','Date','required');
-              //   if($this->form_validation->run()=== TRUE){
-              //     $comment['prod_id'] = $this->input->post('prod_id');
-              //     $comment['prod_title'] = $this->input->post('prod_title');
-              //     $comment['name'] = $this->input->post('name');
-              //     $comment['body'] = $this->input->post('body');
-              //     $comment['userfile'] = $this->input->post('userfile');
-              //     $comment['date'] = $this->input->post('date');
-              //     $InsertComment = $this->users_model->CreateComment('tbl_comment',$comment);
-              //       if($InsertComment){
-              //         $msg_sent = $this->session->set_flashdata('error','Comment Sent! thank you ');
-              //         echo json_encode(array("statusCode"=>200));
-              //         redirect(base_url('users/comment/',$id));
-              //       }else{
-                  
-              //         return redirect(base_url('users/comment/'.$id));
-              //       }
-              //   }else{
-              //     $id = $this->input->post('prod_id');
-              //     return redirect(base_url('users/comment/'.$id));
-              //     $this->load->view('template/header',$data);
-              //     $this->load->view('pages/comment',$data);
-              //     $this->load->view('template/footer');
-              //   return redirect(base_url('users/comment/'.$id));
-                
-              //   }  
-
-          }else{
-        
-            $UserId = $this->session->userdata('id');
-            $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
-            $data['result'] = $this->users_model->SingleProduct($id);
-            $msg_sent = $this->session->set_flashdata('error','Comment Sent! thank you ');
-            $this->load->view('template/header',$data);
-            $this->load->view('pages/comment',$data);
-            $this->load->view('template/footer');
+               $comment['prod_id'] = $this->input->post('prod_id');
+               $comment['prod_title'] = $this->input->post('prod_title');
+               $comment['name'] = $this->input->post('name');
+               $comment['body'] = $this->input->post('content');
+               $comment['userfile'] = $this->input->post('userfile');
+               $comment['date'] = $this->input->post('date');
+               $InsertComment = $this->users_model->CreateComment('tbl_comment',$comment);
+                if($InsertComment){
+                   echo json_encode(array("statusCode"=>200));
+                 }else{
+                  echo json_encode(array("statusCode"=>201));
+                 }
+           }else{
+             $data['getcomment'] = $this->db->get_where('tbl_comment',(array('prod_id'=>$id )))->result();
+             $this->load->view('template/header',$data);
+             $this->load->view('pages/comment',$data);
+             $this->load->view('template/footer');
           }
-          
-       }
+        }
+
 
        public function single_prod(){
             if($this->session->userdata('logged_in')==FALSE){
                 redirect(base_url('users/login_user'));
-            }
+             }
             $id = $this->uri->segment(3);
             $this->session->set_userdata('prod_id',$id);
             $UserId = $this->session->userdata('id');
@@ -734,6 +660,7 @@ class Users extends CI_controller{
                    $get_prod_name = $this->db->get_where('tbl_product',array('id'=>$id))->row()->category;
                    $viewed_prod = $this->db->get_where('tbl_product',array('id'=>$id))->row();
                    $data['similar'] = $this->users_model->get_same_prod('tbl_product',$get_prod_name);
+                   $data['cust_feedback'] = $this->users_model->get_feedback($id);
                    $this->load->view('template/header',$data);
                    $this->load->view('pages/single_prod',$data);
                    $this->load->view('template/footer');

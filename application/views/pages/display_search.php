@@ -3,16 +3,23 @@
 <div class="container">
     <?php 
     //   if(count($keyprod)>1){
-    //   echo "<h4>". (count($keyprod))." Products Found </h4> ";
+    //    echo "<h4>". (count($keyprod))." Products Found </h4> ";
     // }else{
     //     echo (count($keyprod))." Product Found ";
     // }
-    // ?>
+    ?>
 
 </div>
  
 
          <?php if($keyprod){ ?> 
+               <?php 
+                if(count($keyprod)>1){
+                   echo "<h4>". (count($keyprod))." Products Found </h4> ";
+                }else{
+                    echo "<h4>". (count($keyprod))." Product Found </h4> ";
+                }
+                ?>
                     <?php foreach($keyprod as $products) { ?>
                             <div class="col-lg-6" style="background:sandybrown;margin-top:50px;margin-bottom:40px;">
                                 <div class="cards" style="background:white;padding:20px 20px; margin:20px;border-radius:5px;">

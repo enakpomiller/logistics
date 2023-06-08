@@ -315,6 +315,11 @@
 
         }
 
+      public function get_feedback($data){
+         $query = $this->db->get_where('tbl_comment',array('prod_id'=>$data));
+         return $query->result();
+       }
+
 }
 
 ?>

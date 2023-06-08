@@ -281,10 +281,19 @@
                         </div>
                        <?php } ?>
                 </div>
-             <h3  style="padding:10px;font-family:sans-serif;"><i class="glyphicon glyphicon-thumbs-up"></i> Products You May Like </h3>   <hr></hr>
-                  <div class="col-md-2">
-
-                  </div>
+             <h3  style="padding:10px;font-family:sans-serif;"><i class="glyphicon glyphicon-thumbs-up"></i> Feedback From Verified Customers  </h3>   <hr></hr>
+             <?php if($cust_feedback){ ?> 
+              <?php foreach($cust_feedback as $feedback) {?>
+                    <div class="col-md-4 mt-4 mb-4">
+                       <div style="font-family:sans serif"> <?=$feedback->body?> </div>
+                    </div>
+                    <div class="col-md-6">
+                     <div style="font-family:sans serif" class="text-right"> <?=$feedback->date?> </div>
+                    </div>
+                <?php }?>
+             <?php }else{?>
+              <?= " No Feedback on this product "?>
+              <?php } ?>
                </div>
 
         </div>

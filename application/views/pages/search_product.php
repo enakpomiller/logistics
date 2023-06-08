@@ -84,7 +84,6 @@
 <script type="text/javascript">
 
 	function revenue_request(){
-
 		var search = $('#search_product').val();
     console.log(search);
 		if (search == "") {
