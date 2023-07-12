@@ -1,6 +1,6 @@
 
-
-
+<!-- general boostrap 5.0 cdn -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 <br>
 <style>
@@ -40,8 +40,7 @@ a.pagination-links{
   <?php if(!empty($comment)):?>
   <?php foreach($comment as $row):?>
      <tr class="order-each">
-      <td><?=$counter++?> </td>
-      <?php $_SESSION['count']=$counter++;?>
+       <td><?=$counter++?> </td>
        <td><?=$row->prod_title?></td>
        <td> <?=$row->name?></td>
        <td> <?=$row->date?></td>
@@ -101,9 +100,6 @@ a.pagination-links{
                   </button>
               </div>
           </div>
-
-
-
 
 
 
@@ -276,6 +272,9 @@ a.pagination-links{
 
     </div>
 
+    <!-- general boostrap 5.0 cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 
     <!-- datatable script -->
@@ -284,20 +283,22 @@ a.pagination-links{
     <!-- end datatable script -->
 
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('#table').DataTable();
-    });
+      $(document).ready(function() {
+          $('#table').DataTable();
+      });
     </script>
 
 
 
-<script> 
 
+
+<script> 
 function loadMore(){
     $('#next').html(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
     <circle cx="50" cy="50" fill="none" stroke="#000" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138">
       <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
     </circle></svg>`);
+
     var offset = $(".order-each").length;
 
     $.ajax({
@@ -306,12 +307,12 @@ function loadMore(){
       data: 'offset=' + offset,
       success: function(res){
         $('#next').html('Load More');
-        //$('#next').html(res);
-        
         if(res == 400){
+          $('#next').html('<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>');
           alert(' nor more data');
           errorMessage('No more data to load!')
         }else{
+
           $('.form-check-all').append(res);
         }
       }

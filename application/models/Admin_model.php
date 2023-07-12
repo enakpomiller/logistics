@@ -399,7 +399,7 @@
 
 
      public function getloadmore($offset =0){
-      if($offset >=0){
+      if($offset >=10){
         $this->db->limit(2, $offset);
       }
       //$this->db->where('transaction_status', 'success');
