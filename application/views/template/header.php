@@ -88,19 +88,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<button type="submit" class="btn btn-primary">Track</button>
 							</form>
 							<p class="track-p1">Contact Us :</p>
-              <input type="text" name="">
+                         <input type="text" name="">
 							<p class="track-p2"><a href="mailto:mail@example.com">mail@example.com</a></p>
 						</div>
 					</div>
 				</li>
 
-				<?php if($this->session->userdata("logged_in")){ ?>
-			<input type="text" name="search" id="search" placeholder=" enter product key word...." size="55px;" style="position:relative;top:10px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
-			<button  id="search_prod" style="position:relative;top:10px;padding:8px;background:sandybrown;border-radius:3px;border:0px solid red;"> SEARCH  </button>
-
+			  <?php if($this->session->userdata("logged_in")){ ?>
+					<input type="text" name="search" id="search" placeholder=" enter product key word...." size="55px;" style="position:relative;top:10px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
+					<button  id="search_prod" style="position:relative;top:10px;padding:8px;background:sandybrown;border-radius:3px;border:0px solid red;"> SEARCH  </button>
 			<?php }else{  ?>
-			    <input type="text" name="" placeholder=" enter product key word...." size="55px;" style="position:relative;bottom:30px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
-				<button style="position:relative;bottom:30px;padding:8px;background:sandybrown;border-radius:3px;border:0px solid red;"> SEARCH  </button>
+			    <input type="text" name="search" id="search"  placeholder=" enter product key word...." size="55px;" style="position:relative;bottom:30px;padding:10px;border-radius:3px;border:1px solid sandybrown;">
+				<button style="position:relative;bottom:30px;padding:8px;background:sandybrown;border-radius:3px;border:0px solid red;" onclick="revenue_request()"> SEARCHx  </button>
 		 <?php } ?> 
 
 		   <li class="<?=($this->uri->uri_string()==='login/login_user')?'active':''?>" style="margin-top:13px;right:20px;">
@@ -313,6 +312,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 </nav>
 
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
         var blink = document.getElementById('blink');
         setInterval(function() {
@@ -325,45 +328,73 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 
-<script>
-    $(document).ready(function() {
-          $('#search_prod').on('click', function(){
-            var search = $('#search').val();
-            if(search!=""){
-                $.ajax({
-                   url:  "<?php// echo base_url(); ?>" + "users/search",
-                  type: "POST",
-                    data: {type:1,search:search},
-                  cache: false,
-                  success: function(dataResult){
-                    var dataResult =JSON.parse(dataResult);
-                    if(dataResult.statusCode==200){
-					   window.location = "<?=base_url('users/search')?>";
-                    }else if(dataResult.statusCode==201){
-                      $("#error").show();
-                      // $('#error').html('Invalid EmailId or Password !');
-                      Swal.fire('Error!','PRODUCT NOT FOUND !','error')
-
-                    }
-
-                  }
-                });
 
 
-            }else{
-				Swal.fire('Error!','PLEASE ENTER PRODUCT NAME  !','error');
-            }
+<script type="text/javascript">
+
+	function revenue_request(){
+		var search = $('#search').val();
+		consokle.log(search);
+		if (search == "") {
+      swal.fire('warning',' please enter a keyword ','warning');
+			//errorMessage('Filter cannot be empty!')
+			return false
+		}
+
+		$('#btn-revenue').html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...`)
+
+		$.ajax({
+	    type: "POST",
+      url : '<?php echo base_url() ?>' + 'users/search_product',
+	    data: {search: search},
+	    success: function(res){
+
+	      $('#btn-revenue').html(`<i class="fa fa-search text-white me-1 fs-5"></i> Search`);
+
+	      if(res == 400){
+	        // $('.loader').hide();
+					errorMessage('Reference not found!')
+					$('#resultDisplay_revenue').html('');
+					$('#table-mda').dataTable({
+            "ordering": false
           });
-
-
-          //  $(document).ready(function() {
-          //     setInterval(function() {
-          //        $("#mydiv").load('<?//=base_url('users/no_likes')?>')
-          //     }, 500);
-          //   });
-
-
-
-    });
-
+	      }else{
+	        $('#resultDisplay_revenue').html(res);
+					$('#table-mda').dataTable({
+            "ordering": false
+          });
+	      }
+	    },
+	    error: function(error){
+	      errorMessage('Oops! Something went wrong.')
+        $('#btn-revenue').html(`<i class="fa fa-search text-white me-1 fs-5"></i> Search`);
+	    }
+	  });
+	}
 </script>
+
+<script>
+$(function(e){
+
+	if(e.keyCode == 13) {
+		search_tin_request();
+	}
+
+	$(document).keyup(function(e){
+		if(e.keyCode == 27){
+			// $('#resultDisplay').html('');
+		}
+	});
+
+	$('#search_product').keyup(function(e) {
+		if(e.keyCode == 13) {
+			search_tin_request();
+		}
+		if(e.keyCode == 8 && $('#search_product').val() == ''){
+			// $('#resultDisplay').html('');
+		}
+	});
+
+});
+</script>
+  

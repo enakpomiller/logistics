@@ -11,21 +11,17 @@
 
      <div class="container" style="position:relative;top:150px;">
               <div class="form-group" align="center">
-                 <p>  <?=$title?> </p>
-                   <input type="text" name="search_product"   autocomplete="off" id="search_product"  placeholder=" enter product key word...." size="55px;" style="position:relative;top:10px;padding:10px;border-radius:3px;border:1px solid sandybrown;"> 
-                   <a href="javascript:void(0)" onclick="revenue_request();" id="btn-revenue" class="ms-2 btn btn-warning d-flex" style="margin-top:15px;padding:10px;">
+                 <p> <?=$title?> </p>
+                   <input type="text" name="search_product" onkeyup="revenue_request();"  autocomplete="off" id="search_product"  placeholder=" enter product key word...." size="55px;" style="position:relative;top:10px;padding:10px;border-radius:3px;border:1px solid sandybrown;"> 
+                   <a href="javascript:void(0)"  id="btn-revenue" class="ms-2 btn btn-warning d-flex" style="margin-top:15px;padding:10px;">
                       <i class="fa fa-search text-white me-1 fs-5"></i> Search
 		               </a>
                 </div> <p> 
                 <div class="col-md-12 border-top border-top-dashed">
-                    <div class="list-group mt-4" id="searchResult">
-
+                       <div class="list-group mt-4" id="searchResult">
                     </div>
                 </div>  
-
-
               <div class="col-lg-12" id="result"></div> 
-
               <div id="resultDisplay_revenue"></div>
      
     </div>

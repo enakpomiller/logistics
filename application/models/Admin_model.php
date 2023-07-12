@@ -381,13 +381,38 @@
        return $query->row();
      }
 
+    public function get_data($perPage, $offset){
+            // Perform the database query using CodeIgniter's Database Query Builder or any other database library you prefer
+            $this->db->select('*');
+            $this->db->from('tbl_users');
+            $this->db->limit($perPage, $offset);
+            $query = $this->db->get();
+            // Return the retrieved data
+            return $query->result();
+    }
+
      public function del_seller_profile($id){
         $this->db->where('id',$id);
         $this->db->delete('tbl_admin_login');
         return true;
      }
 
+
+     public function getloadmore($offset =0){
+      if($offset >=0){
+        $this->db->limit(2, $offset);
+      }
+      //$this->db->where('transaction_status', 'success');
+       //$this->db->join('payment_status', 'payment_status.paymentStatus=invoices.status');
+      $this->db->order_by('id', 'DESC');
+      return $this->db->get('tbl_comment')->result();
     }
 
+
+
+
+
+
+    }
 
 ?>

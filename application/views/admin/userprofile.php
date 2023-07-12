@@ -55,7 +55,17 @@ a.pagination-links{
           <?php endif;?>
           </tbody>
         </table>
-</div>
+
+           <!-- more --> 
+           <div id="data-container">
+              <!-- Display the initial batch of data -->
+              <?php foreach ($data as $item): ?>
+                  <div class="data-item"><?php echo $item->name; ?></div>
+              <?php endforeach; ?>
+              </div>
+
+             <button id="load-more-btn">Load More</button>
+           </div>
 
 
 
@@ -294,4 +304,42 @@ a.pagination-links{
             $(document).ready(function() {
                 $('#table').DataTable();
             });
-            </script>
+            </script> 
+
+
+
+<script>
+var page = 1; // Initialize the current page
+
+// Attach event listener to the "Load More" button
+document.getElementById('load-more-btn').addEventListener('click', function() {
+    // Send AJAX request to CodeIgniter controller
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '<?php echo site_url("admin/load_more_data"); ?>' + '/' + page);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            // Parse the response
+            var response = JSON.parse(xhr.responseText);
+            
+            // Check if there is more data to load
+            if (response.data.length > 0) {
+                // Append the retrieved data to the existing data container
+                var dataContainer = document.getElementById('data-container');
+                response.data.forEach(function(item) {
+                    var div = document.createElement('div');
+                    div.classList.add('data-item');
+                    div.textContent = item.name;
+                    dataContainer.appendChild(div);
+                });
+                
+                // Increment the page number for the next load
+                page++;
+            } else {
+                // No more data to load, hide the "Load More" button
+                document.getElementById('load-more-btn').style.display = 'none';
+            }
+        }
+    };
+    xhr.send();
+});
+</script>

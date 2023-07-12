@@ -26,7 +26,7 @@ a.pagination-links{
 
 
 <center>
-<table class="table table-striped" id="table">
+<table class="table table-striped">
   <thead>
   <tr>
     <th> s/n </th>
@@ -36,11 +36,12 @@ a.pagination-links{
     <th style="float:right;"> Action </th>
   </tr>
 </thead>
-<tbody>
+<tbody class="list form-check-all">
   <?php if(!empty($comment)):?>
   <?php foreach($comment as $row):?>
-     <tr>
-      <td><?=$counter++?></td>
+     <tr class="order-each">
+      <td><?=$counter++?> </td>
+      <?php $_SESSION['count']=$counter++;?>
        <td><?=$row->prod_title?></td>
        <td> <?=$row->name?></td>
        <td> <?=$row->date?></td>
@@ -87,8 +88,27 @@ a.pagination-links{
 </table>
 </center>
 
+
+     
+         <div class="d-flex justify-content-center text-center">
+              <div class="pagination-wrap hstack gap-2">
+                  <!-- <button class="page-item pagination-prev disabled" onclick="loadMore()">
+                      Previous
+                  </button> -->
+                  <ul class="pagination listjs-pagination mb-0"></ul>
+                  <button class="page-item pagination-next btn-primary" onclick="loadMore()" id="next">
+                      Load More
+                  </button>
+              </div>
+          </div>
+
+
+
+
+
+
   <div class="pagination-links text-left">
-   <p><?php echo $links; ?></p>
+   <p><?php// echo $links; ?></p>
   </div>
 
 
@@ -268,3 +288,36 @@ a.pagination-links{
         $('#table').DataTable();
     });
     </script>
+
+
+
+<script> 
+
+function loadMore(){
+    $('#next').html(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+    <circle cx="50" cy="50" fill="none" stroke="#000" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138">
+      <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+    </circle></svg>`);
+    var offset = $(".order-each").length;
+
+    $.ajax({
+      type: "POST",
+      url: '<?=base_url('admin/offset')?>',
+      data: 'offset=' + offset,
+      success: function(res){
+        $('#next').html('Load More');
+        //$('#next').html(res);
+        
+        if(res == 400){
+          alert(' nor more data');
+          errorMessage('No more data to load!')
+        }else{
+          $('.form-check-all').append(res);
+        }
+      }
+    });
+  }
+</script>
+
+
+

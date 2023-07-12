@@ -161,24 +161,46 @@ class Admin extends CI_controller{
             //  $data["links"] = $this->pagination->create_links();
             //  $data['displaycart'] = $this->admin_model->get_count($config["per_page"], $page);
             //  $this->load->view('admin/userfile', $data);
-               }
- public function allprofile(){
-  if($this->session->userdata('logged_in')){
-        $this->data['title'] = " All Users Profile";
-        $seller_id = $this->session->id;
-        $this->data['prodDetails']= $this->admin_model->prodDetails();
-        $this->data['ON'] =  $this->db->get_where('tbl_admin_login',array('id'=>$_SESSION['ON']))->row();
-        //$this->data['comment'] = $this->admin_model->GetAllComment('tbl_comment');
-        $this->data['allsellers'] = $this->admin_model->GetAllSellers('tbl_admin_login');
-        $this->data['allsellersproduct'] = $this->admin_model->GetAllSellersProduct();
-        //$this->data['sellerprod'] = $this->admin_model->GetFewProduct();
-          $this->load->view('admin/header');
-          $this->load->view('admin/allprofile',$this->data);
-          $this->load->view('admin/footer');
+       }
+
+
+        
+    public function offset(){
+       if($_POST){
+          $offset = $this->input->post('offset');
+          $this->data['loadcomment'] =  $this->admin_model->getloadmore($offset);
+          if($this->data['loadcomment']){
+            $this->load->view('admin/loadmore_comment',$this->data);
+          }else{
+           echo 400;
+          }
+
         }else{
-        redirect((base_url('admin/adminlogin')));
-    }
- }
+        
+        }
+    } 
+
+
+
+      public function allprofile(){
+        if($this->session->userdata('logged_in')){
+              $this->data['title'] = " All Users Profile";
+              $seller_id = $this->session->id;
+              $this->data['prodDetails']= $this->admin_model->prodDetails();
+              $this->data['ON'] =  $this->db->get_where('tbl_admin_login',array('id'=>$_SESSION['ON']))->row();
+              //$this->data['comment'] = $this->admin_model->GetAllComment('tbl_comment');
+              $this->data['allsellers'] = $this->admin_model->GetAllSellers('tbl_admin_login');
+              $this->data['allsellersproduct'] = $this->admin_model->GetAllSellersProduct();
+              //$this->data['sellerprod'] = $this->admin_model->GetFewProduct();
+                $this->load->view('admin/header');
+                $this->load->view('admin/allprofile',$this->data);
+                $this->load->view('admin/footer');
+              }else{
+              redirect((base_url('admin/adminlogin')));
+          }
+      }  
+
+
 
 
       public function search_for_seller_prod(){
@@ -816,7 +838,7 @@ public function bulk_update(){
                 $file_data = $this->upload->data();
                 // $file_path =  'uploads/csv/staff_list.csv';
                 $file_path =  'assets/admin2/product_list.csv';
-              
+
                 // $file_path =  $file_data['full_path'];
                 $headers = ['prod_name',	'prod_price',	'prod_brand','seller_id'];
                 // $csv_array = $this->csvimport->get_array($file_path);

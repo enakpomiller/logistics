@@ -755,19 +755,18 @@ class Users extends CI_controller{
      public function search_product(){
         if($_POST){
           $search = $this->input->post('search');
-           if(!empty($search )){ 
+           if(!empty($search)){ 
               $this->db->like('category',$search);
               //$this->db->or_like('prod_price');
               //$this->db->or_like('prod_name',$search);
               $this->data['keyprod'] = $this->db->get('tbl_product')->result();
               if($this->data['keyprod']){
                    $this->load->view('pages/display_search',$this->data);
-              }
-              else{
+               }else{
                 $this->load->view('pages/display_search',$this->data);
                 // echo "<center> <img src='".base_url('assets/error_img/search.png')."' style='width:30%;'> </center>";
                 // echo "<h4> <p class='text-center text-danger pt-4' style='position:relative;top:20px;'>  Please Enter A Product Key Word</p></h4>  ";
-              }
+               }
            }else{
               echo "<center> <img src='".base_url('assets/error_img/notfound.png')."' style='width:30%;'> </center>";
               echo "<p class='text-center text-danger'>  Please Enter A Product Name </p> ";
