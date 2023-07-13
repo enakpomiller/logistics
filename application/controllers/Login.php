@@ -20,7 +20,18 @@
            }
 
          public function login_user(){
-            if($this->uri->uri_string()==="login/login_user"){
+                   $current = current_url();// current url
+                   $computerName = gethostname(); // get computer name
+                   $userAgent = $this->input->user_agent();// get devicename
+                   if (strpos($userAgent, 'Mobile') !== false) {
+                    // The user agent indicates a mobile device
+                    $deviceName = 'Mobile Device';
+                    } else {
+                    // The user agent indicates a non-mobile device
+                    $deviceName = 'Desktop Device';
+                     }
+
+
                  //$this->users_model->get_image();
                   if($_POST['type']==1){
                       $unique_id = $this->session->userdata('id');
@@ -44,6 +55,19 @@
                                'email'=>$email,
                                'logged_in'=>true
                                 );
+                                // audit trail function
+                                date_default_timezone_set('Africa/Lagos');
+                                $audit = [
+                                  'user_id'=>$id->id,
+                                  'logintime'=>date('Y-M-D H:i:s'),
+                                  'ip_address'=>$this->input->ip_address(),
+                                  'device_name'=>$deviceName,
+                                  'computer_name'=>$computerName
+                                ];
+                                $_SESSION['userid'] = $id->id; 
+                                // end audit trail function 
+
+                                $this->users_model->inserttrackuser($audit);
                                 $this->session->set_userdata($data_arr);
                                 $this->session->set_userdata('id',$id->id);
                                 $this->session->set_userdata('image',$getOneUser->userfile);
@@ -61,9 +85,7 @@
                     $this->load->view('pages/login_user');
                     $this->load->view('template/footer');
                   }
-                }else{
-                   var_dump(" 404 page not found");die;
-                }
+        
 
           }
 
@@ -256,6 +278,11 @@
    }
 
     public function logout(){
+          date_default_timezone_set('Africa/Lagos');
+          $audit['logouttime'] = date('Y-M-D H:i:s');
+          $u_id = $_SESSION['userid'];
+           $this->users_model->updatetrackuser($audit,$u_id);
+
           $this->session->unset_userdata('id');
           $this->session->unset_userdata('email');
           $this->session->unset_userdata('logged_in');

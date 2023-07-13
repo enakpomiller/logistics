@@ -193,7 +193,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 .dot{tive;
     position: relative;
-    bottom: 40px;
+    bottom: 60px;
 		background: green;height: 10px;
 		border: 1px solid yellow;
 		font-weight: bolder;
@@ -264,8 +264,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						 <?php if($this->session->userdata('logged_in')):?>
 					      <a href="#"> <img src="<?=base_url()?>assets/uploads/<?=$this->session->userdata('image')?>" style="position:relative;width:50px;height:50px;left:50%;border-radius:50%;bottom:10px;"> <br>
                 </a>
-                   <p style="position:relative;bottom:40px;left:120px;" id="blink"> Hi, <?=$this->session->userdata('name')?> </p>
-						      <div class="dot"></div>
+                   <p style="position:relative;bottom:55px;left:120px;" id="blink"> 
+								Hi, 
+								<?php
+									if((date('H')>=18)){
+										echo " good evening <br>".$this->session->userdata('name');
+										}elseif(date('H')>=1){
+										 echo "good morning <br>".$this->session->userdata('name');
+										}elseif(data('H')>=13){
+										  echo " good afternoon <br>".$this->session->userdata('name');
+										}
+									
+									;?>
+								</p>
+								<div class="dot"></div>
 						         <div class="dropdown" style="margin-left:80px;padding:10px;position:relative;bottom:40px;">
 							  	     <div class="dropdown-content">
 								         <h4 style="font-family:sans-serif;text-align:center;padding-top:20px;padding: 5px;color: deepskyblue;"><?=$this->session->userdata('name')?></h4>

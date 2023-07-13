@@ -399,8 +399,8 @@
 
 
      public function getloadmore($offset =0){
-      if($offset >=10){
-        $this->db->limit(2, $offset);
+      if($offset >=5){
+        $this->db->limit(5, $offset);
       }
       //$this->db->where('transaction_status', 'success');
        //$this->db->join('payment_status', 'payment_status.paymentStatus=invoices.status');

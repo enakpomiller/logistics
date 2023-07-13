@@ -326,6 +326,15 @@
         return $query->row();
        }
 
+       public function inserttrackuser($data){
+         return $this->db->insert('tbl_auditrail',$data);
+      }
+
+      public function updatetrackuser($audit,$u_id){
+        $this->db->where('user_id',$u_id );
+        return $this->db->update('tbl_auditrail',$audit);
+      }
+
 }
 
 ?>
