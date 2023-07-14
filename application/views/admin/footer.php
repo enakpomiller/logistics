@@ -44,11 +44,11 @@
           <li><a href="<?=base_url('admin/viewcomment')?>"><i class="fa fa-envelope"></i><span>View Comment</span><span class="fa fa-angle-right" style="float: right"></span></a>
 
           </li>
-           <li><a href="#"><i class="fa fa-cog"></i><span>System</span><span class="fa fa-angle-right" style="float: right"></span></a>
-             <ul id="menu-academico-sub" >
-                <li id="menu-academico-avaliacoes" ><a href="404.html">404</a></li>
-                <li id="menu-academico-boletim" ><a href="blank.html">Blank</a></li>
-               </ul>
+           <li><a href="<?=base_url('admin/view_audit')?>"><i class="fa fa-cog"></i><span>Users History</span><span class="fa fa-angle-right" style="float: right"></span></a>
+              <!-- <ul id="menu-academico-sub" >
+                  <li id="menu-academico-avaliacoes" ><a href="404.html">404</a></li>
+                  <li id="menu-academico-boletim" ><a href="blank.html">Blank</a></li>
+                </ul> -->
            </li>
            <li><a href="#"><i class="fa fa-shopping-cart"></i><span>E-Commerce</span><span class="fa fa-angle-right" style="float: right"></span></a>
             <ul id="menu-academico-sub" >

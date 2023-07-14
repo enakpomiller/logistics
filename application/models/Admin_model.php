@@ -399,8 +399,8 @@
 
 
      public function getloadmore($offset =0){
-      if($offset >=5){
-        $this->db->limit(5, $offset);
+      if($offset >=0){
+        $this->db->limit(10, $offset);
       }
       //$this->db->where('transaction_status', 'success');
        //$this->db->join('payment_status', 'payment_status.paymentStatus=invoices.status');
@@ -409,7 +409,14 @@
     }
 
 
-
+    public function GetAllAudit(){
+      $this->db->select('tbl_auditrail.id,userfile as image,name,email,country,logintime,logouttime,ip_address,device_name,computer_name');
+      $this->db->from('tbl_users');
+      $this->db->join('tbl_auditrail','tbl_users.id = tbl_auditrail.user_id');
+      // $this->db->where('tbl_users.id','4');
+      $query = $this->db->get();
+      return $query->result();
+    }
 
 
 

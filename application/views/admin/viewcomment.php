@@ -101,12 +101,13 @@ a.pagination-links{
               </div>
           </div>
 
-
+  
 
   <div class="pagination-links text-left">
    <p><?php// echo $links; ?></p>
   </div>
 
+     <div id="next"></div>
 
     <div class="chit-chat-layer1">
     	<div class="col-md-6 chit-chat-layer1-left">
@@ -294,7 +295,10 @@ a.pagination-links{
 
 <script> 
 function loadMore(){
-  $('#next').html('<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>');
+
+     $('#next').html('<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>');
+
+
     // $('#next').html(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
     // <circle cx="50" cy="50" fill="none" stroke="#000" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138">
     //   <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
@@ -302,21 +306,21 @@ function loadMore(){
 
     var offset = $(".order-each").length;
 
-    $.ajax({
-      type: "POST",
-      url: '<?=base_url('admin/offset')?>',
-      data: 'offset=' + offset,
-      success: function(res){
-        $('#next').html('Load More');
-        if(res == 400){
-          alert(' no data to fetch');
-          errorMessage('No more data to load!');
-        }else{
-          $('.form-check-all').append(res);
+      $.ajax({
+        type: "POST",
+        url: '<?=base_url('admin/offset')?>',
+        data: 'offset=' + offset,
+        success: function(res){
+          $('#next').html('Load More');
+          if(res == 400){
+            alert(' no data to fetch');
+            errorMessage('No more data to load!');
+          }else{
+            $('.form-check-all').append(res);
+          }
         }
-      }
-    });
-  }
+      });
+    }
 </script>
 
 

@@ -180,7 +180,24 @@ class Admin extends CI_controller{
         }
     } 
 
-
+    public function view_audit(){
+        $this->data['allaudit'] = $this->admin_model->GetAllAudit();
+        // echo "<pre>"; print_r($this->data['allaudit']);die;
+        $this->data['title'] = "Users History ";
+        $this->load->view('admin/header');
+        $this->load->view('admin/auditrail',$this->data);
+        $this->load->view('admin/footer');
+    } 
+   
+    public function delete_augit($id){
+        $this->db->where('id',$id);
+        $action =  $this->db->delete('tbl_auditrail');
+        if($action){
+          echo " deleted ";
+        }else{
+         echo " cannot delete";
+        }
+     }
 
       public function allprofile(){
         if($this->session->userdata('logged_in')){

@@ -267,13 +267,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                    <p style="position:relative;bottom:55px;left:120px;" id="blink"> 
 								Hi, 
 								<?php
+								   
 									if((date('H')>=18)){
 										echo " good evening <br>".$this->session->userdata('name');
 										}elseif(date('H')>=1){
 										 echo "good morning <br>".$this->session->userdata('name');
-										}elseif(data('H')>=13){
-										  echo " good afternoon <br>".$this->session->userdata('name');
 										}
+									
 									
 									;?>
 								</p>
