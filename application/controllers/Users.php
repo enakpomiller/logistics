@@ -19,6 +19,7 @@ class Users extends CI_controller{
          }
 
        public function index(){
+          
               $UserId= $this->session->userdata('id');
               $data['demo'] = $this->users_model->GetCartProd('tbl_cart',$UserId);
               $this->load->view('template/header',$data);

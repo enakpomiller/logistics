@@ -34,7 +34,7 @@
                 <td> <?=$audit->ip_address?> </td>
                 <td> <?=$audit->computer_name?> </td>
                 <td width="100"> 
-                    <a href="<?=base_url('admin/delete_augit/'.$audit->id)?>" class="btn btn-danger"><i class="fa fa-trash"></i>delete </a>
+                    <a href="<?=base_url('admin/delete_augit/'.$audit->id)?>" class="btn btn-danger remove"><i class="fa fa-trash"></i>delete </a>
                 </td>
                 </tr>
                 <?php }?>
@@ -45,7 +45,7 @@
 
 
 <!-- sweet alert -->
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <!-- datatable script -->
@@ -134,3 +134,28 @@
 
 
    </script>
+
+
+<script type="text/javascript">
+    $(".remove").click(function(){
+        var id = $(this).parents("tr").attr("id");
+        var prod_name = $(this).parents("td").attr("name");
+      console.log(prod_name);
+
+        if(confirm(' ARE YOU SURE YOU WANT TO DELETE THIS USER? ?'))
+        {
+            $.ajax({
+               url: '<?=base_url('admin/delete_augit/')?>'+id,
+               type: 'DELETE',
+               error: function() {
+                  alert('Something is wrong');
+               },
+               success: function(data) {
+                    $("#"+id).remove();
+                    alert("Record removed successfully");
+                    //swal.fire("success"," PRODUCT DELETED SUCCESSFULLY","success");
+               }
+            });
+        }
+    });
+</script>

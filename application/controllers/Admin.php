@@ -193,7 +193,7 @@ class Admin extends CI_controller{
         $this->db->where('id',$id);
         $action =  $this->db->delete('tbl_auditrail');
         if($action){
-          echo " deleted ";
+          return redirect(base_url('admin/view_audit'));
         }else{
          echo " cannot delete";
         }
