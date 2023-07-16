@@ -418,7 +418,11 @@
       return $query->result();
     }
 
-
+  public function delete_history($table,$data){
+    $this->db->where('id',$data);
+    return $this->db->delete($table);
+  
+   }
 
     }
 

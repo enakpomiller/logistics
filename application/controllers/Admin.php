@@ -189,13 +189,12 @@ class Admin extends CI_controller{
         $this->load->view('admin/footer');
     } 
    
-    public function delete_augit($id){
-        $this->db->where('id',$id);
-        $action =  $this->db->delete('tbl_auditrail');
+    public function delete_audit($id){
+        $action =  $this->admin_model->delete_history('tbl_auditrail',$id);
         if($action){
           return redirect(base_url('admin/view_audit'));
         }else{
-         echo " cannot delete";
+          print_r("cannot delete");
         }
      }
 
